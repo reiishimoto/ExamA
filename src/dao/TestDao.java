@@ -88,7 +88,7 @@ public class TestDao extends Dao {
 	 * @param subject
 	 * @param num
 	 * @param school
-	 * @return
+	 * @return SELECT実行結果をListとして返す
 	 */
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) {
 		if (classNum == null || subject == null || school == null) return null;

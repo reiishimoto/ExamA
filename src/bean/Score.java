@@ -1,5 +1,5 @@
 package bean;
-
+//2025/04/25
 import java.io.Serializable;
 
 public class Score extends User implements Serializable{

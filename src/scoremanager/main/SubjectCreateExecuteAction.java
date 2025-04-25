@@ -1,4 +1,3 @@
-
 package scoremanager.main;
 
 import java.util.HashMap;
@@ -15,57 +14,40 @@ import tool.Action;
 
 public class SubjectCreateExecuteAction extends Action {
 
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        HttpSession session = req.getSession();
+        Teacher teacher = (Teacher) session.getAttribute("user");
 
-public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-// ローカル変数の指定
-	HttpSession session = req.getSession(); // セッション
-	Teacher teacher = (Teacher)session.getAttribute("user");
-	String subjectCd = ""; // 入力された科目コード
-	String subjectName = ""; // 入力された科目名
-	Subject subject = new Subject();
-	SubjectDao subjectDao = new SubjectDao();
-	Map<String, String> errors = new HashMap<>(); // エラーメッセージ
+        String subjectCd   = req.getParameter("subject_cd");
+        String subjectName = req.getParameter("subject_name");
 
-// リクエストパラメーターの取得
-	subjectCd = req.getParameter("subject_cd");
-	subjectName = req.getParameter("subject_name");
+        SubjectDao subjectDao = new SubjectDao();
+        Map<String, String> errors = new HashMap<>();
 
-	// ビジネスロジック
-	if (subjectCd == null || subjectCd.isEmpty()) { // 科目コードが未入力だった場合
-	errors.put("1", "科目コードを入力してください");
-	// リクエストにエラーメッセージをセット
-	req.setAttribute("errors", errors);
-	} else if (subjectName == null || subjectName.isEmpty()) { // 科目名が未入力だった場合
-	errors.put("2", "科目名を入力してください");
-	// リクエストにエラーメッセージをセット
-	req.setAttribute("errors", errors);
-	} else if (subjectDao.get(subjectCd) != null) { // 科目コードが重複している場合
-	errors.put("3", "科目コードが重複しています");
-	// リクエストにエラーメッセージをセット
-	req.setAttribute("errors", errors);
-	} else {
-	// subjectに科目情報をセット
-	subject.setCd(subjectCd);
-	subject.setName(subjectName);
-	subject.setSchool(teacher.getSchool());
-	// saveメソッドで情報を登録
-	subjectDao.save(subject);
-	}
+        // 必須チェックのみ
+        if (subjectCd == null || subjectCd.isEmpty()) {
+            errors.put("subject_cd", "科目コードを入力してください");
+        }
+        if (subjectName == null || subjectName.isEmpty()) {
+            errors.put("subject_name", "科目名を入力してください");
+        }
 
-	// レスポンス値をセット
-	// リクエストに科目コードをセット
-	req.setAttribute("subject_cd", subjectCd);
-	// リクエストに科目名をセット
-	req.setAttribute("subject_name", subjectName);
+        if (errors.isEmpty()) {
+            // 重複チェックをせずにそのまま登録
+            Subject subject = new Subject();
+            subject.setCd(subjectCd);
+            subject.setName(subjectName);
+            subject.setSchool(teacher.getSchool());
+            subjectDao.save(subject);
+            req.getRequestDispatcher("subject_create_done.jsp").forward(req, res);
 
-	// JSPへフォワード
-	if (errors.isEmpty()) { // エラーメッセージがない場合
-	// 登録完了画面にフォワード
-	req.getRequestDispatcher("subject_create_done.jsp").forward(req, res);
-	} else { // エラーメッセージがある場合
-	// 登録画面にフォワード
-	req.getRequestDispatcher("SubjectCreate.action").forward(req, res);
-        }
-    }
-
+        } else {
+            // エラーあり → 入力画面に戻す
+            req.setAttribute("errors",        errors);
+            req.setAttribute("subject_cd",    subjectCd);
+            req.setAttribute("subject_name",  subjectName);
+            req.getRequestDispatcher("subject_create.jsp").forward(req, res);
+        }
+    }
 }

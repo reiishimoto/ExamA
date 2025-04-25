@@ -1,5 +1,11 @@
 package bean;
 
+/**
+ * 得点を保持するための Bean クラス<br>
+ * DAOともどもなんで「得点」のくせにScoreじゃなくTestなんだろーね？？？？
+ * @author s_nakamura
+ *
+ */
 public class Test {
 
 	private Student student;

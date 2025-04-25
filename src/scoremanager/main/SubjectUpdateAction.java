@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on branch 'master' of https://github.com/reiishimoto/ExamA.git
 
 package scoremanager.main;
 
@@ -50,4 +51,10 @@ public class SubjectUpdateAction extends Action {
 			// JSPへフォワード
 			req.getRequestDispatcher("subject_update.jsp").forward(req, res);
 }
+=======
+package scoremanager.main;
+
+public class SubjectUpdateAction {
+
+>>>>>>> a21f0d9 ll
 }

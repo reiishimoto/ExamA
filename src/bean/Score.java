@@ -1,4 +1,4 @@
-package bean; // パッケージ名はSubject Beanと同じものにしてください
+package bean;
 
 import java.io.Serializable;
 import java.util.Objects;

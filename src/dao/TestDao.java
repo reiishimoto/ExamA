@@ -120,7 +120,7 @@ public class TestDao extends Dao {
 	 * Testのリストを受け取り、トランザクション処理で順次保存ないし更新の処理をする。<br>
 	 * 正常に更新処理が完了すればtrue, 例外発生時にはロールバックしfalseを戻り値として返す
 	 * @param list 更新対象のtestのリスト
-	 * @return
+	 * @return トランザクション処理が正常に成功すればtrue, 失敗し、ロールバックした場合はfalse
 	 */
 	public boolean save(List<Test> list) {
 		return exceptionHandle(() -> {

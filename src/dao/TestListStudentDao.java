@@ -41,9 +41,9 @@ public class TestListStudentDao extends Dao {
 				 PreparedStatement ps = con.prepareStatement(baseSql)) {
 
 				ps.setString(1, student.getNo());
-				ResultSet rs = ps.executeQuery();
-
-				return postFilter(rs);
+				try(ResultSet rs = ps.executeQuery()){
+					return postFilter(rs);
+				}
 
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック

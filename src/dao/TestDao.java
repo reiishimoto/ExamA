@@ -102,29 +102,62 @@ public class TestDao extends Dao {
 		return null;
 	}
 
+	/**
+	 * Testのリストを受け取り、トランザクション処理で順次保存ないし更新の処理をする。<br>
+	 * 正常に更新処理が完了すればtrue, 例外発生時にはロールバックしfalseを戻り値として返す
+	 * @param list 更新対象のtestのリスト
+	 * @return
+	 */
 	public boolean save(List<Test> list) {
-		try(Connection con = getConnection()) {
+		Connection con = getConnection()
+		try {
 			con.setAutoCommit(false);
 			for (Test test: list) {
-
 				save(test, con);
 			}
-
+			con.commit();
 		} catch(Exception e) {
 			System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。"+e.getMessage());
+			con.rollback();
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * 受け取った単一のTestに関して更新処理をする。但し、Testの要素が変更前と完全に同一であった場合は変更をスキップし、即座に return をする
+	 * @param test
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
 	private boolean save(Test test, Connection con) throws SQLException {
-		if (get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo()) == null) {
+		Test before = get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo());
+		if (before == null) {
 			String sql = "INSERT INTO test (student_no, subject_cd, school_cd, no, point, class_num) values (?, ?, ?, ?, ?, ?):";
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 
+				ps.setString(1, test.getStudent().getNo());
+				ps.setString(2, test.getSubject().getCd());
+				ps.setString(3, test.getSchool().getCd());
+				ps.setInt(4, test.getNo());
+				ps.setInt(5, test.getPoint());
+				ps.setString(6, test.getClassNum());
+
+				return ps.execute();
+			}
+		} else {
+			if (test.getPoint() == before.getPoint() && test.getClassNum() == before.getClassNum()) return false;
+			String sql = "UPDATE test SET point = ?, class_num = ?";
+
+			try(PreparedStatement ps = con.prepareStatement(sql)){
+
+				ps.setInt(1, test.getPoint());
+				ps.setString(2, test.getClassNum());
+
+				return ps.execute();
 			}
 		}
-		String sql = "";
 
 	}
 }

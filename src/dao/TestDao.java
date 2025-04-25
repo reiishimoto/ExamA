@@ -8,16 +8,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import bean.School;
 import bean.Student;
 import bean.Subject;
+import bean.Test;
 
 public class TestDao extends Dao {
 
 	private String baseSql = "SELECT no, point, class_num FROM test ";
 
-	private List<Test> postFilter(ResultSet rs, School school) {
+	private List<Test> postFilter(ResultSet rs, School school) throws SQLException {
 
 		// 関連するクラスを取り出すためのDAO
 		StudentDao stuDao = new StudentDao();
@@ -31,8 +33,8 @@ public class TestDao extends Dao {
 
 		while(rs.next()) {
 		Test test = new Test();
-		Student student = stuCache.computeIfAbsent(rs.getString("student_no"), v -> stuDao.get(rs.getString("student_no")));
-		Subject subject = subCache.computeIfAbsent(rs.getString("subject_cd"), v -> subDao.get(rs.getString("subject_cd")));
+		Student student = stuCache.computeIfAbsent(rs.getString("student_no"), v -> exceptionHandle(() -> stuDao.get(rs.getString("student_no"))));
+		Subject subject = subCache.computeIfAbsent(rs.getString("subject_cd"), v -> exceptionHandle(() -> subDao.get(rs.getString("subject_cd"), school)));
 
 		test.setStudent(student);
 		test.setClassNum(rs.getString("class_num"));
@@ -68,6 +70,12 @@ public class TestDao extends Dao {
 				test.setPoint(rs.getInt("point"));
 			}
 			return test;
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -96,8 +104,14 @@ public class TestDao extends Dao {
 			ps.setInt(5, entYear);
 
 			try(ResultSet rs = ps.executeQuery()){
-				return postFilter(rs);
+				return postFilter(rs, school);
 			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -109,19 +123,22 @@ public class TestDao extends Dao {
 	 * @return
 	 */
 	public boolean save(List<Test> list) {
-		Connection con = getConnection()
-		try {
-			con.setAutoCommit(false);
-			for (Test test: list) {
-				save(test, con);
+		return exceptionHandle(() -> {
+			Connection con;
+				con = getConnection();
+			try {
+				con.setAutoCommit(false);
+				for (Test test: list) {
+					save(test, con);
+				}
+				con.commit();
+			} catch(Exception e) {
+				System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。"+e.getMessage());
+				con.rollback();
+				return false;
 			}
-			con.commit();
-		} catch(Exception e) {
-			System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。"+e.getMessage());
-			con.rollback();
-			return false;
-		}
-		return true;
+			return true;
+		});
 	}
 
 	/**
@@ -158,6 +175,15 @@ public class TestDao extends Dao {
 				return ps.execute();
 			}
 		}
+	}
 
+	private <T> T exceptionHandle(Callable<T> proccess) {
+		try {
+			return proccess.call();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

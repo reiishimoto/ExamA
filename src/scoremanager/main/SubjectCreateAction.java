@@ -13,32 +13,25 @@ import tool.Action;
 
 public class SubjectCreateAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession(); // セッション
-		Teacher teacher = (Teacher)session.getAttribute("user");
+        HttpSession session = request.getSession(); // セッション取得
+        Teacher teacher = (Teacher) session.getAttribute("user"); // ユーザー情報取得
 
-		// ローカル変数の指定 1
-		ClassNumDao classNumDao = new ClassNumDao(); // クラス番号Daoを初期化
-		LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
+        // ローカル変数の指定
+        ClassNumDao classNumDao = new ClassNumDao(); // クラス番号DAO初期化
+        LocalDate todaysDate = LocalDate.now(); // 現在日付（未使用）
 
-		// リクエストパラメーターの取得 2
-		// なし
+        // DBからデータ取得（学校コードに紐づくクラス番号一覧）
+        List<String> list = classNumDao.filter(teacher.getSchool());
 
-		// DBからデータ取得 3
-		// ログインユーザーの学校コードをもとにクラス番号の一覧を取得
-		List<String> list = classNumDao.filter(teacher.getSchool());
+        // レスポンス値をセット
+        request.setAttribute("class_num_set", list);
+        request.setAttribute("subject_cd", "");       // 初期の科目コード
+        request.setAttribute("subject_name", "");     // 初期の科目名
 
-
-
-		// レスポンス値をセット 6
-		// リクエストにデータをセット
-		request.setAttribute("class_num_set", list);
-
-
-		// JSPへフォワード 7
-		request.getRequestDispatcher("subject_create.jsp").forward(request, response);
-	}
-
+        // JSPへフォワード
+        request.getRequestDispatcher("subject_create.jsp").forward(request, response);
+    }
 }

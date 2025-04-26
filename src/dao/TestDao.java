@@ -82,7 +82,7 @@ public class TestDao extends Dao {
 
 	/**
 	 * 各引数をもとに条件を構成、TESTテーブルから取出しリストとして返却。<br>
-	 * 参照型引数classNum, subject, schoolのnull値は許さず、これら引数にnullがわたった場合はnullを返す
+	 * 参照型引数classNum, subject, schoolのいずれかにnullがわたった場合はnullを返す
 	 * @param entYear
 	 * @param classNum
 	 * @param subject
@@ -124,22 +124,26 @@ public class TestDao extends Dao {
 	 */
 	public boolean save(List<Test> list) {
 		return exceptionHandle(() -> {
-			Connection con;
-				con = getConnection();
-			try {
+			boolean result = false;
+
+			// try-with-resourcesでConnectionを管理
+			try (Connection con = getConnection()) {
 				con.setAutoCommit(false);
-				for (Test test: list) {
+
+				for (Test test : list) {
 					save(test, con);
 				}
+
 				con.commit();
-			} catch(Exception e) {
-				System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。"+e.getMessage());
-				con.rollback();
-				return false;
+				result = true;
+			} catch (Exception e) {
+				System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。" + e.getMessage());
 			}
-			return true;
+
+			return result;
 		});
 	}
+
 
 	/**
 	 * 受け取った単一のTestに関して更新処理をする。但し、Testの要素が変更前と完全に同一であった場合は変更をスキップし、即座に return をする

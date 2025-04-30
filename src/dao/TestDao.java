@@ -88,17 +88,19 @@ public class TestDao extends Dao {
 	 * @return SELECT実行結果をListとして返す
 	 */
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) {
-	    List<String> nullFields = new ArrayList<>();
+		if (classNum == null || subject == null || school == null) {
+			List<String> nullFields = new ArrayList<>();
 
-	    // `null` の引数をリストに追加
-	    if (classNum == null) nullFields.add("classNum");
-	    if (subject == null) nullFields.add("subject");
-	    if (school == null) nullFields.add("school");
+			// `null` の引数をリストに追加
+			if (classNum == null) nullFields.add("classNum");
+			if (subject == null) nullFields.add("subject");
+			if (school == null) nullFields.add("school");
 
-	    // `nullFields` に要素があれば、例外をスロー
-	    if (!nullFields.isEmpty()) {
-	        throw new IllegalArgumentException("例外: " + String.join(", ", nullFields) + " が `null` です。適切な値を指定してください。");
-	    }
+			// `nullFields` に要素があれば、例外をスロー
+			if (!nullFields.isEmpty()) {
+				throw new IllegalArgumentException("例外: " + String.join(", ", nullFields) + " が `null` です。適切な値を指定してください。");
+			}
+		}
 
 		String sql = baseSql
 				+ "JOIN student ON test.student_cd = student.cd WHERE test.subject_cd = ?, test.no = ?, test.class_num = ?, student.school_cd = ?, student.ent_year = ?";

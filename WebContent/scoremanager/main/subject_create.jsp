@@ -9,14 +9,14 @@
         <div>
           <label for="subject_cd">科目コード</label>
           <input class="form-control" type="text" id="subject_cd" name="subject_cd"
-                 value="${subject_cd}" maxlength="10" placeholder="科目コードを入力してください" />
+                 value="${subject_cd}" maxlength="10" placeholder="科目コードを入力してください" required />
         </div>
         <div class="mt-2 text-warning">${errors.subject_cd}</div>
 
         <div>
           <label for="subject_name">科目名</label>
           <input class="form-control" type="text" id="subject_name" name="subject_name"
-                 value="${subject_name}" maxlength="30" placeholder="科目名を入力してください" />
+                 value="${subject_name}" maxlength="30" placeholder="科目名を入力してください" required />
         </div>
         <div class="mt-2 text-warning">${errors.subject_name}</div>
 

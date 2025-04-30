@@ -181,6 +181,11 @@ public class TestDao extends Dao {
 		}
 	}
 
+	/**
+	 * 受け取ったラムダ式を実行するメソッド、Exceptionが発生した場合の処理をここに記述し、呼出元の例外処理を省略する
+	 * @param proccess
+	 * @return
+	 */
 	private <T> T exceptionHandle(Callable<T> proccess) {
 		try {
 			return proccess.call();

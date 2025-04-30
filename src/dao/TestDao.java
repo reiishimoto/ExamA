@@ -71,19 +71,15 @@ public class TestDao extends Dao {
 				test.setPoint(rs.getInt("point"));
 			}
 			return test;
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			ExceptionHandler.handleException(e);
 		}
 		return null;
 	}
 
 	/**
 	 * 各引数をもとに条件を構成、TESTテーブルから取出しリストとして返却。<br>
-	 * 参照型引数classNum, subject, schoolのいずれかにnullが渡るった場合はIllegalArguments例外を投げる
+	 * 参照型引数classNum, subject, schoolのいずれかにnullが渡った場合はIllegalArguments例外を投げる
 	 * @param entYear
 	 * @param classNum
 	 * @param subject
@@ -92,7 +88,18 @@ public class TestDao extends Dao {
 	 * @return SELECT実行結果をListとして返す
 	 */
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) {
-		if (classNum == null || subject == null || school == null) throw new IllegalArgumentException();
+	    List<String> nullFields = new ArrayList<>();
+
+	    // `null` の引数をリストに追加
+	    if (classNum == null) nullFields.add("classNum");
+	    if (subject == null) nullFields.add("subject");
+	    if (school == null) nullFields.add("school");
+
+	    // `nullFields` に要素があれば、例外をスロー
+	    if (!nullFields.isEmpty()) {
+	        throw new IllegalArgumentException("例外: " + String.join(", ", nullFields) + " が `null` です。適切な値を指定してください。");
+	    }
+
 		String sql = baseSql
 				+ "JOIN student ON test.student_cd = student.cd WHERE test.subject_cd = ?, test.no = ?, test.class_num = ?, student.school_cd = ?, student.ent_year = ?";
 		try (Connection con = getConnection();

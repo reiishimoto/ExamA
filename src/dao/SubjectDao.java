@@ -11,6 +11,47 @@ import bean.School;
 import bean.Subject;
 
 public class SubjectDao extends Dao{
+
+	// ★追加する！
+	public Subject get(String cd) throws Exception {
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    Subject subject = null;
+
+	    try {
+	        statement = connection.prepareStatement("select * from subject where cd=?");
+	        statement.setString(1, cd);
+
+	        ResultSet rSet = statement.executeQuery();
+
+	        if (rSet.next()) {
+	            subject = new Subject();
+	            subject.setCd(rSet.getString("cd"));
+	            subject.setName(rSet.getString("name"));
+	            // 学校情報（school）は今回はセットできないのでnullのまま
+	        }
+	    } catch (Exception e) {
+	        throw e;
+	    } finally {
+	        if (statement != null) {
+	            try {
+	                statement.close();
+	            } catch (SQLException sqle) {
+	                throw sqle;
+	            }
+	        }
+	        if (connection != null) {
+	            try {
+	                connection.close();
+	            } catch (SQLException sqle) {
+	                throw sqle;
+	            }
+	        }
+	    }
+	    return subject;
+	}
+
+
 	public Subject get (String cd, School school)throws Exception{
 
 		Subject subject = new Subject();
@@ -57,46 +98,27 @@ public class SubjectDao extends Dao{
 	}
 		return subject;
 }
-	public List<Subject>filter(School school)throws Exception{
+	public List<Subject> filter(School school) throws Exception {
+	    List<Subject> list = new ArrayList<>();
+	    try (Connection connection = getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(
+	             "SELECT cd, name FROM subject WHERE school_cd = ?")) {
 
-		List<Subject> list = new ArrayList<>();
-
-		Connection connection = getConnection();
-
-		PreparedStatement statement = null;
-
-		ResultSet rSet = null;
-
-
-		try{
-
-			statement = connection.prepareStatement("select * from subject where school_cd=?");
-
-			statement.setString(1, school.getCd());
-			rSet = statement.executeQuery();
-
-		}catch (Exception e){
-			throw e;
-		}finally{
-
-			if (statement !=null){
-				try{
-					statement.close();
-				}catch (SQLException sqle){
-					throw sqle;
-				}
-			}
-
-			if (connection !=null){
-				try{
-					connection.close();
-				}catch (SQLException sqle){
-					throw sqle;
-			}
-		}
+	        stmt.setString(1, school.getCd());
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                Subject s = new Subject();
+	                s.setCd(rs.getString("cd"));
+	                s.setName(rs.getString("name"));
+	                s.setSchool(school);
+	                // 必要なら他のフィールドもセット
+	                list.add(s);
+	            }
+	        }
+	    }
+	    return list;
 	}
-		return list;
-}
+
 	public boolean save(Subject subject)throws Exception{
 		Connection connection = getConnection();
 
@@ -154,37 +176,22 @@ public class SubjectDao extends Dao{
     }
 
 
-	public boolean delete(Subject subject) throws Exception {
-	    Connection connection = getConnection();
-	    PreparedStatement statement = null;
-	    int count = 0;
+	 public boolean delete(String cd) throws Exception {
+	        Connection connection = getConnection();
+	        PreparedStatement statement = null;
+	        int count = 0;
 
-	    try {
-
-	        statement = connection.prepareStatement("delete from subject where cd = ? and school_cd=?");
-	        statement.setString(1, subject.getCd());
-	        statement.setString(2, subject.getSchool().getCd());
-
-	        count = statement.executeUpdate(); // 削除実行
-
-	    } catch (Exception e) {
-	        throw e; // 上位に投げる
-	    } finally {
-	        if (statement != null) {
-	            try {
-	                statement.close();
-	            } catch (SQLException sqle) {
-	                throw sqle;
-	            }
+	        try {
+	            statement = connection.prepareStatement("DELETE FROM subject WHERE cd = ?");
+	            statement.setString(1, cd);
+	            count = statement.executeUpdate();
+	        } catch (Exception e) {
+	            throw e;
+	        } finally {
+	            if (statement != null) statement.close();
+	            if (connection != null) connection.close();
 	        }
-	        if (connection != null) {
-	            try {
-	                connection.close();
-	            } catch (SQLException sqle) {
-	                throw sqle;
-	            }
-	        }
-	    }
+
 
 	    // 削除された行数で成功可否を判定
 	    return count > 0;

@@ -32,6 +32,15 @@ public class SubjectCreateExecuteAction extends Action {
         if (subjectName == null || subjectName.isEmpty()) {
             errors.put("subject_name", "科目名を入力してください");
         }
+        if (subjectCd == null || subjectCd.isEmpty()) {
+            errors.put("subject_cd", "科目コードを入力してください");
+        } else if (subjectCd.length() != 3) {
+            errors.put("subject_cd", "科目コードは3文字で入力してください");
+        } else if (subjectDao.get(subjectCd, teacher.getSchool()) != null) {
+            errors.put("subject_cd", "科目コードが重複しています");
+        }
+
+
 
         if (errors.isEmpty()) {
             // 重複チェックをせずにそのまま登録

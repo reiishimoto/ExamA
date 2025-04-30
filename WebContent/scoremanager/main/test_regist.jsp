@@ -4,7 +4,7 @@
 <c:import url="/common/base.jsp">
 
    	<c:param name="title">
-		成績登録システム1
+		成績登録システム
 	</c:param>
 
     <c:param name="scripts">

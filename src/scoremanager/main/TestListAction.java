@@ -37,6 +37,7 @@ public class TestListAction extends Action {
 		String type = req.getParameter("f") == null ? "" : req.getParameter("f");
 
 		RequestDispatcher dispatcher = null;
+
 		if (type.equals("st")) {
 
 			StudentDao stuDao = new StudentDao();
@@ -83,6 +84,7 @@ public class TestListAction extends Action {
 			}
 
 			req.setAttribute("ent_year_set", entYearSet);
+
 		}
 		if (req.getAttribute("class_num_set") == null) {
 
@@ -91,6 +93,16 @@ public class TestListAction extends Action {
 			List<String> classNumList = ExceptUtils.exceptionHandle(() -> dao.filter(teacher.getSchool()));
 
 			req.setAttribute("class_num_set", classNumList);
+
+		}
+		if (req.getAttribute("subject_set") == null) {
+
+			SubjectDao dao = new SubjectDao();
+
+			List<Subject> subjectList = ExceptUtils.exceptionHandle(() -> dao.filter(teacher.getSchool()));
+
+			req.setAttribute("subject_set", subjectList);
+
 		}
 	}
 

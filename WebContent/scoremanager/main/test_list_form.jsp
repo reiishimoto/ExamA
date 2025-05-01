@@ -14,7 +14,7 @@
 					<option value="0">--------</option>
 					<c:forEach var="year" items="${ent_year_set }">
 						<%-- 現在のyearと選択されていたf1が一致していた場合selectedを追記 --%>
-						<option value="${year }" <c:if test="${year==f1 }">selected</c:if>>${year }</option>
+						<option value="${year }" ${year == param.entYear ? "selected" : "" }>${year }</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -24,7 +24,7 @@
 					<option value="0">--------</option>
 					<c:forEach var="num" items="${class_num_set }">
 						<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-						<option value="${num }" <c:if test="${num==classNum }">selected</c:if>>${num }</option>
+						<option value="${num }" ${num == param.classNum ? "selected" : "" }>${num }</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -34,7 +34,7 @@
 					<option value="0">--------</option>
 					<c:forEach var="sub" items="${subject_set }">
 						<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-						<option value="${sub }" <c:if test="${sub == subject }">selected</c:if>>${sub }</option>
+						<option value="${sub.cd }" ${sub.cd.equals(param.subject) ? "selected" : "" }>${sub.name }</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="col-4">
 				<label class="form-label" for="student-f2-select">学生番号</label>
-				<input class="form-control" type="text" name="student_no" placeholder="学生番号を入力してください">
+				<input class="form-control" type="text" name="student_no" value=${param.student_no } placeholder="学生番号を入力してください">
 			</div>
 			<div class="col-2 text-center">
 				<button name="f" value="st" class="btn btn-secondary" id="filter-button">検索</button>

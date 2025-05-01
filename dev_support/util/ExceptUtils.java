@@ -90,7 +90,9 @@ public class ExceptUtils {
 	 *
 	 * <b>使用例:</b><br>
 	 * {@code
-	 * ExceptUtils.nullCheck(name, email, age);
+	 * public void method(@NoNull String name, String email, int age) {
+	 *     ExceptUtils.nullCheck(name, email, age);
+	 * }
 	 * }
 	 *
 	 * @param args チェック対象メソッドの全引数

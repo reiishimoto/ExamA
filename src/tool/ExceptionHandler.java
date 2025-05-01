@@ -4,6 +4,11 @@ import java.sql.SQLException;
 
 public class ExceptionHandler {
     public static void handleException(Exception e) {
+        // `RuntimeException` の内部 `Exception` を取得
+        if (e instanceof RuntimeException && e.getCause() instanceof Exception) {
+            e = (Exception) e.getCause(); // ラップされた例外を展開
+        }
+
     	System.err.println("=========================================================================");
         System.err.println("例外: 処理中に例外が発生しました: " + e.getClass().getSimpleName());
 
@@ -18,7 +23,7 @@ public class ExceptionHandler {
             return; // **スタックトレースは不要なので処理終了**
 
         } else if (e instanceof IllegalArgumentException) {
-            System.err.println("例外: 不適切な引数が渡されました。メソッドの仕様を再確認してください。");
+            System.err.println("例外: 不適切な引数が渡されました。引数を確認してください。");
             System.err.println("例外: 問題のある引数 → " + e.getMessage());
             printStackTraceLimited(e, 5); // 影響範囲を見やすく
 
@@ -33,7 +38,8 @@ public class ExceptionHandler {
             printFilteredStackTrace(e, "Dao", 3); // **DAOのみ表示**
         } else {
             System.err.println("例外: 予期しない例外が発生しました。詳細を確認してください。");
-            printStackTraceLimited(e, 5); // 通常の例外処理
+//            printStackTraceLimited(e, 5); // 通常の例外処理
+            e.printStackTrace();
         }
     }
 

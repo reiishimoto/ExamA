@@ -1,5 +1,7 @@
 package scoremanager.main;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +14,12 @@ import bean.Subject;
 import bean.Teacher;
 import bean.TestListStudent;
 import bean.TestListSubject;
+import dao.ClassNumDao;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestListStudentDao;
 import dao.TestListSubjectDao;
+import dev_support.util.ExceptUtils;
 import tool.Action;
 
 public class TestListAction extends Action {
@@ -25,17 +29,22 @@ public class TestListAction extends Action {
 		HttpSession session = req.getSession();
 		Teacher teacher = (Teacher) session.getAttribute("user");
 
-		RequestDispatcher dispatcher = null;
+		String entYearStr = req.getParameter("entYear");
+		String classNum = req.getParameter("classNum");
 
-		String type = req.getParameter("f");
+		setAttributes(req, teacher);
+
+		String type = req.getParameter("f") == null ? "" : req.getParameter("f");
+
+		RequestDispatcher dispatcher = null;
 		if (type.equals("st")) {
 
 			StudentDao stuDao = new StudentDao();
-			TestListStudentDao tlsDao = new TestListStudentDao();
+			TestListStudentDao tlstDao = new TestListStudentDao();
 
 			Student student = stuDao.get(req.getParameter("f4"));
 
-			List<TestListStudent> list = tlsDao.filter(student);
+			List<TestListStudent> list = tlstDao.filter(student);
 
 			req.setAttribute("list", list);
 
@@ -43,23 +52,46 @@ public class TestListAction extends Action {
 		} else if (type.equals("sj")) {
 
 			SubjectDao subDao = new SubjectDao();
-			TestListSubjectDao tlsDao = new TestListSubjectDao();
+			TestListSubjectDao tlsjDao = new TestListSubjectDao();
 
-			String entYearStr = req.getParameter("f1");
-			String classNum = req.getParameter("f2");
 			Subject subject = subDao.get(req.getParameter("f3"));
 
 			int entYear = Integer.parseInt(entYearStr);
 
-			List<TestListSubject> list = tlsDao.filter(entYear, classNum, subject, teacher.getSchool());
+			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 
 			req.setAttribute("list", list);
 
 			dispatcher = req.getRequestDispatcher("test_list_subject.jsp");
+		} else {
+			dispatcher = req.getRequestDispatcher("test_list.jsp");
 		}
 
 		dispatcher.forward(req, res);
 
+	}
+
+	private static void setAttributes(HttpServletRequest req, Teacher teacher) {
+		if (req.getAttribute("ent_year_str") == null) {
+
+			LocalDate todaysDate = LocalDate.now();
+			int year = todaysDate.getYear();
+			List<Integer> entYearSet = new ArrayList<>();
+
+			for (int i=year; i>year-10; i--) {
+				entYearSet.add(i);
+			}
+
+			req.setAttribute("ent_year_set", entYearSet);
+		}
+		if (req.getAttribute("class_num_set") == null) {
+
+			ClassNumDao dao = new ClassNumDao();
+
+			List<String> classNumList = ExceptUtils.exceptionHandle(() -> dao.filter(teacher.getSchool()));
+
+			req.setAttribute("class_num_set", classNumList);
+		}
 	}
 
 }

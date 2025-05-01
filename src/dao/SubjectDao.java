@@ -119,61 +119,45 @@ public class SubjectDao extends Dao{
 	    return list;
 	}
 
-	public boolean save(Subject subject)throws Exception{
-		Connection connection = getConnection();
+	public boolean save(Subject subject) throws Exception {
+	    // データベース接続を取得
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    int count = 0; // 実行件数
 
-		PreparedStatement statement = null;
+	    try {
+	        // すでに同じcdとschool_cdの科目が存在するかチェック
+	        Subject old = get(subject.getCd(), subject.getSchool());
 
-		int count = 0;
+	        if (old == null) {
+	            // 存在しない場合は新規登録（INSERT）
+	            statement = connection.prepareStatement(
+	                "INSERT INTO subject (cd, name, school_cd) VALUES (?, ?, ?)");
+	            statement.setString(1, subject.getCd()); // 科目コード
+	            statement.setString(2, subject.getName()); // 科目名
+	            statement.setString(3, subject.getSchool().getCd()); // 学校コード
+	        } else {
+	            // 存在する場合は更新（UPDATE）
+	            statement = connection.prepareStatement(
+	                "UPDATE subject SET name = ? WHERE cd = ? AND school_cd = ?");
+	            statement.setString(1, subject.getName()); // 更新後の科目名
+	            statement.setString(2, subject.getCd());   // 科目コード（条件）
+	            statement.setString(3, subject.getSchool().getCd()); // 学校コード（条件）
+	        }
 
-		try{
-			Subject old = get(subject.getCd(), subject.getSchool());
+	        // SQLを実行し、更新・挿入された行数を取得
+	        count = statement.executeUpdate();
 
-			if (old == null){
-				statement = connection.prepareStatement(
-						"insert into subject(cd, name, school_cd) values(?, ?, ?)");
+	    } catch (Exception e) {
+	        throw e;
+	    } finally {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
 
-				statement.setString(1,subject.getCd());
-				statement.setString(2,subject.getName());
-				statement.setString(3, subject.getSchool().getCd());
-
-			}else{
-				statement = connection.prepareStatement(
-						"update student set name = ?");
-
-				statement.setString(1,subject.getName());
-
-			}
-			count = statement.executeUpdate();
-
-		}catch (Exception e){
-			throw e;
-		}finally{
-
-			if (statement !=null){
-				try{
-					statement.close();
-				}catch (SQLException sqle){
-					throw sqle;
-				}
-			}
-
-			if (connection !=null){
-				try{
-					connection.close();
-				}catch (SQLException sqle){
-					throw sqle;
-			}
-		}
-
+	    // 1件以上処理された場合はtrueを返す（成功）
+	    return count > 0;
 	}
-		if (count > 0){
-			return true;
-
-		}else{
-		return false;
-		}
-    }
 
 
 	 public boolean delete(String cd) throws Exception {

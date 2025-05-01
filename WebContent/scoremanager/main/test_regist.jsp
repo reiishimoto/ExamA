@@ -31,45 +31,54 @@
             <c:if test="${not empty errors.get('filter')}">
                 <p class="error"><c:out value="${errors.get('filter')}" /></p>
             </c:if>
-
-            <div class="filter-section">
+<div class="filter-section">
                 <form action="TestRegist.action" method="get">
-                    <label for="f1">入学年度:</label>
-                    <select name="f1" id="f1" required class="form-select d-inline-block w-auto">
-                        <option value="">--------</option>
-                        <c:forEach var="year" items="${ent_year_set}">
-                           <option value="${year}" ${year == f1 ? 'selected' : ''}>${year}</option>
-                        </c:forEach>
-                    </select>
+                    <%-- 各フィルター項目をdivで囲み、縦に並べる --%>
+                    <div class="mb-3"> <%-- 下にマージンを追加 --%>
+					  <label for="mx-auto py-2" class="form-label">入学年度:</label> <%-- form-labelクラスを追加 --%>
+					  <select name="f1" id="f1" required class="form-select w-auto"> <%-- d-inline-blockを削除 --%>
+					   <option value="">--------</option>
+					   <%-- items属性の値を ${ent_year} に変更 --%>
+					   <c:forEach var="year" items="${ent_year}">
+					    <option value="${year}" ${year == f1 ? 'selected' : ''}>${year}</option>
+					   </c:forEach>
+					  </select>
+					 </div>
 
-                    <label for="f2">クラス:</label>
-                    <select name="f2" id="f2" required class="form-select d-inline-block w-auto">
-                        <option value="">--------</option>
-                         <c:forEach var="classNum" items="${class_num_set}">
-                           <option value="${classNum}" ${classNum == f2 ? 'selected' : ''}>${classNum}</option>
-                        </c:forEach>
-                    </select>
+                    <div class="mb-3">
+                        <label for="f2" class="form-label">クラス:</label>
+                        <select name="f2" id="f2" required class="form-select w-auto"> <%-- d-inline-blockを削除 --%>
+                            <option value="">--------</option>
+                             <c:forEach var="classNum" items="${class_num_set}">
+                                <option value="${classNum}" ${classNum == f2 ? 'selected' : ''}>${classNum}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                    <label for="f3">科目:</label>
-                    <select name="f3" id="f3" required class="form-select d-inline-block w-auto">
-                       <option value="">--------</option>
-                        <c:forEach var="subject" items="${subject_set}">
-                           <option value="${subject.cd}" ${subject.cd == f3 ? 'selected' : ''}>${subject.name}</option>
-                        </c:forEach>
-                    </select>
+                    <div class="mb-3">
+                        <label for="f3" class="form-label">科目:</label>
+                        <select name="f3" id="f3" required class="form-select w-auto"> <%-- d-inline-blockを削除 --%>
+                            <option value="">--------</option>
+                             <c:forEach var="subject" items="${subject_set}">
+                                <option value="${subject.cd}" ${subject.cd == f3 ? 'selected' : ''}>${subject.name}</option>
+                             </c:forEach>
+                        </select>
+                    </div>
 
-                    <label for="f4">回数:</label>
-                    <select name="f4" id="f4" required class="form-select d-inline-block w-auto">
-                        <option value="">--------</option>
-                        <c:forEach var="num" items="${test_num_set}">
-                           <option value="${num}" ${num == f4 ? 'selected' : ''}>${num}</option>
-                        </c:forEach>
-                    </select>
+                    <div class="mb-3">
+                        <label for="f4" class="form-label">回数:</label>
+                        <select name="f4" id="f4" required class="form-select w-auto"> <%-- d-inline-blockを削除 --%>
+                            <option value="">--------</option>
+                             <c:forEach var="num" items="${test_num_set}">
+                                <option value="${num}" ${num == f4 ? 'selected' : ''}>${num}</option>
+                             </c:forEach>
+                        </select>
+                    </div>
 
+                    <%-- 検索ボタンは最後に追加 --%>
                     <button type="submit" class="btn btn-secondary btn-sm">検索</button>
                 </form>
             </div>
-
             <%-- Results Section (Displayed after search) --%>
             <c:if test="${not empty students}">
                 <div class="result-section">
@@ -116,7 +125,7 @@
                     </form>
                 </div>
             </c:if>
-             <c:if test="${not empty f1 and empty students and empty errors.search}">
+             <c:if test="${not empty students and empty errors.search}">
                 <p>指定された条件に一致する学生情報が見つかりませんでした。</p>
              </c:if>
 

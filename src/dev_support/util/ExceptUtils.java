@@ -47,7 +47,7 @@ public class ExceptUtils {
 	 * @param process 実行するラムダ式（例: `() -> { return someOperation(); }`）
 	 * @return ラムダ式の結果
 	 */
-	public <T> T exceptionHandle(Callable<T> process) {
+	public static <T> T exceptionHandle(Callable<T> process) {
 		try {
 			return process.call();
 		} catch (RuntimeException e) {
@@ -83,22 +83,19 @@ public class ExceptUtils {
 		}
 	}
 
-
 	/**
 	 * メソッドの引数に `null` が含まれていないかチェックする。
-	 * `@NoNull` が付いている引数に `null` が渡された場合は `IllegalArgumentException` をスローする。
+	 * `@NoNull` が付いている引数に `null` が渡された場合は `IllegalArgumentException` をスローする。<br>
 	 *
 	 * <b>使用例:</b><br>
-	 * {@code
-	 * public void method(@NoNull String name, String email, int age) {
-	 *     ExceptUtils.nullCheck(name, email, age);
-	 * }
-	 * }
+	 * public void method(@NoNull String name, String email, int age) &#123;<br>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;ExceptUtils.nullCheck(name, email, age);<br>
+	 * &#125;
 	 *
 	 * @param args チェック対象メソッドの全引数
-	 * @throws Exception `@NoNull` アノテーション付きの変数が `null` だった場合、例外をスロー
+	 * @throws RuntimeException `@NoNull` アノテーション付きの変数が `null` だった場合、IllagalArgumentExceptionをスロー
 	 */
-	public static void nullCheck(Object... args) throws Exception {
+	public static void nullCheck(Object... args) throws RuntimeException {
 		boolean hasNull = false;
 		for (Object arg : args) {
 			if (arg == null) {
@@ -112,7 +109,12 @@ public class ExceptUtils {
 		String methodName = caller.getMethodName();
 		String className = caller.getClassName();
 
-		Class<?> clazz = Class.forName(className);
+		Class<?> clazz;
+		try {
+			clazz = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 		Method method = findMethod(clazz, methodName, args);
 
 		Parameter[] parameters = method.getParameters();

@@ -16,5 +16,4 @@
 		<jsp:param name="action" value="TestList.action" />
 	</jsp:include>
 	</c:param>
-
 </c:import>

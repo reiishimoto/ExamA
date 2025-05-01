@@ -11,43 +11,30 @@ import tool.Action;
 
 public class SubjectUpdateAction extends Action {
 
-@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // セッションからログイン中の教員情報を取得
+        HttpSession session = req.getSession();
+        Teacher teacher = (Teacher) session.getAttribute("user");
 
-			// ローカル変数の指定
-			HttpSession session = req.getSession(); // セッション
-			Teacher teacher = (Teacher)session.getAttribute("user");
-			String subjectCode = ""; // 科目コード
-			String subjectName = ""; // 科目名
-			String teacherName = ""; // 担当教員
-			int year = 0; // 開講年度
-			String semester = ""; // 学期
-			int credits = 0; // 単位数
-			Subject subject = new Subject(); // 科目の詳細データ
-			SubjectDao subjectDao = new SubjectDao();
+        // リクエストパラメータから科目コードを取得
+        String cd = req.getParameter("cd");
 
-			// リクエストパラメーターの取得
-			subjectCode = req.getParameter("subjectCode");
+        // 科目DAOのインスタンスを生成
+        SubjectDao subjectDao = new SubjectDao();
 
-			// DBからデータ取得
-			subject = subjectDao.get(subjectCode);
+        // 指定された科目コードと学校コードに一致する科目情報を取得
+        Subject subject = subjectDao.get(cd, teacher.getSchool());
 
-			// ビジネスロジック
-			subjectName = subject.getName();
-			teacherName = subject.getTeacherName();
-			year = subject.getYear();
-			semester = subject.getSemester();
-			credits = subject.getCredits();
+        // 科目が見つからない場合はエラーメッセージをセット
+        if (subject == null) {
+            req.setAttribute("error", "科目が存在していません");
+        } else {
+            // 科目が見つかった場合はJSPに渡すためにセット
+            req.setAttribute("subject", subject);
+        }
 
-			// レスポンス値をセット
-			req.setAttribute("subjectCode", subjectCode);
-			req.setAttribute("subjectName", subjectName);
-			req.setAttribute("teacherName", teacherName);
-			req.setAttribute("year", year);
-			req.setAttribute("semester", semester);
-			req.setAttribute("credits", credits);
-
-			// JSPへフォワード
-			req.getRequestDispatcher("subject_update.jsp").forward(req, res);
-}
+        // 科目情報変更画面にフォワード
+        req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+    }
 }

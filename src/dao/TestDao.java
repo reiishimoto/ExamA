@@ -14,6 +14,7 @@ import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Test;
+import dev_support.util.ExceptUtils;
 import tool.ExceptionHandler;
 
 public class TestDao extends Dao {
@@ -89,6 +90,7 @@ public class TestDao extends Dao {
 	 */
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) {
 		if (classNum == null || subject == null || school == null) {
+			ExceptUtils.nullCheck(entYear, classNum, subject, num, school);
 			List<String> nullFields = new ArrayList<>();
 
 			// `null` の引数をリストに追加

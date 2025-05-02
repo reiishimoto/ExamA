@@ -17,11 +17,6 @@ import dev_support.annotation.NoNull;
  *   <li>`null` チェックと例外スロー (`nullCheck`)</li>
  * </ul>
  *
- * <b>使用例：</b>
- * <pre>{@code
- *   ExceptUtils.throwIfCondition(user == null, () -> new IllegalArgumentException("ユーザーが null です！"));
- * }</pre>
- *
  * <b>制限事項：</b>
  * <ul>
  *   <li>このクラスは例外処理の補助を目的としており、エラーロギング機能は提供しません。</li>
@@ -143,5 +138,5 @@ public class ExceptUtils {
 			}
 		}
 		throw new RuntimeException("メソッド `" + methodName + "` が見つかりません。");
-		}
 	}
+}

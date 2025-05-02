@@ -8,7 +8,7 @@
     <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績一覧（学生）</h2>
 
     <jsp:include page="test_list_form.jsp">
-      <jsp:param name="action" value="TestListStudent.action" />
+      <jsp:param name="action" value="TestListStudentExecute.action" />
     </jsp:include>
 
     <c:if test="${not empty student}">

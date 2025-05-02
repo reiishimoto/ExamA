@@ -19,7 +19,7 @@ import tool.ExceptionHandler;
 
 public class TestDao extends Dao {
 
-	private String baseSql = "SELECT no, point, class_num FROM test ";
+	private String baseSql = "SELECT * FROM test ";
 
 	private List<Test> postFilter(ResultSet rs, School school) throws SQLException {
 
@@ -105,7 +105,7 @@ public class TestDao extends Dao {
 		}
 
 		String sql = baseSql
-				+ "JOIN student ON test.student_cd = student.cd WHERE test.subject_cd = ?, test.no = ?, test.class_num = ?, student.school_cd = ?, student.ent_year = ?";
+				+ "JOIN student ON test.student_no = student.no WHERE test.subject_cd = ? AND test.no = ? AND test.class_num = ? AND student.school_cd = ? AND student.ent_year = ?";
 		try (Connection con = getConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 

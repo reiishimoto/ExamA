@@ -10,31 +10,31 @@
 			</div>
 			<div class="col-2">
 				<label class="form-label" for="student-f1-select">入学年度</label>
-				<select class="form-select" id="student-f1-select" name="entYear">
+				<select class="form-select" id="student-f1-select" name="ey">
 					<option value="0">--------</option>
 					<c:forEach var="year" items="${ent_year_set }">
 						<%-- 現在のyearと選択されていたf1が一致していた場合selectedを追記 --%>
-						<option value="${year }" ${year == param.entYear ? "selected" : "" }>${year }</option>
+						<option value="${year }" ${year == param.ey ? "selected" : "" }>${year }</option>
 					</c:forEach>
 				</select>
 			</div>
 			<div class="col-2">
 				<label class="form-label" for="student-f2-select">クラス</label>
-				<select class="form-select" id="student-f2-select" name="classNum">
+				<select class="form-select" id="student-f2-select" name="cn">
 					<option value="0">--------</option>
 					<c:forEach var="num" items="${class_num_set }">
 						<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-						<option value="${num }" ${num == param.classNum ? "selected" : "" }>${num }</option>
+						<option value="${num }" ${num == param.cn ? "selected" : "" }>${num }</option>
 					</c:forEach>
 				</select>
 			</div>
 			<div class="col-4">
 				<label class="form-label" for="student-f2-select">科目</label>
-				<select class="form-select" id="student-f2-select" name="subject">
+				<select class="form-select" id="student-f2-select" name="sj">
 					<option value="0">--------</option>
 					<c:forEach var="sub" items="${subject_set }">
 						<%-- 現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-						<option value="${sub.cd }" ${sub.cd.equals(param.subject) ? "selected" : "" }>${sub.name }</option>
+						<option value="${sub.cd }" ${sub.cd.equals(param.sj) ? "selected" : "" }>${sub.name }</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="col-4">
 				<label class="form-label" for="student-f2-select">学生番号</label>
-				<input class="form-control" type="text" name="student_no" value="${param.student_no }" placeholder="学生番号を入力してください">
+				<input class="form-control" type="text" name="st" value="${param.st }" placeholder="学生番号を入力してください">
 			</div>
 			<div class="col-2 text-center">
 				<button name="f" value="st" class="btn btn-secondary" id="filter-button">検索</button>

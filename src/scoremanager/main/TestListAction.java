@@ -29,10 +29,11 @@ public class TestListAction extends Action {
 		HttpSession session = req.getSession();
 		Teacher teacher = (Teacher) session.getAttribute("user");
 
-		String entYearStr = req.getParameter("entYear");
-		String classNum = req.getParameter("classNum");
+		String entYearStr = req.getParameter("ey");
+		String classNum = req.getParameter("cn");
 
 		setAttributes(req, teacher);
+
 
 		String type = req.getParameter("f") == null ? "" : req.getParameter("f");
 
@@ -44,7 +45,7 @@ public class TestListAction extends Action {
 			StudentDao stuDao = new StudentDao();
 			TestListStudentDao tlstDao = new TestListStudentDao();
 
-			Student student = stuDao.get(req.getParameter("student_no"));
+			Student student = stuDao.get(req.getParameter("st"));
 
 			List<TestListStudent> list = tlstDao.filter(student);
 
@@ -58,10 +59,11 @@ public class TestListAction extends Action {
 			SubjectDao subDao = new SubjectDao();
 			TestListSubjectDao tlsjDao = new TestListSubjectDao();
 
-			Subject subject = subDao.get(req.getParameter("subject"), teacher.getSchool());
+			Subject subject = subDao.get(req.getParameter("sj"), teacher.getSchool());
 
 			int entYear = Integer.parseInt(entYearStr);
 
+			System.out.println("subject.name:" + subject.getName());
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 
 			req.setAttribute("testList", list);

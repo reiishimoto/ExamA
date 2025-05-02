@@ -45,7 +45,7 @@ public class TestListSubjectDao extends Dao {
 
 	/**
 	 * entYear, classNum, subject, schoolを受け取り、TestListSubjectのリストを返却する。<br>
-	 * 参照型引数classNum, subject, schoolのいずれかにnullが渡った場合はnullを返す
+	 * 参照型引数classNum, subject, schoolにはnull値を許さない
 	 * @param entYear
 	 * @param classNum
 	 * @param subject

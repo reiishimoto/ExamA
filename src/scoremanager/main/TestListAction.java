@@ -65,6 +65,7 @@ public class TestListAction extends Action {
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 
 			req.setAttribute("testList", list);
+			req.setAttribute("subject", subject);
 
 			dispatcher = req.getRequestDispatcher("test_list_subject.jsp");
 		} else {

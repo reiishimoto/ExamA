@@ -11,7 +11,7 @@
       <jsp:param name="action" value="TestListSubject.action" />
     </jsp:include>
 
-      <div class="mt-3">科目：${subject}</div>
+      <div class="mt-3">科目：${subject.name}</div>
       <table class="table table-bordered mt-2">
         <thead>
           <tr>

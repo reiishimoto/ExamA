@@ -9,21 +9,24 @@ import java.util.List;
 
 import bean.Student;
 import bean.TestListStudent;
+import dev_support.annotation.NoNull;
+import dev_support.util.ExceptUtils;
 
 public class TestListStudentDao extends Dao {
 
-	private String baseSql = "SELECT subject.name, subject.cd, test.no, test.point FROM test JOIN subject ON test.subject_cd = subject.cd WHERE test.student_no = ?;";
+	private String baseSql = "SELECT subject.name, subject.cd, test.no, test.point FROM test JOIN subject ON test.subject_cd = subject.cd WHERE test.student_no = ?";
 
 	private List<TestListStudent> postFilter(ResultSet rs) throws SQLException {
 		List<TestListStudent> list = new ArrayList<>();
 
-		TestListStudent testListStudent = new TestListStudent();
-		testListStudent.setSubjectName(rs.getString("subject.name"));
-		testListStudent.setSubjectCd(rs.getString("subject.cd"));
-		testListStudent.setNum(rs.getInt("test.no"));
-		testListStudent.setPoint(rs.getInt("test.point"));
-
-		list.add(testListStudent);
+		while(rs.next()) {
+			TestListStudent testListStudent = new TestListStudent();
+			testListStudent.setSubjectName(rs.getString("subject.name"));
+			testListStudent.setSubjectCd(rs.getString("subject.cd"));
+			testListStudent.setNum(rs.getInt("test.no"));
+			testListStudent.setPoint(rs.getInt("test.point"));
+			list.add(testListStudent);
+		}
 
 		return list;
 	}
@@ -33,9 +36,9 @@ public class TestListStudentDao extends Dao {
 	 * @param student 該当のStudentインスタンス
 	 * @return 件数0を含め、クエリに成功した場合はListを返す。はず。例外発生なく失敗した場合はnullを返す
 	 */
-	public List<TestListStudent> filter (Student student) {
+	public List<TestListStudent> filter (@NoNull Student student) {
 		if(student == null) {
-			return null;
+			ExceptUtils.nullCheck(student);
 		} else {
 			try (Connection con = getConnection();
 				 PreparedStatement ps = con.prepareStatement(baseSql)) {

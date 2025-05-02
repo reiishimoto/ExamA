@@ -36,6 +36,7 @@ public class TestListAction extends Action {
 
 		String type = req.getParameter("f") == null ? "" : req.getParameter("f");
 
+
 		RequestDispatcher dispatcher = null;
 
 		if (type.equals("st")) {
@@ -43,11 +44,13 @@ public class TestListAction extends Action {
 			StudentDao stuDao = new StudentDao();
 			TestListStudentDao tlstDao = new TestListStudentDao();
 
-			Student student = stuDao.get(req.getParameter("f4"));
+			Student student = stuDao.get(req.getParameter("student_no"));
 
 			List<TestListStudent> list = tlstDao.filter(student);
 
 			req.setAttribute("testList", list);
+
+			req.setAttribute("student", student);
 
 			dispatcher = req.getRequestDispatcher("test_list_student.jsp");
 		} else if (type.equals("sj")) {
@@ -55,13 +58,14 @@ public class TestListAction extends Action {
 			SubjectDao subDao = new SubjectDao();
 			TestListSubjectDao tlsjDao = new TestListSubjectDao();
 
-			Subject subject = subDao.get(req.getParameter("f3"));
+			Subject subject = subDao.get(req.getParameter("subject"), teacher.getSchool());
 
 			int entYear = Integer.parseInt(entYearStr);
 
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 
 			req.setAttribute("testList", list);
+			req.setAttribute("subject", subject);
 
 			dispatcher = req.getRequestDispatcher("test_list_subject.jsp");
 		} else {

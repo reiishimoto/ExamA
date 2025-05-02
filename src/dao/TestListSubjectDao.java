@@ -13,9 +13,11 @@ import java.util.concurrent.Callable;
 import bean.School;
 import bean.Subject;
 import bean.TestListSubject;
+import dev_support.annotation.NoNull;
+import dev_support.util.ExceptUtils;
 
 public class TestListSubjectDao extends Dao {
-	private String baseSql = "SELECT test.student_no, student.name, student.ent_year, test.class_num, test.no, test.point FROM test JOIN student ON test.student_no = student.no WHERE test.subject_cd = ?;";
+	private String baseSql = "SELECT student.no, student.name, student.ent_year, test.class_num, test.no, test.point FROM test JOIN student ON test.student_no = student.no WHERE test.subject_cd = ?;";
 
 	private List<TestListSubject> postFilter(ResultSet rSet) throws SQLException {
 		Map<String, TestListSubject> map = new HashMap<>();
@@ -26,7 +28,7 @@ public class TestListSubjectDao extends Dao {
 				TestListSubject tls = new TestListSubject();
 
 				tls.setEntYear(rSet.getInt("student.ent_year"));
-				tls.setStudentNo(rSet.getString("test.student_no"));
+				tls.setStudentNo(rSet.getString("student.no"));
 				tls.setStudentName(rSet.getString("student.name"));
 				tls.setClassNum(rSet.getString("test.class_num"));
 
@@ -35,7 +37,7 @@ public class TestListSubjectDao extends Dao {
 				return tls;
 			}));
 
-			testListSubject.getPoints().put(rSet.getInt("no"), rSet.getInt("point"));
+			testListSubject.getPoints().put(rSet.getInt("test.no"), rSet.getInt("point"));
 
 		}
 		return new ArrayList<>(map.values());
@@ -50,26 +52,25 @@ public class TestListSubjectDao extends Dao {
 	 * @param school
 	 * @return
 	 */
-	public List<TestListSubject> filter(int entYear, String classNum, Subject subject, School school) {
+	public List<TestListSubject> filter(int entYear, @NoNull String classNum, @NoNull Subject subject, @NoNull School school) {
 
 		if(classNum == null || subject == null || school == null) {
-			return null;
-		} else {
-			try (Connection con = getConnection();
-				 PreparedStatement ps = con.prepareStatement(baseSql)) {
+			ExceptUtils.nullCheck(entYear, classNum, subject, school);
+		}
+		try (Connection con = getConnection();
+			 PreparedStatement ps = con.prepareStatement(baseSql)) {
 
-				ps.setString(1, subject.getCd());
-				try(ResultSet rs = ps.executeQuery()){
-					return postFilter(rs);
-				}
-
-			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
+			ps.setString(1, subject.getCd());
+			try(ResultSet rs = ps.executeQuery()){
+				return postFilter(rs);
 			}
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
 		}
 		return null;
 	}

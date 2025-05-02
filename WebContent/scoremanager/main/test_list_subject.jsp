@@ -11,8 +11,7 @@
       <jsp:param name="action" value="TestListSubject.action" />
     </jsp:include>
 
-    <c:if test="${not empty subject}">
-      <div class="mt-3">科目：${subject.name}</div>
+      <div class="mt-3">科目：${subject}</div>
       <table class="table table-bordered mt-2">
         <thead>
           <tr>
@@ -31,14 +30,12 @@
               <td>${score.classNum}</td>
               <td>${score.studentNo}</td>
               <td>${score.studentName}</td>
-              <td><c:out value="${score.point1}" default="-" /></td>
-              <td><c:out value="${score.point2}" default="-" /></td>
+              <td><c:out value="${score.getPoint(1)}" default="-" /></td>
+              <td><c:out value="${score.getPoint(2)}" default="-" /></td>
             </tr>
           </c:forEach>
         </tbody>
       </table>
-    </c:if>
-
     <c:if test="${not empty message}">
       <div class="text-danger mt-3">${message}</div>
     </c:if>

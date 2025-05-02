@@ -47,7 +47,7 @@ public class TestListAction extends Action {
 
 			List<TestListStudent> list = tlstDao.filter(student);
 
-			req.setAttribute("list", list);
+			req.setAttribute("testList", list);
 
 			dispatcher = req.getRequestDispatcher("test_list_student.jsp");
 		} else if (type.equals("sj")) {
@@ -61,7 +61,7 @@ public class TestListAction extends Action {
 
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 
-			req.setAttribute("list", list);
+			req.setAttribute("testList", list);
 
 			dispatcher = req.getRequestDispatcher("test_list_subject.jsp");
 		} else {
@@ -72,7 +72,7 @@ public class TestListAction extends Action {
 
 	}
 
-	private static void setAttributes(HttpServletRequest req, Teacher teacher) {
+	private void setAttributes(HttpServletRequest req, Teacher teacher) {
 		if (req.getAttribute("ent_year_str") == null) {
 
 			LocalDate todaysDate = LocalDate.now();

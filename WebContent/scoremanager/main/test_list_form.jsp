@@ -51,7 +51,7 @@
 			</div>
 			<div class="col-4">
 				<label class="form-label" for="student-f2-select">学生番号</label>
-				<input class="form-control" type="text" name="student_no" value=${param.student_no } placeholder="学生番号を入力してください">
+				<input class="form-control" type="text" name="student_no" value="${param.student_no }" placeholder="学生番号を入力してください">
 			</div>
 			<div class="col-2 text-center">
 				<button name="f" value="st" class="btn btn-secondary" id="filter-button">検索</button>

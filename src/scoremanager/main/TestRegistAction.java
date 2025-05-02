@@ -97,7 +97,7 @@ public class TestRegistAction extends Action {
             for (int i = currentYear - 10; i <= currentYear + 1; i++) {
                 entYearSet.add(i);
             }
-            req.setAttribute("ent_year", entYearSet);
+            req.setAttribute("ent_year_set", entYearSet);
 
             List<String> classNumList = cNumDao.filter(school);
             req.setAttribute("class_num_set", classNumList);
@@ -108,7 +108,7 @@ public class TestRegistAction extends Action {
             List<Integer> testNumSet = new ArrayList<>();
             testNumSet.add(1);
             testNumSet.add(2);
-            req.setAttribute("test_num_set", testNumSet);
+            req.setAttribute("test_no_set", testNumSet);
 
         } catch (Exception e) {
             errors.put("general", "画面表示に必要なデータの取得中にエラーが発生しました。");

@@ -4,57 +4,57 @@ import java.io.Serializable;
 import java.util.Map;
 
 public class TestListSubject implements Serializable {
-    private int EntYear;
-    private String StudentNo;
-    private String StudentName;
-    private String ClassNum;
-    private Map<Integer, Integer> Points;
+    private int entYear;
+    private String studentNo;
+    private String studentName;
+    private String classNum;
+    private Map<Integer, Integer> points;
 
     public int getEntYear() {
-        return EntYear;
+        return entYear;
     }
 
     public void setEntYear(int entYear) {
-        EntYear = entYear;
+        this.entYear = entYear;
     }
 
     public String getStudentNo() {
-        return StudentNo;
+        return studentNo;
     }
 
     public void setStudentNo(String studentNo) {
-        StudentNo = studentNo;
+        this.studentNo = studentNo;
     }
 
     public String getStudentName() {
-        return StudentName;
+        return studentName;
     }
 
     public void setStudentName(String studentName) {
-        StudentName = studentName;
+        this.studentName = studentName;
     }
 
     public String getClassNum() {
-        return ClassNum;
+        return classNum;
     }
 
     public void setClassNum(String classNum) {
-        ClassNum = classNum;
+        this.classNum = classNum;
     }
 
     public Map<Integer, Integer> getPoints() {
-        return Points;
+        return points;
     }
 
     public void setPoints(Map<Integer, Integer> points) {
-        Points = points;
+        this.points = points;
     }
 
     public Integer getPoint(Long index) {
-        return Points.get(index.intValue());
+        return points.get(index.intValue());
     }
 
     public void putPoint(int index, int value) {
-        Points.put(index, value);
+        points.put(index, value);
     }
 }

@@ -37,6 +37,11 @@
         </table>
       </c:if>
 
+		    <!-- ここを追加：成績が0件のとき -->
+        <c:if test="${empty testList}">
+          <div class="alert alert-warning mt-3">成績情報が見つかりませんでした。</div>
+        </c:if>
+
       <c:if test="${not empty message}">
         <div class="text-danger mt-3">${message}</div>
       </c:if>

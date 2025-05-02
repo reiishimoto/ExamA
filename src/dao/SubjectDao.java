@@ -71,6 +71,7 @@ public class SubjectDao extends Dao{
 
 			if (rSet.next()){
 				subject.setCd(rSet.getString("cd"));
+				subject.setName(rSet.getString("name"));
 				subject.setSchool(school);
 
 			}else{

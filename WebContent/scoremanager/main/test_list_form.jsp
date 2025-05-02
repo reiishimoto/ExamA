@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <section class="me=4">
-	<form method="get" action="${param.action }">
+	<form method="get" action="TestList.action">
 		<div class="row border mx-3 mb-3 py-2 rounded" id="filter">
 		<div class="row align-items-center">
 			<div class="col-2">

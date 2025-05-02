@@ -13,7 +13,6 @@ import dao.SubjectDao;
 import tool.Action;
 
 public class TestRegistAction extends Action {
-//1
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {

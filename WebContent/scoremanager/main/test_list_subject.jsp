@@ -11,6 +11,7 @@
       <jsp:param name="action" value="TestListSubject.action" />
     </jsp:include>
 
+    <c:if test="${not empty testList}">
       <div class="mt-3">科目：${subject.name}</div>
       <table class="table table-bordered mt-2">
         <thead>
@@ -36,10 +37,16 @@
           </c:forEach>
         </tbody>
       </table>
+    </c:if>
+
+    <!-- 成績が0件のとき -->
+    <c:if test="${empty testList}">
+      <div class="alert alert-warning mt-3">科目情報が見つかりませんでした。</div>
+    </c:if>
+
     <c:if test="${not empty message}">
       <div class="text-danger mt-3">${message}</div>
     </c:if>
 
   </c:param>
 </c:import>
-

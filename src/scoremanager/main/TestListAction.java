@@ -63,7 +63,6 @@ public class TestListAction extends Action {
 
 			int entYear = Integer.parseInt(entYearStr);
 
-			System.out.println("subject.name:" + subject.getName());
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 
 			req.setAttribute("testList", list);

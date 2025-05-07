@@ -30,7 +30,7 @@ public class TestListAction extends Action {
 		Teacher teacher = (Teacher) session.getAttribute("user");
 
 		String entYearStr = req.getParameter("ey");
-		String classNumStr = req.getParameter("cn");
+		String classNum = req.getParameter("cn");
 
 		setAttributes(req, teacher);
 
@@ -66,7 +66,6 @@ public class TestListAction extends Action {
 			Subject subject = subDao.get(req.getParameter("sj"), teacher.getSchool());
 
 			int entYear = Integer.parseInt(entYearStr);
-			int classNum = Integer.parseInt(classNumStr);
 
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 

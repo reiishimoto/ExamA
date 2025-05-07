@@ -34,9 +34,7 @@ public class TestListAction extends Action {
 
 		setAttributes(req, teacher);
 
-
 		String type = req.getParameter("f") == null ? "" : req.getParameter("f");
-
 
 		RequestDispatcher dispatcher = null;
 
@@ -47,7 +45,13 @@ public class TestListAction extends Action {
 
 			Student student = stuDao.get(req.getParameter("st"));
 
-			List<TestListStudent> list = tlstDao.filter(student);
+			List<TestListStudent> list;
+
+			if (student != null) {
+				list = tlstDao.filter(student);
+			} else {
+				list = new ArrayList<>();
+			}
 
 			req.setAttribute("testList", list);
 

@@ -14,10 +14,11 @@ import bean.School;
 import bean.Subject;
 import bean.TestListSubject;
 import dev_support.annotation.NoNull;
+import dev_support.annotation.Nullable;
 import dev_support.util.ExceptUtils;
 
 public class TestListSubjectDao extends Dao {
-	private String baseSql = "SELECT student.no, student.name, student.ent_year, test.class_num, test.no, test.point FROM test JOIN student ON test.student_no = student.no WHERE test.subject_cd = ?;";
+	private String baseSql = "SELECT student.no, student.name, student.ent_year, test.class_num, test.no, test.point FROM test JOIN student ON test.student_no = student.no ";
 
 	private List<TestListSubject> postFilter(ResultSet rSet) throws SQLException {
 		Map<String, TestListSubject> map = new HashMap<>();
@@ -45,20 +46,42 @@ public class TestListSubjectDao extends Dao {
 
 	/**
 	 * entYear, classNum, subject, schoolを受け取り、TestListSubjectのリストを返却する。<br>
-	 * 参照型引数classNum, subject, schoolにはnull値を許さない
 	 * @param entYear
 	 * @param classNum
 	 * @param subject
 	 * @param school
 	 * @return
 	 */
-	public List<TestListSubject> filter(int entYear, @NoNull String classNum, @NoNull Subject subject, @NoNull School school) {
+	public List<TestListSubject> filter(int entYear, @Nullable String classNum, @Nullable Subject subject, @NoNull School school) {
 
-		if(classNum == null || subject == null || school == null) {
+		if(school == null) {
 			ExceptUtils.nullCheck(entYear, classNum, subject, school);
 		}
+
+		StringBuilder sql = new StringBuilder(baseSql);
+		List<Object> placeholders = new ArrayList<>();
+
+		boolean classNumActive, subjectActive;
+
+		classNumActive = classNum != null && !classNum.equals("");
+		subjectActive = subject != null;
+
+		if (classNumActive && subjectActive) {
+			sql.append("WHERE test.class_num = ? AND test.subject_cd = ?;");
+			placeholders.add(classNum);
+			placeholders.add(subject.getCd());
+		} else if (classNumActive) {
+			sql.append("WHERE test.class_num = ?;");
+			placeholders.add(classNum);
+		} else if (subjectActive) {
+			sql.append("WHERE test.subject_cd = ?;");
+			placeholders.add(subject.getCd());
+		} else {
+			sql.append(";");
+		}
+
 		try (Connection con = getConnection();
-			 PreparedStatement ps = con.prepareStatement(baseSql)) {
+			 PreparedStatement ps = con.prepareStatement(sql.toString())) {
 
 			ps.setString(1, subject.getCd());
 			try(ResultSet rs = ps.executeQuery()){

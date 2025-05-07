@@ -179,8 +179,7 @@ public class TestDao extends Dao {
 
 				return ps.execute();
 			}
-		} else {
-			if (test.getPoint() == before.getPoint() && test.getClassNum() == before.getClassNum()) return false;
+		} else if (test.getPoint() != before.getPoint() || test.getClassNum() != before.getClassNum()) {
 			String sql = "UPDATE test SET point = ?, class_num = ?";
 
 			try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -190,6 +189,8 @@ public class TestDao extends Dao {
 
 				return ps.execute();
 			}
+		} else {
+			return false;
 		}
 	}
 

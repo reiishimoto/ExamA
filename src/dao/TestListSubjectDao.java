@@ -52,7 +52,7 @@ public class TestListSubjectDao extends Dao {
 	 * @param school
 	 * @return
 	 */
-	public List<TestListSubject> filter(int entYear, @Nullable String classNum, @Nullable Subject subject, @NoNull School school) {
+	public List<TestListSubject> filter(int entYear, @Nullable int classNum, @Nullable Subject subject, @NoNull School school) {
 
 		if(school == null) {
 			ExceptUtils.nullCheck(entYear, classNum, subject, school);
@@ -63,7 +63,7 @@ public class TestListSubjectDao extends Dao {
 
 		boolean classNumActive, subjectActive;
 
-		classNumActive = classNum != null && !classNum.equals("");
+		classNumActive = classNum != 0;
 		subjectActive = subject != null;
 
 		if (classNumActive && subjectActive) {
@@ -83,7 +83,9 @@ public class TestListSubjectDao extends Dao {
 		try (Connection con = getConnection();
 			 PreparedStatement ps = con.prepareStatement(sql.toString())) {
 
-			ps.setString(1, subject.getCd());
+			for (int i=0; i < placeholders.size(); i++) {
+				ps.setObject(i+1, placeholders.get(i));
+			}
 			try(ResultSet rs = ps.executeQuery()){
 				return postFilter(rs);
 			}

@@ -30,7 +30,7 @@ public class StudentUpdateExecuteAction extends Action {
 		no = req.getParameter("no");
 		name = req.getParameter("name");
 		class_num = req.getParameter("class_num");
-		isAttendStr = req.getParameter("is_attend");
+		isAttendStr = req.getParameter("isAttend");
 
 
 
@@ -42,7 +42,7 @@ public class StudentUpdateExecuteAction extends Action {
 
 		// ビジネスロジック 4
 		// isAttendStrがnullでないときisAttendをtrueに
-		if(isAttendStr!= null) {
+		if(isAttendStr!= null && !isAttendStr.equals("")) {
 			isAttend = true;
 		}
 

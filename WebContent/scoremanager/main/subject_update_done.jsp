@@ -8,14 +8,13 @@
 
   <c:param name="content">
   	<div id="wrap_box">
-      <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2">成績管理</h2>
-      	<p class="text-center" style="background-color:#8cc3a9">登録が完了しました</p>
+      <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2">科目情報変更</h2>
+      	<p class="text-center" style="background-color:#8cc3a9">変更が完了しました</p>
       	<br>
       	<br>
 		<br>
 		<br>
-	  <a href="TestRegistExecute.action">戻る</a>
-      <a href="TestRegist.action">成績参照</a>
+      <a href="SubjectList.action">科目一覧</a>
     </div>
   </c:param>
 </c:import>

@@ -175,7 +175,7 @@ e.printStackTrace();
 				return ps.execute();
 			}
 		} else if (test.getPoint() != before.getPoint() || test.getClassNum() != before.getClassNum()) {
-			String sql = "UPDATE test SET point = ?, class_num = ? WHERE student_no = ?;";
+			String sql = "UPDATE test SET point = ?, class_num = ? WHERE student_no = ? AND test.no = ?;";
 			remove(before);
 			put(test);
 
@@ -184,6 +184,7 @@ e.printStackTrace();
 				ps.setInt(1, test.getPoint());
 				ps.setString(2, test.getClassNum());
 				ps.setString(3,test.getStudent().getNo());
+				ps.setInt(4, test.getNo());
 
 				return ps.execute();
 			}

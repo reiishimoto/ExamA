@@ -1,6 +1,7 @@
 package scoremanager.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,11 +41,11 @@ public class TestRegistExecuteAction extends Action{
 
 
 		//リクエストパラメータの取得
-		class_num = req.getParameter("class_num");
-		no = req.getParameter("no");
+		class_num = req.getParameter("f2");
+		no = req.getParameter("f4");
 		point = req.getParameter("point");
 		subject_cd = req.getParameter("f3");
-		entYearStr = req.getParameter("entYear");
+		entYearStr = req.getParameter("f1");
 
 		Subject subject = subDao.get(subject_cd,school);
 
@@ -54,7 +55,7 @@ public class TestRegistExecuteAction extends Action{
 			Test test = new Test();
 			test.setClassNum(class_num);
 			test.setNo(Integer.parseInt(no));
-			test.setPoint(Integer.parseInt(point));
+			test.setPoint(Integer.parseInt(req.getParameter("point_" + student.getNo())));
 			test.setSchool(school);
 			test.setStudent(student);
 			test.setSubject(subject);
@@ -62,6 +63,7 @@ public class TestRegistExecuteAction extends Action{
 			tests.add(test);
 
 		}
+		System.out.println("tests:" + Arrays.toString(tests.toArray()));
 		tesDao.save(tests);
 
 		req.getRequestDispatcher("test_regist_done.jsp").forward(req, res);

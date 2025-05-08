@@ -1,5 +1,6 @@
 package dao;
 
+import java.lang.ref.SoftReference;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +15,13 @@ import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Test;
+import dev_support.util.CacheManager;
 import dev_support.util.ExceptUtils;
 import tool.ExceptionHandler;
 
 public class TestDao extends Dao {
 
+	private static SoftReference<CacheManager<String, Test>> cacheRef = new SoftReference<>(null);
 	private String baseSql = "SELECT * FROM test ";
 
 	private List<Test> postFilter(ResultSet rs, School school) throws SQLException {
@@ -46,12 +49,14 @@ public class TestDao extends Dao {
 		test.setPoint(rs.getInt("point"));
 
 		list.add(test);
+		put(test);
 		}
 		return list;
 	}
 
 	public Test get(Student student, Subject subject, School school, int no) {
-		String sql = baseSql+"WHERE student_no = ?, subject_cd = ?, school_cd = ?, no = ?;";
+
+		String sql = baseSql+"WHERE student_no = ? AND subject_cd = ? AND school_cd = ? AND no = ?;";
 		try(Connection con = getConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -80,7 +85,6 @@ public class TestDao extends Dao {
 
 	/**
 	 * 各引数をもとに条件を構成、TESTテーブルから取出しリストとして返却。<br>
-	 * 参照型引数classNum, subject, schoolのいずれかにnullが渡った場合はIllegalArguments例外を投げる
 	 * @param entYear
 	 * @param classNum
 	 * @param subject
@@ -91,21 +95,10 @@ public class TestDao extends Dao {
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) {
 		if (classNum == null || subject == null || school == null) {
 			ExceptUtils.nullCheck(entYear, classNum, subject, num, school);
-			List<String> nullFields = new ArrayList<>();
-
-			// `null` の引数をリストに追加
-			if (classNum == null) nullFields.add("classNum");
-			if (subject == null) nullFields.add("subject");
-			if (school == null) nullFields.add("school");
-
-			// `nullFields` に要素があれば、例外をスロー
-			if (!nullFields.isEmpty()) {
-				throw new IllegalArgumentException("例外: " + String.join(", ", nullFields) + " が `null` です。適切な値を指定してください。");
-			}
 		}
 
 		String sql = baseSql
-				+ "JOIN student ON test.student_no = student.no WHERE test.subject_cd = ? AND test.no = ? AND test.class_num = ? AND student.school_cd = ? AND student.ent_year = ?";
+				+ "JOIN student ON test.student_no = student.no WHERE test.subject_cd = ? AND test.no = ? AND test.class_num = ? AND student.school_cd = ? AND student.ent_year = ?;";
 		try (Connection con = getConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -135,27 +128,24 @@ public class TestDao extends Dao {
 	 * @return トランザクション処理が正常に成功すればtrue, 失敗し、ロールバックした場合はfalse
 	 */
 	public boolean save(List<Test> list) {
-		return exceptionHandle(() -> {
-			boolean result = false;
+		boolean result = false;
 
-			// try-with-resourcesでConnectionを管理
-			try (Connection con = getConnection()) {
-				con.setAutoCommit(false);
+		// try-with-resourcesでConnectionを管理
+		try (Connection con = getConnection()) {
+			con.setAutoCommit(false);
 
-				for (Test test : list) {
-					save(test, con);
-				}
-
-				con.commit();
-				result = true;
-			} catch (Exception e) {
-				System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。" + e.getMessage());
+			for (Test test : list) {
+				if (lookUp(test) == null) save(test, con);
 			}
 
-			return result;
-		});
-	}
+			con.commit();
+			result = true;
+		} catch (Exception e) {
+			System.out.println("トランザクション処理中に例外が発生したため、処理をキャンセルしました。" + e.getMessage());
+		}
 
+		return result;
+	}
 
 	/**
 	 * 受け取った単一のTestに関して更新処理をする。但し、Testの要素が変更前と完全に同一であった場合は変更をスキップし、即座に return をする
@@ -167,7 +157,10 @@ public class TestDao extends Dao {
 	private boolean save(Test test, Connection con) throws SQLException {
 		Test before = get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo());
 		if (before == null) {
-			String sql = "INSERT INTO test (student_no, subject_cd, school_cd, no, point, class_num) values (?, ?, ?, ?, ?, ?):";
+			String sql = "INSERT INTO test (student_no, subject_cd, school_cd, no, point, class_num) values (?, ?, ?, ?, ?, ?);";
+
+			put(test);
+
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 
 				ps.setString(1, test.getStudent().getNo());
@@ -180,7 +173,9 @@ public class TestDao extends Dao {
 				return ps.execute();
 			}
 		} else if (test.getPoint() != before.getPoint() || test.getClassNum() != before.getClassNum()) {
-			String sql = "UPDATE test SET point = ?, class_num = ?";
+			String sql = "UPDATE test SET point = ?, class_num = ?;";
+			remove(before);
+			put(test);
 
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 
@@ -192,6 +187,34 @@ public class TestDao extends Dao {
 		} else {
 			return false;
 		}
+	}
+
+	private static synchronized CacheManager<String, Test> getCache() {
+		CacheManager<String, Test> cache = cacheRef.get();
+		if (cache == null) {
+			cache = new CacheManager<>(200);
+			cacheRef = new SoftReference<CacheManager<String,Test>>(cache);
+		}
+		return cache;
+	}
+
+	/** キャッシュからデータ取得 */
+	private static Test lookUp(Test test) {
+		return getCache().lookUp(generateKey(test));
+	}
+
+	private static void remove(Test test) {
+		getCache().remove(generateKey(test));
+	}
+
+	/** キャッシュにデータ保存 */
+	private static void put(Test test) {
+		CacheManager<String, Test> cache = getCache();
+		cache.put(generateKey(test), test);
+	}
+
+	private static String generateKey(Test test) {
+		return test.getStudent().getNo() + "_" + test.getSubject().getCd() + "_" + test.getSchool().getCd() + "_" + test.getNo();
 	}
 
 	/**

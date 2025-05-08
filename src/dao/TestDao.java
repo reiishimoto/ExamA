@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import bean.Subject;
 import bean.Test;
 import dev_support.util.CacheManager;
 import dev_support.util.ExceptUtils;
-import tool.ExceptionHandler;
 
 public class TestDao extends Dao {
 
@@ -41,8 +41,9 @@ public class TestDao extends Dao {
 		Student student = stuCache.computeIfAbsent(rs.getString("student_no"), v -> exceptionHandle(() -> stuDao.get(rs.getString("student_no"))));
 		Subject subject = subCache.computeIfAbsent(rs.getString("subject_cd"), v -> exceptionHandle(() -> subDao.get(rs.getString("subject_cd"), school)));
 
+
 		test.setStudent(student);
-		test.setClassNum(rs.getString("class_num"));
+		test.setClassNum(rs.getString("test.class_num"));
 		test.setSubject(subject);
 		test.setSchool(school);
 		test.setNo(rs.getInt("no"));
@@ -68,9 +69,9 @@ public class TestDao extends Dao {
 			ps.setInt(4, no);
 
 			try(ResultSet rs = ps.executeQuery()) {
-
+				if (!rs.next()) return null;
 				test.setStudent(student);
-				test.setClassNum(rs.getString("class_num"));
+				test.setClassNum(rs.getString("test.class_num"));
 				test.setSubject(subject);
 				test.setSchool(school);
 				test.setNo(rs.getInt("no"));
@@ -78,7 +79,7 @@ public class TestDao extends Dao {
 			}
 			return test;
 		} catch (Exception e) {
-			ExceptionHandler.handleException(e);
+e.printStackTrace();
 		}
 		return null;
 	}
@@ -162,6 +163,7 @@ public class TestDao extends Dao {
 			put(test);
 
 			try(PreparedStatement ps = con.prepareStatement(sql)){
+				System.out.println(Arrays.toString(new Object[] {test.getNo(), test.getPoint(), test.getClassNum(), test.getStudent().getNo()}));
 
 				ps.setString(1, test.getStudent().getNo());
 				ps.setString(2, test.getSubject().getCd());
@@ -173,7 +175,7 @@ public class TestDao extends Dao {
 				return ps.execute();
 			}
 		} else if (test.getPoint() != before.getPoint() || test.getClassNum() != before.getClassNum()) {
-			String sql = "UPDATE test SET point = ?, class_num = ?;";
+			String sql = "UPDATE test SET point = ?, class_num = ? WHERE student_no = ?;";
 			remove(before);
 			put(test);
 
@@ -181,6 +183,7 @@ public class TestDao extends Dao {
 
 				ps.setInt(1, test.getPoint());
 				ps.setString(2, test.getClassNum());
+				ps.setString(3,test.getStudent().getNo());
 
 				return ps.execute();
 			}
@@ -226,8 +229,7 @@ public class TestDao extends Dao {
 		try {
 			return proccess.call();
 		} catch (Exception e) {
-			ExceptionHandler.handleException(e);
+			throw new RuntimeException(e);
 		}
-		return null;
 	}
 }

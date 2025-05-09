@@ -39,7 +39,7 @@ public class TestListSubjectDao extends Dao {
 				return tls;
 			}));
 
-			testListSubject.getPoints().put(rSet.getInt("test.no"), rSet.getInt("point"));
+			testListSubject.putPoint(rSet.getInt("test.no"), rSet.getInt("point"));
 
 		}
 		return new ArrayList<>(map.values());

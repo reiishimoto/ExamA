@@ -50,8 +50,8 @@ public class TestListSubject implements Serializable {
         this.points = points;
     }
 
-    public Integer getPoint(Long index) {
-        return points.get(index.intValue());
+    public String getPoint(Long index) {
+        return points.containsKey(index.intValue()) ? points.get(index.intValue()).toString() : null;
     }
 
     public void putPoint(int index, int value) {

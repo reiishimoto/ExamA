@@ -12,8 +12,8 @@
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2">ログアウト</h2>
 			<div id="wrap_box">
 				<p class="text-center" style="background-color:#66CC99">ログアウトしました</p>
-				<a href="../Login.action">ログイン</a>
-				<a href="../ManagerLogin.action">管理者ログインはこちら</a>
+				<a href="../ManagerLogin.action">ログイン</a>
+				<a href="../Login.action">教員ログインはこちら</a>
 			</div>
 		</div>
 	</c:param>

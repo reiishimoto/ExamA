@@ -57,7 +57,7 @@ public class ManagerLoginExecuteAction extends Action {
 			req.setAttribute("id", id);
 
 			//フォワード
-			url = "login.jsp";
+			url = "managerlogin.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
 		}
 

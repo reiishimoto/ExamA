@@ -28,7 +28,7 @@
 
 	<c:param name="content">
 		<section class="w-75 text-center m-auto border pb-3">
-			<form action = "LoginExecute.action" method="post">
+			<form action = "ManagerLoginExecute.action" method="post">
 				<div id="wrap_box">
 					<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2">ログイン</h2>
 					<c:if test="${errors.size()>0}">
@@ -61,10 +61,7 @@
 								<input class="form-check-input" id="password-display" name="chk_d_ps" type="checkbox" />
 								パスワードを表示
 							</label>
-							<br>
-							<br>
-
-							<a href="../ManagerLogin.action">管理者ログインはこちら</a>
+							<a href="../Login.action">教員ログインはこちら</a>
 						</div>
 					</div>
 

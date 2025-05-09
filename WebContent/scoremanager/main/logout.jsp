@@ -13,7 +13,7 @@
 			<div id="wrap_box">
 				<p class="text-center" style="background-color:#66CC99">ログアウトしました</p>
 				<a href="../Login.action">ログイン</a>
-				<a href="../ManagerLogin.action">管理者ログインはこちら</a>
+
 			</div>
 		</div>
 	</c:param>

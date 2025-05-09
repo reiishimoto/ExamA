@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,38 +54,42 @@ public class TestListSubjectDao extends Dao {
 	 * @return
 	 */
 	public List<TestListSubject> filter(int entYear, @NoNull String classNum, @Nullable Subject subject, @NoNull School school) {
-
 		if(classNum == null || school == null) {
 			ExceptUtils.nullCheck(entYear, classNum, subject, school);
 		}
 
 		StringBuilder sql = new StringBuilder(baseSql);
-		List<String> placeholders = new ArrayList<>();
+		List<Object> placeholders = new ArrayList<>();
 
 		boolean classNumActive, subjectActive;
 
-		classNumActive = classNum != null && !classNum.equals(0);
+		classNumActive = classNum != null && !classNum.equals("0");
 		subjectActive = subject != null;
 
+		sql.append("WHERE student.ent_year = ? ");
+		placeholders.add(entYear);
+
 		if (classNumActive && subjectActive) {
-			sql.append("WHERE test.class_num = ? AND test.subject_cd = ?;");
+			sql.append("AND test.class_num = ? AND test.subject_cd = ?;");
 			placeholders.add(classNum);
 			placeholders.add(subject.getCd());
 		} else if (classNumActive) {
-			sql.append("WHERE test.class_num = ?;");
+			sql.append("AND test.class_num = ?;");
 			placeholders.add(classNum);
 		} else if (subjectActive) {
-			sql.append("WHERE test.subject_cd = ?;");
+			sql.append("AND test.subject_cd = ?;");
 			placeholders.add(subject.getCd());
 		} else {
 			sql.append(";");
 		}
 
+		System.out.println(sql + "\n" + Arrays.toString(placeholders.toArray()));
+
 		try (Connection con = getConnection();
 			 PreparedStatement ps = con.prepareStatement(sql.toString())) {
 
 			for (int i=0; i < placeholders.size(); i++) {
-				ps.setString(i+1, placeholders.get(i));
+				ps.setObject(i+1, placeholders.get(i));
 			}
 			try(ResultSet rs = ps.executeQuery()){
 				return postFilter(rs);

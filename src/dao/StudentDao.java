@@ -234,7 +234,7 @@ public class StudentDao extends Dao {
 			beforeTable = "enrollment";
 		}
 
-		String insSql = "insert into " + table + " select no, name, ent_year, class_num, ?, school_cd from " + beforeTable + " where no=?";
+		String insSql = "insert into " + table + " select no, ?, ?, ?, ?, school_cd from " + beforeTable + " where no = ?";
 		String delSql = "delete from " + beforeTable + " where no=?";
 
 		boolean toStudent = after.isAttend();
@@ -245,15 +245,20 @@ public class StudentDao extends Dao {
 
 			connection.setAutoCommit(false);
 
+			insertState.setString(1, after.getName());
+			insertState.setInt(2, after.getEntYear());
+			insertState.setString(3, after.getClassNum());
+			insertState.setString(5, after.getNo());
+
 			if (toStudent) {
-				insertState.setBoolean(1, true);
+				insertState.setBoolean(4, after.isAttend());
 			} else {
-				insertState.setString(1, after.getReason());
+				insertState.setString(4, after.getReason());
 			}
-			insertState.setString(2, after.getNo());
 			deleteState.setString(1, after.getNo());
 
 			int count = insertState.executeUpdate();
+			System.out.println(count);
 
 			if (count != deleteState.executeUpdate()) {
 				System.err.println("重大: StudentDao$remove INSERT式とDELETE式の件数が異なっていたため、更新をキャンセルしました。");

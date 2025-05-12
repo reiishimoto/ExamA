@@ -22,7 +22,7 @@ import dev_support.util.ExceptUtils;
 public class TestDao extends Dao {
 
 	private static SoftReference<CacheManager<String, Test>> cacheRef = new SoftReference<>(null);
-	private String baseSql = "SELECT * FROM test ";
+	private static final String baseSql = "SELECT * FROM test ";
 
 	private List<Test> postFilter(ResultSet rs, School school) throws SQLException {
 

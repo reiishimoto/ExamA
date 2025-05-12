@@ -19,7 +19,7 @@ import dev_support.annotation.Nullable;
 import dev_support.util.ExceptUtils;
 
 public class TestListSubjectDao extends Dao {
-	private String baseSql = "SELECT student.no, student.name, student.ent_year, test.class_num, test.no, test.point FROM test JOIN student ON test.student_no = student.no ";
+	private static final String baseSql = "SELECT student.no, student.name, student.ent_year, test.class_num, test.no, test.point FROM test JOIN student ON test.student_no = student.no ";
 
 	private List<TestListSubject> postFilter(ResultSet rSet) throws SQLException {
 		Map<String, TestListSubject> map = new HashMap<>();

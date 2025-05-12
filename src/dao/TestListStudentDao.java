@@ -14,7 +14,7 @@ import dev_support.util.ExceptUtils;
 
 public class TestListStudentDao extends Dao {
 
-	private String baseSql = "SELECT subject.name, subject.cd, test.no, test.point FROM test JOIN subject ON test.subject_cd = subject.cd WHERE test.student_no = ?";
+	private static final String baseSql = "SELECT subject.name, subject.cd, test.no, test.point FROM test JOIN subject ON test.subject_cd = subject.cd WHERE test.student_no = ?";
 
 	private List<TestListStudent> postFilter(ResultSet rs) throws SQLException {
 		List<TestListStudent> list = new ArrayList<>();

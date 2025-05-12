@@ -52,7 +52,6 @@ public class ExceptUtils {
 		}
 	}
 
-
 	/**
 	 * 条件に応じて例外をスローするメソッド。
 	 * `condition` が `true` の場合、`exceptionSupplier` から例外を取得し、スローする。

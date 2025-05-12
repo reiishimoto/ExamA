@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/common/base.jsp" >
+
 	<c:param name="title">
 		得点管理システム
 	</c:param>
@@ -18,13 +19,11 @@
 				<label class="mx-auto py-2">入学年度</label><br>
 				<input type="hidden" id="ent_year" name="ent_year" value="${ent_year}"> &nbsp;&nbsp; ${ent_year}<br>
 				</div>
-				<a></a>
 
 				       			 <div>
 				<label class="mx-auto py-2">学生番号</label><br>
 				<input type="hidden" id="no" name="no" value="${no}"> &nbsp;&nbsp; ${no}<br>
 				</div>
-				<a></a>
 
 
 				 <p></p>
@@ -45,9 +44,31 @@
 
 				<div class="d-flex align-items-center py-2">
 					<label class="form-check-label me-2" for="isAttend">在学中</label>
-					<input type="checkbox" name="isAttend" value="true"
+					<input type="checkbox" id="isAttend" name="isAttend" value="true"
     					<c:if test="${isAttend == true}">checked</c:if>>
+					<div id="extraForm" style="display: none;">
+						<label for="extraInfo">&nbsp;&nbsp;&nbsp;&nbsp;追加情報</label>
+						<label>
+							<input type="radio" name="reason" value="卒業" ${reason == '卒業' ? 'checked' : '' }> 卒業
+						</label>
+						<label>
+						<input type="radio" name="reason" value="退学" ${reason == '退学' ? 'checked' : '' }> 退学
+						</label>
+					</div>
 				</div>
+				<script>
+				function updateFormVisibility() {
+				    let checkbox = document.getElementById("isAttend");
+				    let extraForm = document.getElementById("extraForm");
+				    extraForm.style.display = checkbox.checked ? "none" : "block";
+				}
+
+				// 初期状態を適用
+				document.addEventListener("DOMContentLoaded", updateFormVisibility);
+
+				// チェックの変更を監視
+				document.getElementById("isAttend").addEventListener("change", updateFormVisibility);
+				</script>
 
 				<div class="mx-auto py-2">
 					<input class="btn btn-primary" type="submit" name="login" value="変更">

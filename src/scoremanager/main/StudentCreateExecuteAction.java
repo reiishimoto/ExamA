@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Student;
+import bean.ExStudent;
 import bean.Teacher;
 import dao.StudentDao;
 import tool.Action;
@@ -24,7 +24,7 @@ public class StudentCreateExecuteAction extends Action {
 		String student_no = ""; // 入力された学生番号
 		String student_name = ""; // 入力された氏名
 		String class_num = ""; // 選択されたクラス番号
-		Student student = new Student();
+		ExStudent student = new ExStudent();
 		StudentDao studentDao = new StudentDao();
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 

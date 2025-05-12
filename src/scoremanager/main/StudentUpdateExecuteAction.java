@@ -4,7 +4,7 @@ package scoremanager.main;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Student;
+import bean.ExStudent;
 import dao.StudentDao;
 import tool.Action;
 
@@ -20,9 +20,10 @@ public class StudentUpdateExecuteAction extends Action {
 		String class_num = "";
 		String isAttendStr = "";
 		boolean isAttend = false;
-		Student student = new Student();
+		String reason = "";
+		// 不在時のメッセージに対応できるようExStudent使用
+		ExStudent student = new ExStudent();
 		StudentDao studentDao = new StudentDao();
-
 
 		// リクエストパラメーターの取得 2
 		// ent_year,no,name,class_num,isAttendStr
@@ -32,20 +33,15 @@ public class StudentUpdateExecuteAction extends Action {
 		class_num = req.getParameter("class_num");
 		isAttendStr = req.getParameter("isAttend");
 
+		// 追加課題 非在学理由
+		reason = req.getParameter("reason");
 
-
-
-		// DBからデータ取得 3
-		// なし
-
-
-
-		// ビジネスロジック 4
 		// isAttendStrがnullでないときisAttendをtrueに
 		if(isAttendStr!= null && !isAttendStr.equals("")) {
 			isAttend = true;
+		} else {
+			student.setReason(reason);
 		}
-
 
 		// studentに学生情報をセット
 		// no,name,ent_year,class,num,isAttendをセット

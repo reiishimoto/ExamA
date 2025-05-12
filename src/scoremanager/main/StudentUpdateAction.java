@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.ExStudent;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -71,7 +72,9 @@ public class StudentUpdateAction extends Action {
 		// リクエストに在学フラグをセット
 		req.setAttribute("isAttend", isAttend);
 
-
+		if (student.getClass() == ExStudent.class) {
+			req.setAttribute("reason", ((ExStudent)student).getReason());
+		}
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_update.jsp").forward(req, res);

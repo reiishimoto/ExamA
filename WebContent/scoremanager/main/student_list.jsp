@@ -79,7 +79,7 @@
 											◯
 										</c:when>
 										<c:otherwise>
-											×
+											${student.reason }
 										</c:otherwise>
 									</c:choose>
 								</td>

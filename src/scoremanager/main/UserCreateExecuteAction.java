@@ -24,7 +24,7 @@ public class UserCreateExecuteAction extends ManagementAction {
 		String schoolCd = req.getParameter("school_cd");
 		String roll = req.getParameter("roll");
 
-		if (oneTimeStructure != null && oneTimeStructure.getSender().equals("UserListAction")) {
+		if (oneTimeStructure != null) {
 			Set<?> set = oneTimeStructure.retrieve("UserListAction", Set.class);
 			if (set.contains(id)) {
 				errors.put("id", "そのidは既に存在しています");

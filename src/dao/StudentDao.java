@@ -95,7 +95,7 @@ public class StudentDao extends Dao {
 
 		String order = " order by no asc";
 
-		String conditionIsAttend = "";
+		String conditionIsAttend = isAttend ? " and is_attend" : "";
 
 		try (Connection connection = getConnection();
 			 PreparedStatement statement = connection.prepareStatement(choiceSql(isAttend) + condition + conditionIsAttend + order)) {
@@ -116,7 +116,7 @@ public class StudentDao extends Dao {
 
 		String condition = " where school_cd=? and ent_year=? ";
 		String order = " order by no asc";
-		String conditionIsAttend = "";
+		String conditionIsAttend = isAttend ? " and is_attend" : "";
 
 		try (Connection connection = getConnection();
 			 PreparedStatement statement = connection.prepareStatement(choiceSql(isAttend) + condition + conditionIsAttend + order)) {
@@ -138,9 +138,10 @@ public class StudentDao extends Dao {
 		String order = " order by no asc";
 
 		String condition = " where school_cd=?";
+		String conditionIsAttend = isAttend ? " and is_attend" : "";
 
 		try (Connection connection = getConnection();
-			 PreparedStatement statement = connection.prepareStatement(choiceSql(isAttend) + condition + order)){
+			 PreparedStatement statement = connection.prepareStatement(choiceSql(isAttend) + condition + conditionIsAttend + order)){
 
 			statement.setString(1, school.getCd());
 

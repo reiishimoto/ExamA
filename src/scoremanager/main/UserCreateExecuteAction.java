@@ -27,7 +27,7 @@ public class UserCreateExecuteAction extends ManagementAction {
 		if (oneTimeStructure != null) {
 			Set<?> set = oneTimeStructure.retrieve("UserListAction", Set.class);
 			if (set.contains(id)) {
-				errors.put("id", "そのidは既に存在しています");
+				errors.put("id", String.format("id ｢%s｣ は既に存在しています", id));
 				req.setAttribute("errors", errors);
 				send();
 				SchoolDao scDao = new SchoolDao();

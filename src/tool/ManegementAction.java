@@ -6,10 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import bean.Manager;
 
-public abstract class ManegimentAction extends Action {
+public abstract class ManegementAction extends Action {
 
 	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public final void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
 
 		if (session.getAttribute("user") instanceof Manager) {

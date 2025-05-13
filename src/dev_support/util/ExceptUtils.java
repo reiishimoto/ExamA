@@ -23,7 +23,7 @@ import dev_support.annotation.NoNull;
  *   <li>リフレクションを使用するため、セキュリティ設定によっては動作が制限される場合があります。</li>
  * </ul>
  */
-public class ExceptUtils {
+public final class ExceptUtils {
 
 	private ExceptUtils() {
 		throw new IllegalStateException("ExceptUtilsクラスはインスタンス化ができません");

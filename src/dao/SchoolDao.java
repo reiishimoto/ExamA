@@ -64,4 +64,24 @@ public class SchoolDao extends Dao{
 		}
 		return school;
 	}
+
+	public boolean save(School school) throws Exception {
+		String sql;
+
+		School before = get(school.getCd());
+		if (before == null) {
+			sql = "insert into school (name, cd) values (?, ?)";
+		} else {
+			sql = "update school set name=? where cd=?";
+		}
+
+		try (Connection connection = getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+
+			statement.setString(1, school.getCd());
+			statement.setString(2, school.getName());
+
+			return statement.executeUpdate() > 0;
+		}
+	}
 }

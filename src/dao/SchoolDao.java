@@ -68,7 +68,7 @@ public class SchoolDao extends Dao{
 	}
 
 	public List<School> list() throws Exception {
-		String sql = "select * from school";
+		String sql = "select * from school order by cd asc";
 
 		try (Connection connection = getConnection();
 			 PreparedStatement statement = connection.prepareStatement(sql)) {

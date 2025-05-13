@@ -160,7 +160,7 @@ public class StudentDao extends Dao {
 
 		if (before == null) {
 			return insert(student);
-		} else if (before.isAttend() == student.isAttend()) {
+		} else if (before.isAttend() == student.isAttend() && before instanceof ExStudent && !((ExStudent)before).getReason().equals("×")) {
 			return update(table, student);
 		} else {
 			return remove(table, student);

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Manager;
 
-public abstract class ManegementAction extends Action {
+public abstract class ManagementAction extends Action {
 
 	@Override
 	public final void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -15,7 +15,7 @@ public abstract class ManegementAction extends Action {
 		if (session.getAttribute("user") instanceof Manager) {
 			executeManage(req, res);
 		} else {
-			res.sendRedirect("illegal.jsp");
+			res.sendRedirect("../illegal.jsp");
 		}
 	}
 

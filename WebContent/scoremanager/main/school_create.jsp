@@ -8,7 +8,7 @@
       <form action="SchoolCreateExecute.action" method="post">
         <div>
           <label for="subject_cd">学校コード</label>
-          <input class="form-control" type="text" id="school_cd" name="school_cd"
+          <input class="form-control" type="text" id="school_cd" name="school_cd" maxlength="3"
                  value="${cd}" maxlength="10" placeholder="学校コードを入力してください" required />
         </div>
         <div class="mt-2 text-warning">${errors.cd}</div>

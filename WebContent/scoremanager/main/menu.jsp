@@ -44,6 +44,10 @@
 					style="height: 10rem; background-color: #bdd;">
 					<a href="SchoolList.action">学校管理</a>
 				</div>
+				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
+					style="height: 10rem; background-color: #dbd;">
+					<a href="UserList.action">ユーザ管理</a>
+				</div>
 			</div>
 			</c:if>
 		</section>

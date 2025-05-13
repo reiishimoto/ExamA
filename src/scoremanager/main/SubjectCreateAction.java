@@ -1,6 +1,5 @@
 package scoremanager.main;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ public class SubjectCreateAction extends Action {
 
         // ローカル変数の指定
         ClassNumDao classNumDao = new ClassNumDao(); // クラス番号DAO初期化
-        LocalDate todaysDate = LocalDate.now(); // 現在日付（未使用）
 
         // DBからデータ取得（学校コードに紐づくクラス番号一覧）
         List<String> list = classNumDao.filter(teacher.getSchool());

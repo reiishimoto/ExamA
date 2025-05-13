@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Manager;
+import bean.ExTeacher;
 import dao.ManagerDao;
 import tool.Action;
 
@@ -22,7 +22,7 @@ public class ManagerLoginExecuteAction extends Action {
 		String id = "";
 		String password = "";
 		ManagerDao managerDao = new ManagerDao();
-		Manager manager = null;
+		ExTeacher manager = null;
 
 		//リクエストパラメータ―の取得 2
 		id = req.getParameter("id");// 教員ID

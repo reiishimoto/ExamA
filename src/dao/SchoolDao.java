@@ -78,8 +78,8 @@ public class SchoolDao extends Dao{
 		try (Connection connection = getConnection();
 			 PreparedStatement statement = connection.prepareStatement(sql)) {
 
-			statement.setString(1, school.getCd());
-			statement.setString(2, school.getName());
+			statement.setString(1, school.getName());
+			statement.setString(2, school.getCd());
 
 			return statement.executeUpdate() > 0;
 		}

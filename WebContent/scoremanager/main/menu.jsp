@@ -38,6 +38,14 @@
 					<a href="ClassList.action">クラス管理</a>
 				</div>
 			</div>
+			<c:if test="${not empty sessionScope.isManager}">
+			<div class="row text-center px-4 fs-3 my-5">
+				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
+					style="height: 10rem; background-color: #bdd;">
+					<a href="SchoolList.action">学校管理</a>
+				</div>
+			</div>
+			</c:if>
 		</section>
 	</c:param>
 </c:import>

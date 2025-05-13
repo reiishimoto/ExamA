@@ -43,6 +43,7 @@ public class ManagerLoginExecuteAction extends Action {
 			manager.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", manager);
+			session.setAttribute("isManager", new Object());
 
 			//リダイレクト
 			url = "main/Menu.action";

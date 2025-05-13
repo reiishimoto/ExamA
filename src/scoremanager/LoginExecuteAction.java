@@ -43,6 +43,7 @@ public class LoginExecuteAction extends Action {
 			teacher.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", teacher);
+			if (session.getAttribute("isManager") != null) session.removeAttribute("isManager");
 
 			//リダイレクト
 			url = "main/Menu.action";

@@ -2,7 +2,9 @@ package scoremanager.main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +37,7 @@ public class TestListAction extends Action {
 		setAttributes(req, teacher);
 
 		String type = req.getParameter("f") == null ? "" : req.getParameter("f");
+		Map<String, String> error = new HashMap<>();
 
 		RequestDispatcher dispatcher = null;
 
@@ -51,6 +54,8 @@ public class TestListAction extends Action {
 				list = tlstDao.filter(student);
 			} else {
 				list = new ArrayList<>();
+				error.put("stu", "学生番号を入力してください");
+				req.setAttribute("errors", error);
 			}
 
 			req.setAttribute("testList", list);
@@ -66,6 +71,14 @@ public class TestListAction extends Action {
 			Subject subject = subDao.get(req.getParameter("sj"), teacher.getSchool());
 
 			int entYear = Integer.parseInt(entYearStr);
+			if (entYear == 0) {
+				if (classNum.equals("0")) {
+					error.put("sub", "入学年度を指定してください");
+				} else {
+					error.put("sub", "クラスを入力する際は入学年度も指定してください");
+				}
+				req.setAttribute("errors", error);
+			}
 
 			List<TestListSubject> list = tlsjDao.filter(entYear, classNum, subject, teacher.getSchool());
 

@@ -41,7 +41,7 @@
 			<div class="col-2 text-center">
 				<button name="f" value="sj" class="btn btn-secondary" id="filter-button">検索</button>
 			</div>
-			<div class="mt-2 text-warning">${errors.get("f1") }</div>
+			<div class="mt-2 text-warning">${errors.get("sub") }</div>
 			</div>
 			<hr style="display: flex; margin: 10px; margin-left: 2%; width: 96%;">
 			<!-- 🔹 2行目（ボックス内に収める） -->
@@ -56,7 +56,7 @@
 			<div class="col-2 text-center">
 				<button name="f" value="st" class="btn btn-secondary" id="filter-button">検索</button>
 			</div>
-			<div class="mt-2 text-warning">${errors.get("f1") }</div>
+			<div class="mt-2 text-warning">${errors.get("stu") }</div>
 			</div>
 		</div>
 	</form>

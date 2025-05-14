@@ -8,9 +8,7 @@
     <div class="container mt-4">
       <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績一覧（学生）</h2>
 
-      <jsp:include page="test_list_form.jsp">
-        <jsp:param name="action" value="TestListStudentExecute.action" />
-      </jsp:include>
+      <jsp:include page="test_list_form.jsp"/>
 
       <c:if test="${not empty student}">
         <div class="mt-3 mb-2 fw-bold">氏名：${student.name}（${student.no}）</div>

@@ -7,9 +7,7 @@
 
     <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績一覧（科目）</h2>
 
-    <jsp:include page="test_list_form.jsp">
-      <jsp:param name="action" value="TestListSubject.action" />
-    </jsp:include>
+    <jsp:include page="test_list_form.jsp"/>
 
     <c:if test="${not empty testList}">
       <div class="mt-3">科目：${subject.name}</div>

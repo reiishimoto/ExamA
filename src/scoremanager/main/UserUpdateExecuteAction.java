@@ -14,11 +14,11 @@ public class UserUpdateExecuteAction extends ManagementAction {
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		ExTeacher before = null;
-		if (oneTimeStructure == null) {
+		if (tempStructure == null) {
 			res.sendRedirect("UserList.action");
 			return;
 		} else {
-			before = oneTimeStructure.retrieve("UserUpdateAction", ExTeacher.class);
+			before = tempStructure.retrieve("UserUpdateAction", ExTeacher.class);
 		}
 
 		String id = req.getParameter("user_id");

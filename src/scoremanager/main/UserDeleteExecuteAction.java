@@ -12,12 +12,12 @@ public class UserDeleteExecuteAction extends ManagementAction {
 
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		if (oneTimeStructure == null || !oneTimeStructure.getSender().equals("UserDeleteAction")) {
+		if (!isSendFrom("UserDeleteAction")) {
 			res.sendRedirect("UserList.action");
 			return;
 		}
 		HttpSession session = req.getSession();
-		ExTeacher user = oneTimeStructure.retrieve("UserDeleteAction", ExTeacher.class);
+		ExTeacher user = tempStructure.retrieve("UserDeleteAction", ExTeacher.class);
 
 		ManagerDao maDao = new ManagerDao();
 		maDao.delete(user);

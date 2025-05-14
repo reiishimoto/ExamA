@@ -160,7 +160,7 @@ public class StudentDao extends Dao {
 
 		if (before == null) {
 			return insert(student);
-		} else if (before.isAttend() == student.isAttend() || before instanceof ExStudent && !((ExStudent)before).getReason().equals("×")) {
+		} else if (before.isAttend() == student.isAttend() && before instanceof ExStudent && !((ExStudent)before).getRawReason().equals("FALSE")) {
 			return update(table, student);
 		} else {
 			return remove(table, student);
@@ -188,7 +188,7 @@ public class StudentDao extends Dao {
 
 	private boolean update(String table, ExStudent after) throws Exception {
 		if (table == null) return false;
-		if ((table == "student") != after.isAttend()) return remove(table, after);
+		if ((table.equals("student")) != after.isAttend()) return remove("student", after);
 		String sql;
 		ThrowsConsumer<PreparedStatement> setObjects;
 		if (after.isAttend()) {

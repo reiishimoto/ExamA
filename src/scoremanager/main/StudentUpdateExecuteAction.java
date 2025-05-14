@@ -14,7 +14,7 @@ public class StudentUpdateExecuteAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		Student target = null;
+		Student target;
 		if (tempStrage == null) {
 			res.sendRedirect("StudentList.action");
 			return;

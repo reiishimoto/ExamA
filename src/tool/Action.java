@@ -13,8 +13,12 @@ public abstract class Action {
 			HttpServletRequest req, HttpServletResponse res
 		) throws Exception;
 
-	public final void action(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void action(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		session = req.getSession();
+		if (session.getAttribute("user") == null) {
+			res.sendRedirect("../Login.action");
+			return;
+		}
 		tempStrage = (TempStrage) session.getAttribute(KEY);
 		session.setAttribute(KEY, null);
 		execute(req, res);

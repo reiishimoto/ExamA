@@ -8,7 +8,7 @@ import tool.EarlyAction;
 public class LoginAction extends EarlyAction {
 
 	@Override
-	public void executeEarly(HttpServletRequest req, HttpServletResponse res)
+	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 		req.getRequestDispatcher("login.jsp").forward(req, res);
 	}

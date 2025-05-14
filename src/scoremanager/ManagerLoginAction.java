@@ -8,7 +8,7 @@ import tool.EarlyAction;
 public class ManagerLoginAction extends EarlyAction {
 
 	@Override
-	public void executeEarly(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		req.getRequestDispatcher("managerlogin.jsp").forward(req, res);
 	}
 

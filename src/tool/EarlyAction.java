@@ -6,14 +6,14 @@ import javax.servlet.http.HttpSession;
 
 public abstract class EarlyAction extends Action {
 
+	public abstract void execute(HttpServletRequest req, HttpServletResponse res) throws Exception;
+
 	@Override
-	public final void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void action(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
 		session.removeAttribute("user");
 		session.removeAttribute("isManager");
-		executeEarly(req, res);
+		execute(req, res);
 	}
-
-	public abstract void executeEarly(HttpServletRequest req, HttpServletResponse res) throws Exception;
 
 }

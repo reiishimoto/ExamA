@@ -27,10 +27,10 @@ public class SubjectUpdateAction extends Action {
     	if (!isSendFrom("SubjectListAction")) {
     		res.sendRedirect("SubjectList.action");
     		return;
-    	} else if (isSendFrom("SubjectUpdateAction") && cd.equals(tempStructure.retrieve("SubjectUpdateAction", Subject.class).getCd()))  {
-    		req.setAttribute("subject", tempStructure.retrieve("SubjectUpdateAction", Subject.class));
+    	} else if (isSendFrom("SubjectUpdateAction") && cd.equals(tempStrage.retrieve("SubjectUpdateAction", Subject.class).getCd()))  {
+    		req.setAttribute("subject", tempStrage.retrieve("SubjectUpdateAction", Subject.class));
     	} else {
-    		set = tempStructure.retrieve("SubjectListAction", Set.class);
+    		set = tempStrage.retrieve("SubjectListAction", Set.class);
 
     		// 科目DAOのインスタンスを生成
     		SubjectDao subjectDao = new SubjectDao();
@@ -44,10 +44,10 @@ public class SubjectUpdateAction extends Action {
     		} else {
     			// 科目が見つかった場合はJSPに渡すためにセット
     			req.setAttribute("subject", subject);
-    			tempStructure.store("SubjectUpdateAction", subject);
+    			tempStrage.store("SubjectUpdateAction", subject);
     		}
     	}
-    	sendStructure();
+    	passStrage();
 
         // 科目情報変更画面にフォワード
         req.getRequestDispatcher("subject_update.jsp").forward(req, res);

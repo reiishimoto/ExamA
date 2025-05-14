@@ -11,7 +11,7 @@ public class UserCreateAction extends ManagementAction {
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		SchoolDao scDao = new SchoolDao();
-		sendStructure();
+		passStrage();
 
 		req.setAttribute("schools", scDao.list());
 

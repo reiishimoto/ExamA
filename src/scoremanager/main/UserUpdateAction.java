@@ -7,7 +7,7 @@ import bean.ExTeacher;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ManagementAction;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class UserUpdateAction extends ManagementAction {
 
@@ -18,14 +18,14 @@ public class UserUpdateAction extends ManagementAction {
 
 		ExTeacher user;
 		if (isSendFrom("UserUpdateAction")) {
-			user = tempStructure.retrieve("UserUpdateAction", ExTeacher.class);
+			user = tempStrage.retrieve("UserUpdateAction", ExTeacher.class);
 		} else {
 			ManagerDao maDao = new ManagerDao();
 			user = maDao.fetchInfo(req.getParameter("id"));
 		}
 
-		tempStructure = new TempStructure("UserUpdateAction", user);
-		sendStructure();
+		tempStrage = new TempStrage("UserUpdateAction", user);
+		passStrage();
 		req.setAttribute("user", user);
 		req.setAttribute("schools", scDao.list());
 		req.getRequestDispatcher("user_update.jsp").forward(req, res);

@@ -17,7 +17,7 @@ public class UserDeleteExecuteAction extends ManagementAction {
 			return;
 		}
 		HttpSession session = req.getSession();
-		ExTeacher user = tempStructure.retrieve("UserDeleteAction", ExTeacher.class);
+		ExTeacher user = tempStrage.retrieve("UserDeleteAction", ExTeacher.class);
 
 		ManagerDao maDao = new ManagerDao();
 		maDao.delete(user);

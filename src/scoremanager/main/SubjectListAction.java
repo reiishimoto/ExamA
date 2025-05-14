@@ -11,7 +11,7 @@ import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class SubjectListAction extends Action {
 
@@ -31,8 +31,8 @@ public class SubjectListAction extends Action {
         // リクエストに科目リストをセット
         request.setAttribute("subjects", subjects);
 
-        tempStructure = new TempStructure("SubjectListAction", subjects.stream().map(Subject::getCd).collect(Collectors.toSet()));
-        sendStructure();
+        tempStrage = new TempStrage("SubjectListAction", subjects.stream().map(Subject::getCd).collect(Collectors.toSet()));
+        passStrage();
 
         // JSPへフォワード
         request.getRequestDispatcher("subject_list.jsp").forward(request, response);

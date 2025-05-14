@@ -12,7 +12,7 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class StudentUpdateAction extends Action {
 
@@ -81,8 +81,8 @@ public class StudentUpdateAction extends Action {
 		}
 
 		// ワンタイムストラクチャを設定
-		tempStructure = new TempStructure("StudentUpdateAction", student);
-		sendStructure();
+		tempStrage = new TempStrage("StudentUpdateAction", student);
+		passStrage();
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_update.jsp").forward(req, res);

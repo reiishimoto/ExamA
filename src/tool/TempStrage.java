@@ -3,10 +3,10 @@ package tool;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TempStructure {
+public class TempStrage{
     private final Map<String, Object> map = new HashMap<>();
 
-    public TempStructure(String current, Object data) {
+    public TempStrage(String current, Object data) {
         map.put(current, data);
     }
 

@@ -15,8 +15,8 @@ public class SubjectDeleteExecuteAction extends Action {
         // リクエストパラメータの取得
         String cd;
 
-        if (tempStructure != null) {
-        	cd = tempStructure.retrieve("SubjectDeleteAction", Subject.class).getCd();
+        if (tempStrage != null) {
+        	cd = tempStrage.retrieve("SubjectDeleteAction", Subject.class).getCd();
         } else {
         	res.sendRedirect("SubjectList.action");
         	return;

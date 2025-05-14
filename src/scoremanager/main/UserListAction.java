@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExTeacher;
 import dao.ManagerDao;
 import tool.ManagementAction;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class UserListAction extends ManagementAction {
 
@@ -23,8 +23,8 @@ public class UserListAction extends ManagementAction {
 		int type = filter.matches("[012]") ? Integer.parseInt(filter) : 0;
 		List<ExTeacher> users = maDao.list(type);
 
-		tempStructure = new TempStructure("UserListAction", users.stream().map(ExTeacher::getId).collect(Collectors.toSet()));
-		sendStructure();
+		tempStrage = new TempStrage("UserListAction", users.stream().map(ExTeacher::getId).collect(Collectors.toSet()));
+		passStrage();
 		req.setAttribute("users", users);
 
 		req.getRequestDispatcher("user_list.jsp").forward(req, res);

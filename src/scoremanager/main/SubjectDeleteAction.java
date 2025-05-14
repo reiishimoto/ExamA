@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.Subject;
 import dao.SubjectDao;
 import tool.Action;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class SubjectDeleteAction extends Action {
 
@@ -18,7 +18,7 @@ public class SubjectDeleteAction extends Action {
         // ローカル変数の指定
         String cd = req.getParameter("cd"); // 科目コード
 
-        if (!isSendFrom("SubjectListAction") || !tempStructure.retrieve("SubjectListAction", Set.class).contains(cd)) {
+        if (!isSendFrom("SubjectListAction") || !tempStrage.retrieve("SubjectListAction", Set.class).contains(cd)) {
         	res.sendRedirect("SubjectList.action");
         	return;
         }
@@ -30,8 +30,8 @@ public class SubjectDeleteAction extends Action {
         // レスポンス値をセット
         req.setAttribute("subject", subject);
 
-        tempStructure = new TempStructure("SubjectDeleteAction", subject);
-        sendStructure();
+        tempStrage = new TempStrage("SubjectDeleteAction", subject);
+        passStrage();
 
         // JSPへフォワード
         req.getRequestDispatcher("subject_delete.jsp").forward(req, res);

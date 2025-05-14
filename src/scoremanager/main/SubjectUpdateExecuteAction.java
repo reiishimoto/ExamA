@@ -16,11 +16,11 @@ public class SubjectUpdateExecuteAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
     	String subjectCd;
-    	if (tempStructure == null) {
+    	if (tempStrage == null) {
     		res.sendRedirect("SubjectList.action");
     		return;
     	} else {
-    		subjectCd = tempStructure.retrieve("SubjectUpdateAction", Subject.class).getCd();
+    		subjectCd = tempStrage.retrieve("SubjectUpdateAction", Subject.class).getCd();
     	}
 
         // セッションからログインユーザー（教員）情報を取得

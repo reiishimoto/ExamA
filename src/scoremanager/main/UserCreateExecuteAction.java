@@ -11,7 +11,7 @@ import bean.ExTeacher;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ManagementAction;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class UserCreateExecuteAction extends ManagementAction {
 
@@ -24,12 +24,12 @@ public class UserCreateExecuteAction extends ManagementAction {
 		String schoolCd = req.getParameter("school_cd");
 		String roll = req.getParameter("roll");
 
-		if (tempStructure != null) {
-			Set<?> set = tempStructure.retrieve("UserListAction", Set.class);
+		if (tempStrage != null) {
+			Set<?> set = tempStrage.retrieve("UserListAction", Set.class);
 			if (set.contains(id)) {
 				errors.put("id", String.format("id ｢%s｣ は既に存在しています", id));
 				req.setAttribute("errors", errors);
-				sendStructure();
+				passStrage();
 				SchoolDao scDao = new SchoolDao();
 				req.setAttribute("schools", scDao.list());
 
@@ -58,8 +58,8 @@ public class UserCreateExecuteAction extends ManagementAction {
 
 		maDao.save(user);
 
-		tempStructure = new TempStructure("UserUpdateExecuteAction", user);
-		sendStructure();
+		tempStrage = new TempStrage("UserUpdateExecuteAction", user);
+		passStrage();
 
 		req.getRequestDispatcher("user_create_done.jsp").forward(req, res);
 	}

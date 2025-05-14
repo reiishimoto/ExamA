@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExTeacher;
 import dao.ManagerDao;
 import tool.ManagementAction;
-import tool.TempStructure;
+import tool.TempStrage;
 
 public class UserDeleteAction extends ManagementAction {
 
@@ -16,8 +16,8 @@ public class UserDeleteAction extends ManagementAction {
 
 		ManagerDao maDao = new ManagerDao();
 		ExTeacher user = maDao.fetchInfo(id);
-		tempStructure = new TempStructure("UserDeleteAction", user);
-		sendStructure();
+		tempStrage = new TempStrage("UserDeleteAction", user);
+		passStrage();
 
 		req.setAttribute("user", user);
 

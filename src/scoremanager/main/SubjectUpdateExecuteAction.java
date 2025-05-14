@@ -14,11 +14,19 @@ public class SubjectUpdateExecuteAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+    	String subjectCd;
+    	if (tempStructure == null) {
+    		res.sendRedirect("SubjectList.action");
+    		return;
+    	} else {
+    		subjectCd = tempStructure.retrieve("SubjectUpdateAction", Subject.class).getCd();
+    	}
+
         // セッションからログインユーザー（教員）情報を取得
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
         // リクエストパラメータから科目コードと科目名を取得
-        String subjectCd = req.getParameter("subject_cd");
         String subjectName = req.getParameter("subject_name");
         // 科目DAOを生成
         SubjectDao subjectDao = new SubjectDao();

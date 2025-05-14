@@ -15,11 +15,11 @@ public class StudentUpdateExecuteAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		Student target = null;
-		if (oneTimeStructure == null) {
+		if (tempStructure == null) {
 			res.sendRedirect("StudentList.action");
 			return;
 		} else {
-			target = oneTimeStructure.retrieve("StudentUpdateAction", Student.class);
+			target = tempStructure.retrieve("StudentUpdateAction", Student.class);
 		}
 
 		// ローカル変数の指定 1

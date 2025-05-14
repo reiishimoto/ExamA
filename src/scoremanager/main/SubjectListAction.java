@@ -1,6 +1,7 @@
 package scoremanager.main;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
+import tool.TempStructure;
 
 public class SubjectListAction extends Action {
 
@@ -28,6 +30,9 @@ public class SubjectListAction extends Action {
 
         // リクエストに科目リストをセット
         request.setAttribute("subjects", subjects);
+
+        tempStructure = new TempStructure("SubjectListAction", subjects.stream().map(Subject::getCd).collect(Collectors.toSet()));
+        sendStructure();
 
         // JSPへフォワード
         request.getRequestDispatcher("subject_list.jsp").forward(request, response);

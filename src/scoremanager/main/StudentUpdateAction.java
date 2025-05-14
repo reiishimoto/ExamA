@@ -12,7 +12,7 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
-import tool.OneTimeStructure;
+import tool.TempStructure;
 
 public class StudentUpdateAction extends Action {
 
@@ -44,6 +44,11 @@ public class StudentUpdateAction extends Action {
 		List<String> class_num_set = classNumDao.filter(teacher.getSchool());
 
 
+		if (student == null || !class_num_set.contains(student.getClassNum())) {
+			res.sendRedirect("StudentList.action");
+			return;
+		}
+
 
 		// ビジネスロジック 4
 		// ent_year,name,class_num,isAttend
@@ -51,10 +56,6 @@ public class StudentUpdateAction extends Action {
 		name = student.getName();
 		class_num = student.getClassNum();
 		isAttend = student.isAttend();
-
-		oneTimeStructure = new OneTimeStructure("StudentUpdateAction", student);
-		sendStructure();
-		System.out.println(oneTimeStructure);
 
 		// レスポンス値をセット 6
 		// リクエストに入学年度をセット
@@ -78,6 +79,10 @@ public class StudentUpdateAction extends Action {
 		if (student.getClass() == ExStudent.class) {
 			req.setAttribute("reason", ((ExStudent)student).getReason());
 		}
+
+		// ワンタイムストラクチャを設定
+		tempStructure = new TempStructure("StudentUpdateAction", student);
+		sendStructure();
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_update.jsp").forward(req, res);

@@ -29,7 +29,7 @@ public class UserCreateExecuteAction extends ManagementAction {
 			if (set.contains(id)) {
 				errors.put("id", String.format("id ｢%s｣ は既に存在しています", id));
 				req.setAttribute("errors", errors);
-				send();
+				sendStructure();
 				SchoolDao scDao = new SchoolDao();
 				req.setAttribute("schools", scDao.list());
 
@@ -59,7 +59,7 @@ public class UserCreateExecuteAction extends ManagementAction {
 		maDao.save(user);
 
 		oneTimeStructure = new OneTimeStructure("UserUpdateExecuteAction", user);
-		send();
+		sendStructure();
 
 		req.getRequestDispatcher("user_create_done.jsp").forward(req, res);
 	}

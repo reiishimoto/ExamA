@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public abstract class Action {
-	private static final String KEY = "onetime_structure's_key";
+	private static final String KEY = "onetime_structure_key";
 	private HttpSession session;
 	protected OneTimeStructure oneTimeStructure;
 
@@ -20,7 +20,7 @@ public abstract class Action {
 		execute(req, res);
 	}
 
-	protected final void send() {
+	protected final void sendStructure() {
 		if (session != null && oneTimeStructure != null) {
 			session.setAttribute(KEY, oneTimeStructure);
 		}

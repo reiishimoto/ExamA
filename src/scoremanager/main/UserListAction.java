@@ -24,7 +24,7 @@ public class UserListAction extends ManagementAction {
 		List<ExTeacher> users = maDao.list(type);
 
 		oneTimeStructure = new OneTimeStructure("UserListAction", users.stream().map(ExTeacher::getId).collect(Collectors.toSet()));
-		send();
+		sendStructure();
 		req.setAttribute("users", users);
 
 		req.getRequestDispatcher("user_list.jsp").forward(req, res);

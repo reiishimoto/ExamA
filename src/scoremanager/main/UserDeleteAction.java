@@ -17,7 +17,7 @@ public class UserDeleteAction extends ManagementAction {
 		ManagerDao maDao = new ManagerDao();
 		ExTeacher user = maDao.fetchInfo(id);
 		oneTimeStructure = new OneTimeStructure("UserDeleteAction", user);
-		send();
+		sendStructure();
 
 		req.setAttribute("user", user);
 

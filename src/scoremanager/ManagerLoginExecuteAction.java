@@ -9,13 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import bean.ExTeacher;
 import dao.ManagerDao;
-import tool.Action;
+import tool.EarlyAction;
 
 
-public class ManagerLoginExecuteAction extends Action {
+public class ManagerLoginExecuteAction extends EarlyAction {
 
 	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void executeEarly(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		//ローカル変数の宣言 1
 		String url = "";

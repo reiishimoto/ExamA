@@ -63,7 +63,7 @@
 							</label>
 							<br>
 							<br>
-							<a href="/examA/scoremanager/login.jsp">教員ログインはこちら</a>
+							<a href="Login.action">教員ログインはこちら</a>
 						</div>
 					</div>
 

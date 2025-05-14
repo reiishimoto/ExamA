@@ -7,7 +7,6 @@ import bean.ExTeacher;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ManagementAction;
-import tool.OneTimeStructure;
 
 public class UserUpdateExecuteAction extends ManagementAction {
 
@@ -18,14 +17,9 @@ public class UserUpdateExecuteAction extends ManagementAction {
 		if (oneTimeStructure == null) {
 			res.sendRedirect("UserList.action");
 			return;
-		} else if (oneTimeStructure.getSender().equals("UserUpdateExecuteAction")) {
-			send();
-			res.sendRedirect("UserUpdate.action");
-			return;
 		} else {
 			before = oneTimeStructure.retrieve("UserUpdateAction", ExTeacher.class);
 		}
-		send();
 
 		String id = req.getParameter("user_id");
 		String name = req.getParameter("user_name");
@@ -44,9 +38,6 @@ public class UserUpdateExecuteAction extends ManagementAction {
 		user.setManager(roll.equalsIgnoreCase("manager"));
 
 		maDao.save(user);
-
-		oneTimeStructure = new OneTimeStructure("UserUpdateExecuteAction", user);
-		send();
 
 		req.getRequestDispatcher("user_update_done.jsp").forward(req, res);
 	}

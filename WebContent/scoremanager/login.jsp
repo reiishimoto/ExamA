@@ -64,7 +64,7 @@
 							<br>
 							<br>
 
-							<a href="/examA/scoremanager/managerlogin.jsp">管理者ログインはこちら</a>
+							<a href="ManagerLogin.action">管理者ログインはこちら</a>
 						</div>
 					</div>
 

@@ -11,7 +11,7 @@ public class OneTimeStructure {
 
     public <T> T retrieve(String previous, Class<T> type) {
         if (!previous.equals(sender)) {
-            throw new IllegalStateException("アクション " + sender + " からの予期しないアクセス");
+            throw new IllegalStateException("アクション " + sender + " からの予期しないアドレス遷移");
         }
         return type.cast(data); // 安全なキャスト
     }

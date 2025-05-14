@@ -17,12 +17,12 @@
 
 				<div>
 				<label class="mx-auto py-2">入学年度</label><br>
-				<input type="hidden" id="ent_year" name="ent_year" value="${ent_year}"> &nbsp;&nbsp; ${ent_year}<br>
+				&nbsp;&nbsp; ${ent_year}<br>
 				</div>
 
 				       			 <div>
 				<label class="mx-auto py-2">学生番号</label><br>
-				<input type="hidden" id="no" name="no" value="${no}"> &nbsp;&nbsp; ${no}<br>
+				&nbsp;&nbsp; ${no}<br>
 				</div>
 
 

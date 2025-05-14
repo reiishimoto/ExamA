@@ -12,7 +12,6 @@ public abstract class EarlyAction extends Action {
 		session.removeAttribute("user");
 		session.removeAttribute("isManager");
 		executeEarly(req, res);
-		System.out.println(session.getAttribute("user"));
 	}
 
 	public abstract void executeEarly(HttpServletRequest req, HttpServletResponse res) throws Exception;

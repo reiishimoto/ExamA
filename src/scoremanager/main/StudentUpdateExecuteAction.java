@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExStudent;
+import bean.Student;
 import dao.StudentDao;
 import tool.Action;
 
@@ -13,9 +14,15 @@ public class StudentUpdateExecuteAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
+		Student target = null;
+		if (oneTimeStructure == null) {
+			res.sendRedirect("StudentList.action");
+			return;
+		} else {
+			target = oneTimeStructure.retrieve("StudentUpdateAction", Student.class);
+		}
+
 		// ローカル変数の指定 1
-		int ent_year = 0;
-		String no = "";
 		String name = "";
 		String class_num = "";
 		String isAttendStr = "";
@@ -26,9 +33,7 @@ public class StudentUpdateExecuteAction extends Action {
 		StudentDao studentDao = new StudentDao();
 
 		// リクエストパラメーターの取得 2
-		// ent_year,no,name,class_num,isAttendStr
-		ent_year = Integer.parseInt(req.getParameter("ent_year"));
-		no = req.getParameter("no");
+		// name,class_num,isAttendStr
 		name = req.getParameter("name");
 		class_num = req.getParameter("class_num");
 		isAttendStr = req.getParameter("isAttend");
@@ -45,15 +50,15 @@ public class StudentUpdateExecuteAction extends Action {
 
 		// studentに学生情報をセット
 		// no,name,ent_year,class,num,isAttendをセット
-		student.setNo(no);
+		student.setNo(target.getNo());
 		student.setName(name);
-		student.setEntYear(ent_year);
+		student.setEntYear(target.getEntYear());
 		student.setClassNum(class_num);
 		student.setAttend(isAttend);
 
-		System.out.print(no);
+		System.out.print(target.getNo());
 		System.out.print(name);
-		System.out.print(ent_year);
+		System.out.print(target.getEntYear());
 		System.out.print(class_num);
 		System.out.print(isAttend);
 

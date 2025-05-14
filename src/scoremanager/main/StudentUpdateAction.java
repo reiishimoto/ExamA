@@ -12,6 +12,7 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
+import tool.OneTimeStructure;
 
 public class StudentUpdateAction extends Action {
 
@@ -51,7 +52,9 @@ public class StudentUpdateAction extends Action {
 		class_num = student.getClassNum();
 		isAttend = student.isAttend();
 
-
+		oneTimeStructure = new OneTimeStructure("StudentUpdateAction", student);
+		sendStructure();
+		System.out.println(oneTimeStructure);
 
 		// レスポンス値をセット 6
 		// リクエストに入学年度をセット

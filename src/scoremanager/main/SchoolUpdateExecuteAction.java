@@ -11,13 +11,16 @@ public class SchoolUpdateExecuteAction extends ManagementAction {
 
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String cd = req.getParameter("school_cd");
+		School school;
+		if (!isSendFrom("SchoolUpdateAction")) {
+			res.sendRedirect("SchoolList.acton");
+			return;
+		} else {
+			school = tempStrage.retrieve("SchoolUpdateAction", School.class);
+		}
 		String name = req.getParameter("school_name");
 		SchoolDao scDao = new SchoolDao();
 
-		School school = new School();
-
-		school.setCd(cd);
 		school.setName(name);
 
 		scDao.save(school);

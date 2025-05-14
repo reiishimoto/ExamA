@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.School;
 import dao.SchoolDao;
 import tool.ManagementAction;
+import tool.TempStrage;
 
 public class SchoolUpdateAction extends ManagementAction {
 
@@ -18,6 +19,8 @@ public class SchoolUpdateAction extends ManagementAction {
 		System.out.println(school);
 
 		req.setAttribute("school", school);
+		tempStrage = new TempStrage("SchoolUpdateAction", school);
+		passStrage();
 
 		req.getRequestDispatcher("school_update.jsp").forward(req, res);;
 	}

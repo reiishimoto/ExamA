@@ -15,5 +15,4 @@ public abstract class EarlyAction extends Action {
 		session.removeAttribute("isManager");
 		execute(req, res);
 	}
-
 }

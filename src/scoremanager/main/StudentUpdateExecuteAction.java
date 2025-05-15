@@ -9,8 +9,9 @@ import bean.Student;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(rootClass=StudentUpdateAction.class, redirectFor="StudentList.action", isEnd=true)
+@ChainAction(locate=ChainLocate.END, rootClass=StudentUpdateAction.class, redirectFor="StudentList.action")
 public class StudentUpdateExecuteAction extends Action {
 
 	@Override

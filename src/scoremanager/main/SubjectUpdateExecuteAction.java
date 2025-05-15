@@ -9,9 +9,10 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
 // 科目情報の更新処理を実行するアクション
-@ChainAction(rootClass=SubjectUpdateAction.class, redirectFor="SubjectList.action", isEnd=true)
+@ChainAction(locate=ChainLocate.END, rootClass=SubjectUpdateAction.class, redirectFor="SubjectList.action")
 public class SubjectUpdateExecuteAction extends Action {
 
     @Override
@@ -24,6 +25,7 @@ public class SubjectUpdateExecuteAction extends Action {
         Teacher teacher = (Teacher) session.getAttribute("user");
         // リクエストパラメータから科目コードと科目名を取得
         String subjectName = req.getParameter("subject_name");
+        if (subjectName.length() > 20) subjectName = subjectName.substring(0, 20);
         // 科目DAOを生成
         SubjectDao subjectDao = new SubjectDao();
         // 科目コードと学校コードで該当の科目を検索

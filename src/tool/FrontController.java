@@ -59,7 +59,8 @@ public class FrontController extends HttpServlet {
 		if (chainInfo == null) return null;
 
 		TempStrage strage;
-		if (chainInfo.isRoot()) {
+		ChainLocate locate = chainInfo.locate();
+		if (locate == ChainLocate.ROOT) {
 			strage = new TempStrage(action.getClass());
 			session.setAttribute(ChainAction.KEY, strage);
 		} else {
@@ -67,7 +68,7 @@ public class FrontController extends HttpServlet {
 			if (strage == null || !strage.isSendFrom(chainInfo.rootClass())) {
 				return chainInfo.redirectFor();
 			}
-			if(chainInfo.isEnd()) session.setAttribute(ChainAction.KEY, null);
+			if(locate == ChainLocate.END) session.setAttribute(ChainAction.KEY, null);
 		}
 		action.setStrage(strage);
 		return null;

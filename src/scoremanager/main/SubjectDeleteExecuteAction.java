@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(rootClass=SubjectDeleteAction.class, redirectFor="SubjectList.action", isEnd=true)
+@ChainAction(locate=ChainLocate.END, rootClass=SubjectDeleteAction.class, redirectFor="SubjectList.action")
 public class SubjectDeleteExecuteAction extends Action {
 
     @Override

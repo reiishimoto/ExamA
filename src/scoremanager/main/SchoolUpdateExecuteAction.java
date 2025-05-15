@@ -6,9 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import bean.School;
 import dao.SchoolDao;
 import tool.ChainAction;
+import tool.ChainLocate;
 import tool.ManagementAction;
 
-@ChainAction(rootClass=SchoolUpdateAction.class, redirectFor="SchoolList.action")
+@ChainAction(locate=ChainLocate.END, rootClass=SchoolUpdateAction.class, redirectFor="SchoolList.action")
 public class SchoolUpdateExecuteAction extends ManagementAction {
 
 	@Override

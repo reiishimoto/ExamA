@@ -16,7 +16,7 @@
         <div>
           <label for="subject_name">科目名</label>
           <input class="form-control" type="text" id="subject_name" name="subject_name"
-                 value="${subject_name}" maxlength="30" placeholder="科目名を入力してください" required />
+                 value="${subject_name}" maxlength="20" placeholder="科目名を入力してください" required />
         </div>
         <div class="mt-2 text-warning">${errors.subject_name}</div>
 

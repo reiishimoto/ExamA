@@ -18,8 +18,9 @@ import dao.SubjectDao;
 import dao.TestDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(rootClass=TestRegistAction.class, redirectFor="TestRegist.action", isEnd=true)
+@ChainAction(locate=ChainLocate.END, rootClass=TestRegistAction.class, redirectFor="TestRegist.action")
 public class TestRegistExecuteAction extends Action{
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 

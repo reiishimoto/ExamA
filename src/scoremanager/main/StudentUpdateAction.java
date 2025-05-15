@@ -13,8 +13,9 @@ import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(isRoot=true)
+@ChainAction(locate=ChainLocate.ROOT)
 public class StudentUpdateAction extends Action {
 
 	@Override

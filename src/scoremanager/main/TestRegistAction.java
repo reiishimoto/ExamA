@@ -21,8 +21,9 @@ import dao.SubjectDao;
 import dao.TestDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(isRoot=true)
+@ChainAction(locate=ChainLocate.ROOT)
 public class TestRegistAction extends Action {
 
     @Override

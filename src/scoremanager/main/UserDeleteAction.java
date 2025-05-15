@@ -6,9 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExTeacher;
 import dao.ManagerDao;
 import tool.ChainAction;
+import tool.ChainLocate;
 import tool.ManagementAction;
 
-@ChainAction(isRoot=true)
+@ChainAction(locate=ChainLocate.ROOT)
 public class UserDeleteAction extends ManagementAction {
 
 	@Override

@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(rootClass=StudentDeleteAction.class, redirectFor="StudentList.action", isEnd=true)
+@ChainAction(locate=ChainLocate.END, rootClass=StudentDeleteAction.class, redirectFor="StudentList.action")
 public class StudentDeleteExecuteAction extends Action {
 
 	@Override

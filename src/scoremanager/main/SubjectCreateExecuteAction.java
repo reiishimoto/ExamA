@@ -26,11 +26,10 @@ public class SubjectCreateExecuteAction extends Action {
         Map<String, String> errors = new HashMap<>();
 
         // 必須チェックのみ
-        if (subjectCd == null || subjectCd.isEmpty()) {
-            errors.put("subject_cd", "科目コードを入力してください");
-        }
         if (subjectName == null || subjectName.isEmpty()) {
             errors.put("subject_name", "科目名を入力してください");
+        } else if (subjectName.length() > 20) {
+        	errors.put("subject_name", "科目名は20字以下で入力してください");
         }
         if (subjectCd == null || subjectCd.isEmpty()) {
             errors.put("subject_cd", "科目コードを入力してください");

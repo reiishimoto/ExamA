@@ -7,8 +7,9 @@ import bean.Student;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(isRoot=true)
+@ChainAction(locate=ChainLocate.ROOT)
 public class StudentDeleteAction extends Action {
 
 	@Override

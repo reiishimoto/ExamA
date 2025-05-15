@@ -9,8 +9,9 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
+import tool.ChainLocate;
 
-@ChainAction(isRoot=true)
+@ChainAction(locate=ChainLocate.ROOT)
 public class SubjectUpdateAction extends Action {
 
     @Override

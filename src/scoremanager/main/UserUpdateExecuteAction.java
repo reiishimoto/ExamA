@@ -7,9 +7,10 @@ import bean.ExTeacher;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ChainAction;
+import tool.ChainLocate;
 import tool.ManagementAction;
 
-@ChainAction(rootClass=UserUpdateAction.class, redirectFor="UserList.action")
+@ChainAction(locate=ChainLocate.END, rootClass=UserUpdateAction.class, redirectFor="UserList.action")
 public class UserUpdateExecuteAction extends ManagementAction {
 
 	@Override

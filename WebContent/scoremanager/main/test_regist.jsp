@@ -115,7 +115,15 @@
 <td><c:out value="${student.no}" /></td>
 <td><c:out value="${student.name}" /></td>
 <td>
-<input type="text" name="point_${student.no}" value="${scoresMap[student.no]}" size="5" class="form-control form-control-sm w-auto d-inline-block">
+<input type="number"
+       name="point_${student.no}"
+       value="${scoresMap[student.no]}"
+       size="5"
+       min="0"
+       max="100"
+       required
+       class="form-control form-control-sm w-auto d-inline-block">
+
 <c:if test="${not empty errors[student.no]}">
 <span class="error"><c:out value="${errors[student.no]}" /></span>
 </c:if>

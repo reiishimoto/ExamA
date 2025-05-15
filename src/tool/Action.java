@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public abstract class Action {
-	private static final String KEY = "onetime_structure_key";
 	private HttpSession session;
 	protected TempStrage tempStrage;
 
@@ -19,19 +18,10 @@ public abstract class Action {
 			res.sendRedirect("../Login.action");
 			return;
 		}
-		tempStrage = (TempStrage) session.getAttribute(KEY);
-		session.setAttribute(KEY, null);
 		execute(req, res);
 	}
 
-	protected final void passStrage() {
-		if (session != null && tempStrage != null) {
-			session.setAttribute(KEY, tempStrage);
-		}
+	public void setStrage(TempStrage strage) {
+		tempStrage = strage;
 	}
-
-    // senderチェックを共通化
-    protected final boolean isSendFrom(String expectedSender) {
-        return tempStrage != null && tempStrage.isSendFrom(expectedSender);
-    }
 }

@@ -17,7 +17,9 @@ import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
 import tool.Action;
+import tool.ChainAction;
 
+@ChainAction(rootClass=TestRegistAction.class, redirectFor="TestRegist.action", isEnd=true)
 public class TestRegistExecuteAction extends Action{
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
@@ -34,27 +36,25 @@ public class TestRegistExecuteAction extends Action{
 
 		String class_num = "";
 		String subject_cd = "";
-		String no = "";
-		String point = "";
-		String entYearStr = "";
+		int no;
+		int entYear;
 		TestDao tesDao = new TestDao();
 
 
 		//リクエストパラメータの取得
-		class_num = req.getParameter("f2");
-		no = req.getParameter("f4");
-		point = req.getParameter("point");
-		subject_cd = req.getParameter("f3");
-		entYearStr = req.getParameter("f1");
+		entYear = tempStrage.retrieve("f1", Integer.class);
+		class_num = tempStrage.retrieve("f2", String.class);
+		no = tempStrage.retrieve("f4", Integer.class);
+		subject_cd = tempStrage.retrieve("f3", String.class);
 
 		Subject subject = subDao.get(subject_cd,school);
 
-		students = stuDao.filter(school, Integer.parseInt(entYearStr), class_num, true);
+		students = stuDao.filter(school, entYear, class_num, true);
 
 		for(Student student:students){
 			Test test = new Test();
 			test.setClassNum(class_num);
-			test.setNo(Integer.parseInt(no));
+			test.setNo(no);
 			test.setPoint(Integer.parseInt(req.getParameter("point_" + student.getNo())));
 			test.setSchool(school);
 			test.setStudent(student);

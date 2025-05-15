@@ -16,7 +16,6 @@
       	<form action="SchoolUpdateExecute.action" method="post">
         <div>
           <label>学校コード</label><br>
-          <input type="hidden" name="school_cd" value="${school.cd}" />
           ${school.cd}
         </div>
 

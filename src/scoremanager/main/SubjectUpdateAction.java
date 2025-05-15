@@ -1,7 +1,5 @@
 package scoremanager.main;
 
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,7 +8,9 @@ import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
+import tool.ChainAction;
 
+@ChainAction(isRoot=true)
 public class SubjectUpdateAction extends Action {
 
     @Override
@@ -23,31 +23,21 @@ public class SubjectUpdateAction extends Action {
 
     	// リクエストパラメータから科目コードを取得
     	String cd = req.getParameter("cd");
-    	Set<?> set;
-    	if (!isSendFrom("SubjectListAction")) {
-    		res.sendRedirect("SubjectList.action");
-    		return;
-    	} else if (isSendFrom("SubjectUpdateAction") && cd.equals(tempStrage.retrieve("SubjectUpdateAction", Subject.class).getCd()))  {
-    		req.setAttribute("subject", tempStrage.retrieve("SubjectUpdateAction", Subject.class));
-    	} else {
-    		set = tempStrage.retrieve("SubjectListAction", Set.class);
 
-    		// 科目DAOのインスタンスを生成
-    		SubjectDao subjectDao = new SubjectDao();
+		// 科目DAOのインスタンスを生成
+		SubjectDao subjectDao = new SubjectDao();
 
-    		// 指定された科目コードと学校コードに一致する科目情報を取得
-    		subject = subjectDao.get(cd, teacher.getSchool());
+		// 指定された科目コードと学校コードに一致する科目情報を取得
+		subject = subjectDao.get(cd, teacher.getSchool());
 
-    		// 科目が見つからない場合はエラーメッセージをセット
-    		if (subject == null || !set.contains(subject.getCd())) {
-    			req.setAttribute("error", "科目が存在していません");
-    		} else {
-    			// 科目が見つかった場合はJSPに渡すためにセット
-    			req.setAttribute("subject", subject);
-    			tempStrage.store("SubjectUpdateAction", subject);
-    		}
-    	}
-    	passStrage();
+		// 科目が見つからない場合はエラーメッセージをセット
+		if (subject == null) {
+			req.setAttribute("error", "科目が存在していません");
+		} else {
+			// 科目が見つかった場合はJSPに渡すためにセット
+			req.setAttribute("subject", subject);
+			tempStrage.store("subjectCd", cd);
+		}
 
         // 科目情報変更画面にフォワード
         req.getRequestDispatcher("subject_update.jsp").forward(req, res);

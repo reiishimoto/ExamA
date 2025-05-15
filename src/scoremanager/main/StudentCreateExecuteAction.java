@@ -62,13 +62,13 @@ public class StudentCreateExecuteAction extends Action {
 
 		// レスポンス値をセット 6
 		// リクエストに入学年度をセット
-		req.setAttribute("ent_year", ent_year);
+		req.setAttribute("f1", ent_year);
 		// リクエストに学生番号をセット
 		req.setAttribute("no", student_no);
 		// リクエストに氏名をセット
 		req.setAttribute("name", student_name);
 		// リクエストにクラス番号をセット
-		req.setAttribute("class_num", class_num);
+		req.setAttribute("f2", class_num);
 
 		// JSPへフォワード 7
 		if (errors.isEmpty()) { // エラーメッセージがない場合
@@ -79,5 +79,4 @@ public class StudentCreateExecuteAction extends Action {
 			req.getRequestDispatcher("StudentCreate.action").forward(req, res);
 		}
 	}
-
 }

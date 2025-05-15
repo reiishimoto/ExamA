@@ -16,7 +16,6 @@
       	<form action="SubjectUpdateExecute.action" method="post">
         <div>
           <label>科目コード</label><br>
-          <input type="hidden" name="subject_cd" value="${subject.cd}" />
           ${subject.cd}
         </div>
 

@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ExTeacher;
 import dao.ManagerDao;
+import tool.ChainAction;
 import tool.ManagementAction;
-import tool.TempStrage;
 
+@ChainAction(isRoot=true)
 public class UserDeleteAction extends ManagementAction {
 
 	@Override
@@ -16,10 +17,9 @@ public class UserDeleteAction extends ManagementAction {
 
 		ManagerDao maDao = new ManagerDao();
 		ExTeacher user = maDao.fetchInfo(id);
-		tempStrage = new TempStrage("UserDeleteAction", user);
-		passStrage();
 
 		req.setAttribute("user", user);
+		tempStrage.store("user", user);
 
 		req.getRequestDispatcher("user_delete.jsp").forward(req, res);;
 	}

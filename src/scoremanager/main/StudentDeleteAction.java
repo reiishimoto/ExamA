@@ -2,19 +2,18 @@ package scoremanager.main;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bean.Student;
 import dao.StudentDao;
 import tool.Action;
+import tool.ChainAction;
 
+@ChainAction(isRoot=true)
 public class StudentDeleteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		// ローカル変数の指定 1
-		HttpSession session = req.getSession(); // セッション
 		String no = ""; // 学生番号
 		String name= ""; // 氏名
 		int ent_year = 0; // 入学年度
@@ -26,13 +25,9 @@ public class StudentDeleteAction extends Action {
 		// リクエストパラメーターの取得 2
 		no = req.getParameter("no");
 
-
-
 		// DBからデータ取得 3
 		// 学生の詳細データを取得
 		student = studentDao.get(no);
-
-
 
 		// ビジネスロジック 4
 		// ent_year,name,class_num,isAttend
@@ -40,8 +35,6 @@ public class StudentDeleteAction extends Action {
 		name = student.getName();
 		class_num = student.getClassNum();
 		isAttend = student.isAttend();
-
-
 
 		// レスポンス値をセット 6
 		// リクエストに入学年度をセット
@@ -59,7 +52,7 @@ public class StudentDeleteAction extends Action {
 		// リクエストに在学フラグをセット
 		req.setAttribute("isAttend", isAttend);
 
-
+		tempStrage.store("no", no);
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_delete.jsp").forward(req, res);

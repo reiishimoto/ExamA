@@ -3,10 +3,11 @@ package scoremanager.main;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Subject;
 import dao.SubjectDao;
 import tool.Action;
+import tool.ChainAction;
 
+@ChainAction(rootClass=SubjectDeleteAction.class, redirectFor="SubjectList.action", isEnd=true)
 public class SubjectDeleteExecuteAction extends Action {
 
     @Override
@@ -15,12 +16,7 @@ public class SubjectDeleteExecuteAction extends Action {
         // リクエストパラメータの取得
         String cd;
 
-        if (tempStrage != null) {
-        	cd = tempStrage.retrieve("SubjectDeleteAction", Subject.class).getCd();
-        } else {
-        	res.sendRedirect("SubjectList.action");
-        	return;
-        }
+    	cd = tempStrage.retrieve("subjectCd", String.class);
 
         // 削除処理
         SubjectDao subjectDao = new SubjectDao();

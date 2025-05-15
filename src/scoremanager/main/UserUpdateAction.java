@@ -6,9 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExTeacher;
 import dao.ManagerDao;
 import dao.SchoolDao;
+import tool.ChainAction;
 import tool.ManagementAction;
-import tool.TempStrage;
 
+@ChainAction(isRoot=true)
 public class UserUpdateAction extends ManagementAction {
 
 	@Override
@@ -17,15 +18,10 @@ public class UserUpdateAction extends ManagementAction {
 		SchoolDao scDao = new SchoolDao();
 
 		ExTeacher user;
-		if (isSendFrom("UserUpdateAction")) {
-			user = tempStrage.retrieve("UserUpdateAction", ExTeacher.class);
-		} else {
-			ManagerDao maDao = new ManagerDao();
-			user = maDao.fetchInfo(req.getParameter("id"));
-		}
+		ManagerDao maDao = new ManagerDao();
+		user = maDao.fetchInfo(req.getParameter("id"));
 
-		tempStrage = new TempStrage("UserUpdateAction", user);
-		passStrage();
+		tempStrage.store("user", user);
 		req.setAttribute("user", user);
 		req.setAttribute("schools", scDao.list());
 		req.getRequestDispatcher("user_update.jsp").forward(req, res);

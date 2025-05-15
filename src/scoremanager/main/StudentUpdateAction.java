@@ -12,8 +12,9 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
-import tool.TempStrage;
+import tool.ChainAction;
 
+@ChainAction(isRoot=true)
 public class StudentUpdateAction extends Action {
 
 	@Override
@@ -34,8 +35,6 @@ public class StudentUpdateAction extends Action {
 		// リクエストパラメーターの取得 2
 		no = req.getParameter("no");
 
-
-
 		// DBからデータ取得 3
 		// 学生の詳細データを取得
 		student = studentDao.get(no);
@@ -48,7 +47,6 @@ public class StudentUpdateAction extends Action {
 			res.sendRedirect("StudentList.action");
 			return;
 		}
-
 
 		// ビジネスロジック 4
 		// ent_year,name,class_num,isAttend
@@ -81,8 +79,7 @@ public class StudentUpdateAction extends Action {
 		}
 
 		// ワンタイムストラクチャを設定
-		tempStrage = new TempStrage("StudentUpdateAction", student);
-		passStrage();
+		tempStrage.store("student", student);
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_update.jsp").forward(req, res);

@@ -16,8 +16,6 @@
       	<form action="UserUpdateExecute.action" method="post">
         <div>
           <label>ユーザid</label><br>
-          <input type="hidden" name="user_id" value="${user.id}" />
-          <input type="hidden" name="user_id" value="${user.id}" />
           ${user.id}
         </div>
 

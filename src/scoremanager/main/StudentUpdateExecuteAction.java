@@ -8,19 +8,15 @@ import bean.ExStudent;
 import bean.Student;
 import dao.StudentDao;
 import tool.Action;
+import tool.ChainAction;
 
+@ChainAction(rootClass=StudentUpdateAction.class, redirectFor="StudentList.action", isEnd=true)
 public class StudentUpdateExecuteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		Student target;
-		if (tempStrage == null) {
-			res.sendRedirect("StudentList.action");
-			return;
-		} else {
-			target = tempStrage.retrieve("StudentUpdateAction", Student.class);
-		}
+		Student target = tempStrage.retrieve("student", Student.class);
 
 		// ローカル変数の指定 1
 		String name = "";
@@ -60,7 +56,7 @@ public class StudentUpdateExecuteAction extends Action {
 		System.out.print(name);
 		System.out.print(target.getEntYear());
 		System.out.print(class_num);
-		System.out.print(isAttend);
+		System.out.println(isAttend);
 
 
 		// 変更内容を保存save

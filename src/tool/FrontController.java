@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = { "*.action" })
 public class FrontController extends HttpServlet {
@@ -21,13 +22,20 @@ public class FrontController extends HttpServlet {
 			// アクションクラスのインスタンスを返却
 			Action action = (Action) Class.forName(name).getDeclaredConstructor().newInstance();
 
+			HttpSession session = req.getSession();
+
+	        String redirectPath = chainProcessing(session, action);
+	        if (redirectPath != null) {
+	            res.sendRedirect(redirectPath);
+	            return;
+	        }
+
 			// 遷移先URLを取得
 			action.action(req, res);
 
-
 		} catch (Exception e) {
-//			ExceptionHandler.handleException(e);
-			e.printStackTrace();
+			ExceptionHandler.handleException(e);
+//			e.printStackTrace();
 			// エラーページへリダイレクト
 			req.getRequestDispatcher("/error.jsp").forward(req, res);
 		}
@@ -38,5 +46,30 @@ public class FrontController extends HttpServlet {
 
 		doGet(req,res);
 
+	}
+
+	/**
+	 *
+	 * @param session TempStrage情報を取得,また追加するために使用します
+	 * @param action Actionクラスインスタンスに設定されたアノテーションからsessionの操作を判断します
+	 * @return 不整合によりリダイレクト処理が発生する場合はリダイレクト先のパスを、それ以外の場合ではnullを返します
+	 */
+	private String chainProcessing(HttpSession session, Action action) {
+		ChainAction chainInfo = action.getClass().getAnnotation(ChainAction.class);
+		if (chainInfo == null) return null;
+
+		TempStrage strage;
+		if (chainInfo.isRoot()) {
+			strage = new TempStrage(action.getClass());
+			session.setAttribute(ChainAction.KEY, strage);
+		} else {
+			strage = (TempStrage) session.getAttribute(ChainAction.KEY);
+			if (strage == null || !strage.isSendFrom(chainInfo.rootClass())) {
+				return chainInfo.redirectFor();
+			}
+			if(chainInfo.isEnd()) session.setAttribute(ChainAction.KEY, null);
+		}
+		action.setStrage(strage);
+		return null;
 	}
 }

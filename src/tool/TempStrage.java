@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TempStrage{
+	private final Class<?> rootClass;
     private final Map<String, Object> map = new HashMap<>();
 
-    public TempStrage(String current, Object data) {
-        map.put(current, data);
+    public TempStrage(Class<?> root) {
+    	this.rootClass = root;
     }
 
     public void store(String key, Object value) {
@@ -18,7 +19,7 @@ public class TempStrage{
         return type.cast(map.get(key)); // 安全なキャスト
     }
 
-    public boolean isSendFrom(String key) {
-    	return map.containsKey(key);
+    public boolean isSendFrom(Class<?> clazz) {
+    	return rootClass == clazz;
     }
 }

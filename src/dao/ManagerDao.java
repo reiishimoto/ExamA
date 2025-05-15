@@ -158,18 +158,7 @@ public class ManagerDao extends Dao {
 		}
 	}
 
-	public boolean save(ExTeacher user) throws Exception {
-		ExTeacher before = fetchInfo(user.getId());
-		if (before == null) {
-			return insert(user);
-		} else if (before.isManager() == user.isManager()) {
-			return update(user);
-		} else {
-			throw new IllegalArgumentException("同アカウントの権限の変更はサポートされていません");
-		}
-	}
-
-	private boolean insert(ExTeacher user) throws Exception {
+	public boolean insert(ExTeacher user) throws Exception {
 		String sql;
 		if (user.isManager()) {
 			sql = "insert into manager values (?, ?, ?, ?)";
@@ -190,7 +179,7 @@ public class ManagerDao extends Dao {
 		}
 
 	}
-	private boolean update(ExTeacher user) throws Exception {
+	public boolean update(ExTeacher user) throws Exception {
 		String sql;
 		if (user.isManager()) {
 			sql = "update manager set password=?, name=?, school_cd=? where id=?";

@@ -20,7 +20,9 @@ import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
 import tool.Action;
+import tool.ChainAction;
 
+@ChainAction(isRoot=true)
 public class TestRegistAction extends Action {
 
     @Override
@@ -70,6 +72,10 @@ public class TestRegistAction extends Action {
                     errors.put("filter", "指定された科目が存在しません。");
                 }
 
+                tempStrage.store("f1", entYear);
+                tempStrage.store("f2", classNum);
+                tempStrage.store("f3", subjectCd);
+                tempStrage.store("f4", testNo);
                 req.setAttribute("f1", entYear);
                 req.setAttribute("f2", classNum);
                 req.setAttribute("f3", subjectCd);

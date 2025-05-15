@@ -6,18 +6,16 @@ import javax.servlet.http.HttpSession;
 
 import bean.ExTeacher;
 import dao.ManagerDao;
+import tool.ChainAction;
 import tool.ManagementAction;
 
+@ChainAction(rootClass=UserDeleteAction.class, redirectFor="UserList.action", isEnd=true)
 public class UserDeleteExecuteAction extends ManagementAction {
 
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		if (!isSendFrom("UserDeleteAction")) {
-			res.sendRedirect("UserList.action");
-			return;
-		}
 		HttpSession session = req.getSession();
-		ExTeacher user = tempStrage.retrieve("UserDeleteAction", ExTeacher.class);
+		ExTeacher user = tempStrage.retrieve("user", ExTeacher.class);
 
 		ManagerDao maDao = new ManagerDao();
 		maDao.delete(user);

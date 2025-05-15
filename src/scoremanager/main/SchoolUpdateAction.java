@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
 import dao.SchoolDao;
+import tool.ChainAction;
 import tool.ManagementAction;
-import tool.TempStrage;
 
+@ChainAction(isRoot=true)
 public class SchoolUpdateAction extends ManagementAction {
 
 	@Override
@@ -19,8 +20,7 @@ public class SchoolUpdateAction extends ManagementAction {
 		System.out.println(school);
 
 		req.setAttribute("school", school);
-		tempStrage = new TempStrage("SchoolUpdateAction", school);
-		passStrage();
+		tempStrage.store("school", school);
 
 		req.getRequestDispatcher("school_update.jsp").forward(req, res);;
 	}

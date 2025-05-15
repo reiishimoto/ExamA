@@ -158,9 +158,11 @@ public class StudentDao extends Dao {
 		Student before = get(student.getNo());
 		String table = student.isAttend() ? "student" : "enrollment";
 
+		System.out.println("student.name:" + student.getName());
+
 		if (before == null) {
 			return insert(student);
-		} else if (before.isAttend() == student.isAttend() && before instanceof ExStudent && !((ExStudent)before).getRawReason().equals("FALSE")) {
+		} else if (before.isAttend() == student.isAttend() || before instanceof ExStudent && ((ExStudent)before).getRawReason().equals("FALSE")) {
 			return update(table, student);
 		} else {
 			return remove(table, student);
@@ -169,6 +171,7 @@ public class StudentDao extends Dao {
 
 	private boolean insert(ExStudent student) throws Exception {
 		String sql;
+		if (get(student.getNo()) != null) return false;
 
 		sql = "insert into student(no, name, ent_year, class_num, is_attend, school_cd) values(?, ?, ?, ?, ?, ? )";
 

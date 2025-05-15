@@ -8,20 +8,16 @@ import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
+import tool.ChainAction;
 
 // 科目情報の更新処理を実行するアクション
+@ChainAction(rootClass=SubjectUpdateAction.class, redirectFor="SubjectList.action", isEnd=true)
 public class SubjectUpdateExecuteAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-    	String subjectCd;
-    	if (tempStrage == null) {
-    		res.sendRedirect("SubjectList.action");
-    		return;
-    	} else {
-    		subjectCd = tempStrage.retrieve("SubjectUpdateAction", Subject.class).getCd();
-    	}
+    	String subjectCd = tempStrage.retrieve("subjectCd", String.class);
 
         // セッションからログインユーザー（教員）情報を取得
         HttpSession session = req.getSession();

@@ -16,31 +16,30 @@
 
 				<div>
 				<label class="mx-auto py-2">入学年度</label><br>
-				<input type="hidden" id="ent_year" name="ent_year" value="${ent_year}"> &nbsp;&nbsp; ${ent_year}<br>
+				&nbsp;&nbsp; ${ent_year}<br>
 				</div>
 				<a></a>
 
 				<div>
 				<label class="mx-auto py-2">学生番号</label><br>
-				<input type="hidden" id="no" name="no" value="${no}"> &nbsp;&nbsp; ${no}<br>
+				&nbsp;&nbsp; ${no}<br>
 				</div>
 				<a></a>
 
 				<div>
 				<label class="mx-auto py-2">氏名</label><br>
-				<input type="hidden" id="name" name="name" value="${name}"> &nbsp;&nbsp; ${name}<br>
+				&nbsp;&nbsp; ${name}<br>
 				</div>
 				<a></a>
 
 				<div>
 				<label class="mx-auto py-2">クラス</label><br>
-				<input type="hidden" id="class_num" name="class_num" value="${my_class}"> &nbsp;&nbsp; ${my_class}<br>
+				&nbsp;&nbsp; ${my_class}<br>
 				</div>
 				<a></a>
 
 				<div class="d-flex align-items-center py-2">
 					<label class="form-check-label me-2" for="isAttend">在学状況</label>
-					<input type="hidden" name="isAttend" value="${isAttend}" />
 					<c:choose>
 						<c:when test="${isAttend == true}">
 							<span>在学中</span>

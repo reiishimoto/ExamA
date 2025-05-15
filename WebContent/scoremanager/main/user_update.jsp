@@ -24,7 +24,7 @@
         <div class="mt-2">
           <label for="user_name">ユーザ名</label><br>
           <input class="form-control" type="text" id="user_name" name="user_name"
-                 value="${user.name}" maxlength="30" placeholder="ユーザ名を入力してください" required />
+                 value="${user.name}" maxlength="10" placeholder="ユーザ名を入力してください" required />
         </div>
 
 		<div class="mx-auto py-2">

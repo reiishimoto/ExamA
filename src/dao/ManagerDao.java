@@ -85,7 +85,7 @@ public class ManagerDao extends Dao {
 
 		while (rs.next()) {
 			String schoolCd = rs.getString("school_cd");
-			School school = cache.lookUp(schoolCd);
+			School school = cache.retrieve(schoolCd);
 			if (school == null) {
 				school = scDao.get(schoolCd);
 				cache.put(schoolCd, school);
@@ -112,7 +112,7 @@ public class ManagerDao extends Dao {
 		while(rs.next()) {
 
 			String schoolCd = rs.getString("school_cd");
-			School school = cache.lookUp(schoolCd);
+			School school = cache.retrieve(schoolCd);
 			if (school == null) {
 				school = scDao.get(schoolCd);
 				cache.put(schoolCd, school);

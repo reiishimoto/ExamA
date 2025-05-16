@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = { "*.action" })
 public class FrontController extends HttpServlet {
+	private static final AnnotationCacher<ChainAction> chainCache = new AnnotationCacher<>(ChainAction.class);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -55,7 +56,7 @@ public class FrontController extends HttpServlet {
 	 * @return 不整合によりリダイレクト処理が発生する場合はリダイレクト先のパスを、それ以外の場合ではnullを返します
 	 */
 	private String chainProcessing(HttpSession session, Action action) {
-		ChainAction chainInfo = action.getClass().getAnnotation(ChainAction.class);
+		ChainAction chainInfo = chainCache.get(action.getClass());
 		if (chainInfo == null) return null;
 
 		TempStrage strage;

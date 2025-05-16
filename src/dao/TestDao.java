@@ -79,7 +79,7 @@ public class TestDao extends Dao {
 			}
 			return test;
 		} catch (Exception e) {
-e.printStackTrace();
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -204,7 +204,7 @@ e.printStackTrace();
 
 	/** キャッシュからデータ取得 */
 	private static Test lookUp(Test test) {
-		return getCache().lookUp(generateKey(test));
+		return getCache().retrieve(generateKey(test));
 	}
 
 	private static void remove(Test test) {

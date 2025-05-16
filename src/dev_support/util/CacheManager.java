@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.function.Function;
 
 public class CacheManager<K, V> {
   private final LinkedHashMap<K, V> cache;
@@ -37,7 +38,7 @@ public class CacheManager<K, V> {
     initCheck();
   }
 
-  public V lookUp(K key) {
+  public V retrieve(K key) {
     return cache.get(key);
   }
 
@@ -49,6 +50,13 @@ public class CacheManager<K, V> {
       }
     }
   }
+
+  public V computeIfAbsent(K key, Function<K, V> mappingFunction) {
+	synchronized (cache) {
+	  return cache.computeIfAbsent(key, mappingFunction);
+	}
+  }
+
 
   public boolean remove(K key) {
     synchronized (cache) {

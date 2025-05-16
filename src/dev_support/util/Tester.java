@@ -145,7 +145,7 @@ public class Tester {
    * @return ランダムに選ばれたテストケースの値、またはテストケースが存在しない場合は {@code TuneCases.NO_CASE}
    */
   private Object getRandomArgument(Parameter parameter) {
-    Object[] argSuggest = suggestedCase.lookUp(parameter);
+    Object[] argSuggest = suggestedCase.retrieve(parameter);
 
     if (argSuggest == null) {
       TuneCases cases = TuneCases.DEFAULT;

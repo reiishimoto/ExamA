@@ -283,8 +283,6 @@ public class StudentDao extends Dao {
 
 			delStudent.setString(1, no); // no をバインド
 
-			connection.setAutoCommit(false);
-
 			count = delStudent.executeUpdate(); // student削除実行
 
 			if (count == 0) {

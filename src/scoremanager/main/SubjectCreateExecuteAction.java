@@ -11,6 +11,7 @@ import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
+import tool.Completion;
 
 public class SubjectCreateExecuteAction extends Action {
 
@@ -48,7 +49,12 @@ public class SubjectCreateExecuteAction extends Action {
             subject.setName(subjectName);
             subject.setSchool(teacher.getSchool());
             subjectDao.save(subject);
-            req.getRequestDispatcher("subject_create_done.jsp").forward(req, res);
+    		Completion completion = Completion.getData("subject_create_done", () -> Completion.createInfo(
+    				"科目登録", "登録が完了しました",
+    				"SubjectCreate.action", "戻る",
+    				"SubjectList.action", "科目一覧"));
+
+    		completion.forward(req, res);
 
         } else {
             // エラーあり → 入力画面に戻す

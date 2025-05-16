@@ -12,7 +12,6 @@
 	<c:param name="content">
 		<section>
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">学生情報表示</h2>
-			<form action="StudentDeleteExecute.action" method="get">
 
 				<div>
 				<label class="mx-auto py-2">入学年度</label><br>
@@ -63,9 +62,8 @@
 				</div>
 
 				<div class="mx-auto py-2">
-					<input class="btn btn-primary" type="submit" name="login" value="削除">
+					<a class="btn btn-denger" href="StudentDeleteExecute.action">削除</a>
 				</div>
-			</form>
 			<a href="StudentList.action">戻る</a>
 		</section>
 	</c:param>

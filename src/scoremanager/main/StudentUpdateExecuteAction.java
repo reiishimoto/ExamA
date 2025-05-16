@@ -10,6 +10,7 @@ import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 
 @ChainAction(locate=ChainLocate.END, rootClass=StudentUpdateAction.class, redirectFor="StudentList.action")
 public class StudentUpdateExecuteAction extends Action {
@@ -71,7 +72,11 @@ public class StudentUpdateExecuteAction extends Action {
 
 
 		// JSPへフォワード 7
-		req.getRequestDispatcher("student_update_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("student_update_done", () -> Completion.createInfo(
+				"生徒情報更新", "更新が完了しました",
+				"StudentList.action", "生徒一覧"));
+
+		completion.forward(req, res);
 	}
 
 }

@@ -8,6 +8,7 @@ import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 
 @ChainAction(locate=ChainLocate.END, rootClass=StudentDeleteAction.class, redirectFor="StudentList.action")
 public class StudentDeleteExecuteAction extends Action {
@@ -25,7 +26,11 @@ public class StudentDeleteExecuteAction extends Action {
 		studentDao.delete(no);
 
 		// JSPへフォワード 7
-		req.getRequestDispatcher("student_delete_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("student_delete_done", () -> Completion.createInfo(
+				"生徒削除", "削除が完了しました",
+				"StudentList.action", "生徒一覧"));
+
+		completion.forward(req, res);
 	}
 
 }

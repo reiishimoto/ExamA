@@ -8,6 +8,7 @@ import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 import tool.ManagementAction;
 
 @ChainAction(locate=ChainLocate.END, rootClass=UserUpdateAction.class, redirectFor="UserList.action")
@@ -33,7 +34,11 @@ public class UserUpdateExecuteAction extends ManagementAction {
 
 		maDao.update(user);
 
-		req.getRequestDispatcher("user_update_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("user_update_done", () -> Completion.createInfo(
+				"ユーザ情報更新", "更新が完了しました",
+				"UserList.action", "ユーザ一覧"));
+
+		completion.forward(req, res);
 	}
 
 }

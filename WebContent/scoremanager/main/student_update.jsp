@@ -45,14 +45,14 @@
 				<div class="d-flex align-items-center py-2">
 					<label class="form-check-label me-2" for="isAttend">在学中</label>
 					<input type="checkbox" id="isAttend" name="isAttend" value="true"
-    					<c:if test="${isAttend == true}">checked</c:if>>
+    					<c:if test="${isAttend }">checked</c:if>>
 					<div id="extraForm" style="display: none;">
 						<label for="extraInfo">&nbsp;&nbsp;&nbsp;&nbsp;追加情報</label>
 						<label>
 							<input type="radio" name="reason" value="卒業" ${reason == '卒業' ? 'checked' : '' }> 卒業
 						</label>
 						<label>
-						<input type="radio" name="reason" value="退学" ${reason == '退学' ? 'checked' : '' }> 退学
+							<input type="radio" name="reason" value="退学" ${reason == '退学' ? 'checked' : '' }> 退学
 						</label>
 					</div>
 				</div>

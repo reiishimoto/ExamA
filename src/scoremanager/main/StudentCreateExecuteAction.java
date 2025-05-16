@@ -11,6 +11,7 @@ import bean.ExStudent;
 import bean.Teacher;
 import dao.StudentDao;
 import tool.Action;
+import tool.Completion;
 
 public class StudentCreateExecuteAction extends Action {
 
@@ -73,7 +74,12 @@ public class StudentCreateExecuteAction extends Action {
 		// JSPへフォワード 7
 		if (errors.isEmpty()) { // エラーメッセージがない場合
 			// 登録完了画面にフォワード
-			req.getRequestDispatcher("student_create_done.jsp").forward(req, res);
+			Completion completion = Completion.getData("student_create_done", () -> Completion.createInfo(
+					"生徒登録", "登録が完了しました",
+					"StudentCreate.action", "戻る",
+					"StudentList.action", "生徒一覧"));
+
+			completion.forward(req, res);
 		} else { // エラーメッセージがある場合
 			// 登録画面にフォワード
 			req.getRequestDispatcher("StudentCreate.action").forward(req, res);

@@ -19,6 +19,7 @@ import dao.TestDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 
 @ChainAction(locate=ChainLocate.END, rootClass=TestRegistAction.class, redirectFor="TestRegist.action")
 public class TestRegistExecuteAction extends Action{
@@ -67,7 +68,12 @@ public class TestRegistExecuteAction extends Action{
 		System.out.println("tests:" + Arrays.toString(tests.toArray()));
 		tesDao.save(tests);
 
-		req.getRequestDispatcher("test_regist_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("test_regist_done", () -> Completion.createInfo(
+				"成績管理", "登録が完了しました",
+				"TestRegist.action", "戻る",
+				"TestList.action", "成績参照"));
+
+		completion.forward(req, res);
 	}
 
 

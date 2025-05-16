@@ -7,6 +7,7 @@ import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 
 @ChainAction(locate=ChainLocate.END, rootClass=SubjectDeleteAction.class, redirectFor="SubjectList.action")
 public class SubjectDeleteExecuteAction extends Action {
@@ -24,6 +25,10 @@ public class SubjectDeleteExecuteAction extends Action {
         subjectDao.delete(cd);
 
         // JSPへフォワード
-        req.getRequestDispatcher("subject_delete_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("subject_delete_done", () -> Completion.createInfo(
+				"科目削除", "削除が完了しました",
+				"SubjectList.action", "科目一覧"));
+
+		completion.forward(req, res);
     }
 }

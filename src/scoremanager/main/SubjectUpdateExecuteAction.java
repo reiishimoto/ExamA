@@ -10,6 +10,7 @@ import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 
 // 科目情報の更新処理を実行するアクション
 @ChainAction(locate=ChainLocate.END, rootClass=SubjectUpdateAction.class, redirectFor="SubjectList.action")
@@ -36,6 +37,10 @@ public class SubjectUpdateExecuteAction extends Action {
         subjectDao.save(subject);
 
         // 完了画面へフォワード
-        req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("subject_update_done", () -> Completion.createInfo(
+				"科目更新", "更新が完了しました",
+				"SubjectList.action", "科目一覧"));
+
+		completion.forward(req, res);
     }
 }

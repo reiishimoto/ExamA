@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.ExTeacher;
 import dao.ManagerDao;
 import dao.SchoolDao;
+import tool.Completion;
 import tool.ManagementAction;
 
 public class UserCreateExecuteAction extends ManagementAction {
@@ -52,7 +53,12 @@ public class UserCreateExecuteAction extends ManagementAction {
 
 		maDao.insert(user);
 
-		req.getRequestDispatcher("user_create_done.jsp").forward(req, res);
+		Completion completion = Completion.getData("user_create_done", () -> Completion.createInfo(
+				"ユーザ登録", "登録が完了しました",
+				"UserCreate.action", "戻る",
+				"UserList.action", "ユーザ一覧"));
+
+		completion.forward(req, res);
 	}
 
 }

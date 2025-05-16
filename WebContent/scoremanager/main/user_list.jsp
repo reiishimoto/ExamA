@@ -17,7 +17,7 @@
 			</div>
 			<form method="get">
 				<div class="row mx-3 mb-3 py-2 align-items-center" id="filter">
-					<div class="col-1">区分</div>
+					<div class="col-2">区分</div>
 					<div class="col-5 form-check text-center">
 						<select class="form-select" id="student-f2-select" name="f">
 						<option value="0" ${param.f == 0 ? 'selected' : '' }>すべて</option>

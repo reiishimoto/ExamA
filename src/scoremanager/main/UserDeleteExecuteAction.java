@@ -8,6 +8,7 @@ import bean.ExTeacher;
 import dao.ManagerDao;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.Completion;
 import tool.ManagementAction;
 
 @ChainAction(locate=ChainLocate.END, rootClass=UserDeleteAction.class, redirectFor="UserList.action")
@@ -23,7 +24,11 @@ public class UserDeleteExecuteAction extends ManagementAction {
 		if (((ExTeacher)session.getAttribute("user")).getId().equals(user.getId())) {
 			res.sendRedirect("../index.jsp");
 		} else {
-			req.getRequestDispatcher("user_delete_done.jsp").forward(req, res);
+			Completion completion = Completion.getData("user_delete_done", () -> Completion.createInfo(
+					"ユーザ情報削除", "削除が完了しました",
+					"UserList.action", "ユーザ一覧"));
+
+			completion.forward(req, res);
 		}
 	}
 

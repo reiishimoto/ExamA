@@ -18,7 +18,7 @@ public class ClassCreateExecuteAction extends Action {
 		ClassNumDao classDao = new ClassNumDao();
 		classDao.insert(classNum, teacher.getSchool());
 
-		Completion completion = Completion.getData("class_create_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("class_create_done", Completion.createInfo(
 				"クラス情報登録", "登録が完了しました",
 				"ClassCreate.action", "戻る",
 				"ClassList.action", "クラス一覧"));

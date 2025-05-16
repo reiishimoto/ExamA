@@ -21,7 +21,7 @@ public class SchoolCreateExecuteAction extends ManagementAction {
 
 		new SchoolDao().save(school);
 
-		Completion completion = Completion.getData("school_create_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("school_create_done", Completion.createInfo(
 				"学校登録", "登録が完了しました",
 				"SchoolCreate.action", "戻る",
 				"SchoolList.action", "科目一覧"));

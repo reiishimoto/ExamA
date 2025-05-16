@@ -25,7 +25,7 @@ public class SubjectDeleteExecuteAction extends Action {
         subjectDao.delete(cd);
 
         // JSPへフォワード
-		Completion completion = Completion.getData("subject_delete_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("subject_delete_done", Completion.createInfo(
 				"科目削除", "削除が完了しました",
 				"SubjectList.action", "科目一覧"));
 

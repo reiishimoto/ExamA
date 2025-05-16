@@ -22,7 +22,7 @@ public class SchoolUpdateExecuteAction extends ManagementAction {
 		school.setName(name);
 		scDao.save(school);
 
-		Completion completion = Completion.getData("school_update_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("school_update_done", Completion.createInfo(
 				"学校更新", "更新が完了しました",
 				"SchoolList.action", "学校一覧"));
 

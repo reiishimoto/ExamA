@@ -209,6 +209,7 @@ public class Tester {
    * @param cases 使用するテストケースが格納された配列。各要素は {@code clazz} のインスタンスである必要があります。
    * @param <C> 引数のクラス型
    */
+  @SuppressWarnings("unchecked")
   public <C> void setTestArguments(Class<C> clazz, C... cases) {
     argumentsMap.put(clazz, cases);
   }

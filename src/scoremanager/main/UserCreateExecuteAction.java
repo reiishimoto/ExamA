@@ -53,7 +53,7 @@ public class UserCreateExecuteAction extends ManagementAction {
 
 		maDao.insert(user);
 
-		Completion completion = Completion.getData("user_create_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("user_create_done", Completion.createInfo(
 				"ユーザ登録", "登録が完了しました",
 				"UserCreate.action", "戻る",
 				"UserList.action", "ユーザ一覧"));

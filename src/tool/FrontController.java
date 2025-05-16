@@ -59,20 +59,29 @@ public class FrontController extends HttpServlet {
 		ChainAction chainInfo = chainCache.get(action.getClass());
 		if (chainInfo == null) return null;
 
-		TempStrage strage;
 		ChainLocate locate = chainInfo.locate();
+
 		if (locate == ChainLocate.ROOT) {
-			strage = new TempStrage(action.getClass());
-			session.setAttribute(ChainAction.KEY, strage);
-		} else {
-			strage = (TempStrage) session.getAttribute(ChainAction.KEY);
-			if (locate != ChainLocate.OPTIONAL && (
-					strage == null || !strage.isSendFrom(chainInfo.rootClass()))) {
-				return chainInfo.redirectFor();
-			}
-			if(locate == ChainLocate.END) session.setAttribute(ChainAction.KEY, null);
+			TempStrage newStrage = new TempStrage(action.getClass());
+			session.setAttribute(ChainAction.KEY, newStrage);
+			action.setStrage(newStrage);
+			return null;
 		}
+
+		TempStrage strage = (TempStrage) session.getAttribute(ChainAction.KEY);
+
+		if (locate != ChainLocate.OPTIONAL && !isValidTransition(strage, chainInfo.rootClass())) {
+			return chainInfo.redirectFor();
+		} else if (locate == ChainLocate.END) {
+			session.removeAttribute(ChainAction.KEY);
+		}
+
 		action.setStrage(strage);
 		return null;
 	}
+
+	private boolean isValidTransition(TempStrage strage, Class<? extends Action> expectedRoot) {
+	    return strage != null && strage.isSendFrom(expectedRoot);
+	}
+
 }

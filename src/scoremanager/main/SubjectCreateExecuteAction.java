@@ -49,7 +49,7 @@ public class SubjectCreateExecuteAction extends Action {
             subject.setName(subjectName);
             subject.setSchool(teacher.getSchool());
             subjectDao.save(subject);
-    		Completion completion = Completion.getData("subject_create_done", () -> Completion.createInfo(
+    		Completion completion = Completion.getData("subject_create_done", Completion.createInfo(
     				"科目登録", "登録が完了しました",
     				"SubjectCreate.action", "戻る",
     				"SubjectList.action", "科目一覧"));

@@ -28,7 +28,7 @@ public class ClassDeleteExecuteAction extends Action {
 
 		classDao.delete(classNum);
 
-		Completion completion = Completion.getData("class_delete_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("class_delete_done", Completion.createInfo(
 				"クラス削除", "削除が完了しました",
 				"ClassList.action", "クラス一覧"));
 

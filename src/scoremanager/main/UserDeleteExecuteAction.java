@@ -24,7 +24,7 @@ public class UserDeleteExecuteAction extends ManagementAction {
 		if (((ExTeacher)session.getAttribute("user")).getId().equals(user.getId())) {
 			res.sendRedirect("../index.jsp");
 		} else {
-			Completion completion = Completion.getData("user_delete_done", () -> Completion.createInfo(
+			Completion completion = Completion.getData("user_delete_done", Completion.createInfo(
 					"ユーザ情報削除", "削除が完了しました",
 					"UserList.action", "ユーザ一覧"));
 

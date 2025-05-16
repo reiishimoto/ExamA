@@ -34,7 +34,7 @@ public class UserUpdateExecuteAction extends ManagementAction {
 
 		maDao.update(user);
 
-		Completion completion = Completion.getData("user_update_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("user_update_done", Completion.createInfo(
 				"ユーザ情報更新", "更新が完了しました",
 				"UserList.action", "ユーザ一覧"));
 

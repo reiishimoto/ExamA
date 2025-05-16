@@ -72,7 +72,7 @@ public class StudentUpdateExecuteAction extends Action {
 
 
 		// JSPへフォワード 7
-		Completion completion = Completion.getData("student_update_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("student_update_done", Completion.createInfo(
 				"生徒情報更新", "更新が完了しました",
 				"StudentList.action", "生徒一覧"));
 

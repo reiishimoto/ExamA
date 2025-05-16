@@ -68,7 +68,7 @@ public class TestRegistExecuteAction extends Action{
 		System.out.println("tests:" + Arrays.toString(tests.toArray()));
 		tesDao.save(tests);
 
-		Completion completion = Completion.getData("test_regist_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("test_regist_done", Completion.createInfo(
 				"成績管理", "登録が完了しました",
 				"TestRegist.action", "戻る",
 				"TestList.action", "成績参照"));

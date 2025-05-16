@@ -74,7 +74,7 @@ public class StudentCreateExecuteAction extends Action {
 		// JSPへフォワード 7
 		if (errors.isEmpty()) { // エラーメッセージがない場合
 			// 登録完了画面にフォワード
-			Completion completion = Completion.getData("student_create_done", () -> Completion.createInfo(
+			Completion completion = Completion.getData("student_create_done", Completion.createInfo(
 					"生徒登録", "登録が完了しました",
 					"StudentCreate.action", "戻る",
 					"StudentList.action", "生徒一覧"));

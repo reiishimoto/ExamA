@@ -37,7 +37,7 @@ public class SubjectUpdateExecuteAction extends Action {
         subjectDao.save(subject);
 
         // 完了画面へフォワード
-		Completion completion = Completion.getData("subject_update_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("subject_update_done", Completion.createInfo(
 				"科目更新", "更新が完了しました",
 				"SubjectList.action", "科目一覧"));
 

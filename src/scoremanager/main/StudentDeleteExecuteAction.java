@@ -26,7 +26,7 @@ public class StudentDeleteExecuteAction extends Action {
 		studentDao.delete(no);
 
 		// JSPへフォワード 7
-		Completion completion = Completion.getData("student_delete_done", () -> Completion.createInfo(
+		Completion completion = Completion.getData("student_delete_done", Completion.createInfo(
 				"生徒削除", "削除が完了しました",
 				"StudentList.action", "生徒一覧"));
 

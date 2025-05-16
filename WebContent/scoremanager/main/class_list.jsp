@@ -19,11 +19,13 @@
 						<tr>
 							<th>クラス名</th>
 							<th>学校コード</th>
+							<th></th>
 						</tr>
 						<c:forEach var="classData" items="${classes}">
 							<tr>
 								<td>${classData.class_num}</td>
 								<td>${classData.school.name}</td>
+								<td><a href="ClassDelete.action?num=${classData.class_num }">削除</a>
 							</tr>
 						</c:forEach>
 					</table>

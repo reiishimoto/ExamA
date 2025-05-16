@@ -65,7 +65,8 @@ public class FrontController extends HttpServlet {
 			session.setAttribute(ChainAction.KEY, strage);
 		} else {
 			strage = (TempStrage) session.getAttribute(ChainAction.KEY);
-			if (strage == null || !strage.isSendFrom(chainInfo.rootClass())) {
+			if (locate != ChainLocate.OPTIONAL && (
+					strage == null || !strage.isSendFrom(chainInfo.rootClass()))) {
 				return chainInfo.redirectFor();
 			}
 			if(locate == ChainLocate.END) session.setAttribute(ChainAction.KEY, null);

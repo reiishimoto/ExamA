@@ -14,7 +14,7 @@
         <p>ほんとに！？消去するよ！しちゃうよ？いいんだね？</p>
 		<h5 class="text-danger">⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告⚠️警告</h5>
         <div class="mt-3">
-          <a class="btn btn-denger" href="SubjectDeleteExecute.action">削除</a>
+          <a class="btn btn-danger" href="SubjectDeleteExecute.action">削除</a>
         </div>
       <div class="mt-3">
         <a href="SubjectList.action">戻る</a>

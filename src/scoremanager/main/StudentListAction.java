@@ -64,7 +64,7 @@ public class StudentListAction extends Action {
 			//指定なしの場合
 			//全学生情報を取得
 			students = sDao.filter(teacher.getSchool(), isAttend);
-		} else {
+		} else if (tempStrage == null) {
 			errors.put("f1", "クラスを指定する場合は入学年度も指定してください");
 			request.setAttribute("errors", errors);
 			//全学生情報を取得

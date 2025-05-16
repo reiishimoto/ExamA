@@ -11,10 +11,6 @@ import bean.School;
 
 public class ClassNumDao extends Dao{
 
-//	public ClassNum get(String class_num, School school) throws Exception {
-//
-//	}
-
 	public ClassNum get(String num, School school) throws Exception {
 		String sql = "select * from class_num where class_num=? AND school_cd=?";
 
@@ -99,9 +95,29 @@ public class ClassNumDao extends Dao{
 			return count > 0;
 		}
 	}
-//
-//	public boolean save(ClassNum classNum, String newClassNum) throws Exception {
-//
-//	}
 
+	public boolean delete(ClassNum classNum) throws Exception {
+		String cnSql = "delete from class_num where school_cd=? AND class_num=?";
+		String stSql = "delete from student where school_cd=? AND class_num=?";
+
+		try (Connection connection = getConnection();
+			 PreparedStatement delClassNum = connection.prepareStatement(cnSql)) {
+			connection.setAutoCommit(false);
+
+			delClassNum.setString(1, classNum.getSchool().getCd());
+			delClassNum.setString(2, classNum.getClass_num());
+			int count = delClassNum.executeUpdate();
+			boolean success = count>0;
+			if (success) {
+				try (PreparedStatement delStudent = connection.prepareStatement(stSql)) {
+					delStudent.setString(1, classNum.getSchool().getCd());
+					delStudent.setString(2, classNum.getClass_num());
+
+					delStudent.execute();
+				}
+			}
+			connection.commit();
+			return success;
+		}
+	}
 }

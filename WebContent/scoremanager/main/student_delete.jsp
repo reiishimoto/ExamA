@@ -62,7 +62,7 @@
 				</div>
 
 				<div class="mx-auto py-2">
-					<a class="btn btn-denger" href="StudentDeleteExecute.action">削除</a>
+					<a class="btn btn-danger" href="StudentDeleteExecute.action">削除</a>
 				</div>
 			<a href="StudentList.action">戻る</a>
 		</section>

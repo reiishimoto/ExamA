@@ -9,7 +9,7 @@
         <h5 class="text-danger">消すよ？</h5>
         <p>${user.name}(${user.id})</p>
         <div class="mt-3">
-          <a class="btn btn-denger" href="UserDeleteExecute.action">削除</a>
+          <a class="btn btn-danger" href="UserDeleteExecute.action">削除</a>
         </div>
       <div class="mt-3">
         <a href="UserList.action">戻る</a>

@@ -12,7 +12,7 @@
                  value="${cd}" maxlength="10" placeholder="クラス番号を入力してください" required />
         </div>
         <div class="mt-2 text-warning">${errors.cd}</div>
-
+		<br>
         <p>
 			学校情報: ${school.name }(${school.cd })
         </p>

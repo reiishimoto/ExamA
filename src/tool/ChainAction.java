@@ -44,6 +44,7 @@ public @interface ChainAction {
      * <li>{@link ChainLocate#ROOT} - チェーンの開始点（TempStrage を生成）</li>
      * <li>{@link ChainLocate#MIDDLE} - チェーンの途中（整合性チェック）</li>
      * <li>{@link ChainLocate#END} - チェーンの終端（TempStrage を破棄）</li>
+     * <li>{@link ChainLocate#OPTIONAL} - rootClassからのチェーンを許容するが、必須ではない</li>
      * </ul>
      */
     ChainLocate locate() default ChainLocate.MIDDLE;

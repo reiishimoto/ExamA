@@ -36,7 +36,7 @@ import javax.servlet.http.HttpSession;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ChainAction {
-    public static final String KEY = "onetime_structure_key";
+    public static final String KEY = new String("CHAIN_ACTION_KEY");
 
     /**
      * このアクションの位置を指定 default: {@link ChainLocate#MIDDLE}<br>

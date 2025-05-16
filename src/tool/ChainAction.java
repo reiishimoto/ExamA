@@ -56,7 +56,7 @@ public @interface ChainAction {
     Class<? extends Action> rootClass() default Action.class;
 
     /**
-     * 不正な遷移時のリダイレクト先 default: `"Menu.action"`<br>
+     * 不正な遷移時のリダイレクト先 default: "Menu.action"<br>
      * {@link #rootClass} の整合性が取れない場合、このパスへリダイレクトされる
      */
     String redirectFor() default "Menu.action";

@@ -33,7 +33,7 @@ public class SubjectDeleteAction extends Action {
 
 		// レスポンス値をセット
 		req.setAttribute("subject", subject);
-		tempStrage.store("subjectCd", cd);
+		getStrage().store("subjectCd", cd);
 
 		// JSPへフォワード
 		req.getRequestDispatcher("subject_delete.jsp").forward(req, res);

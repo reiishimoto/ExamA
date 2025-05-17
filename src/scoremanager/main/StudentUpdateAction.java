@@ -80,7 +80,7 @@ public class StudentUpdateAction extends Action {
 		}
 
 		// ワンタイムストラクチャを設定
-		tempStrage.store("student", student);
+		getStrage().store("student", student);
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_update.jsp").forward(req, res);

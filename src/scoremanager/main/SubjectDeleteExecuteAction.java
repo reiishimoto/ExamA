@@ -18,7 +18,7 @@ public class SubjectDeleteExecuteAction extends Action {
         // リクエストパラメータの取得
         String cd;
 
-    	cd = tempStrage.retrieve("subjectCd", String.class);
+    	cd = getStrage().retrieve("subjectCd", String.class);
 
         // 削除処理
         SubjectDao subjectDao = new SubjectDao();

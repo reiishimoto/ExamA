@@ -20,7 +20,7 @@ public class StudentDeleteExecuteAction extends Action {
 		StudentDao studentDao = new StudentDao();
 
 		// リクエストパラメーターの取得
-		String no = tempStrage.retrieve("no", String.class);
+		String no = getStrage().retrieve("no", String.class);
 
 		// 変更内容を保存save
 		studentDao.delete(no);

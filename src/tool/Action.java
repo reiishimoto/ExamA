@@ -4,8 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public abstract class Action {
-	protected TempStrage tempStrage;
+public abstract class Action implements AutoCloseable {
+	private static final ThreadLocal<TempStrage> localStrage = ThreadLocal.withInitial(() -> null);
+	private ChainAction chainInfo;
 
 	public abstract void execute(
 			HttpServletRequest req, HttpServletResponse res
@@ -20,7 +21,25 @@ public abstract class Action {
 		execute(req, res);
 	}
 
-	public void setStrage(TempStrage strage) {
-		tempStrage = strage;
+	public void setChainInfo(ChainAction chain) {
+		chainInfo = chain;
+	}
+	public ChainAction getChainInfo() {
+		return chainInfo;
+	}
+
+	protected TempStrage getStrage() {
+		return localStrage.get();
+	}
+	public void setLocalStrage(TempStrage strage) {
+		localStrage.set(strage);
+	}
+	public void creanup() {
+		localStrage.remove();
+	}
+
+	@Override
+	public void close() {
+		creanup();
 	}
 }

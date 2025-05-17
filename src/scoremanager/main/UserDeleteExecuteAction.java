@@ -17,7 +17,7 @@ public class UserDeleteExecuteAction extends ManagementAction {
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
-		ExTeacher user = tempStrage.retrieve("user", ExTeacher.class);
+		ExTeacher user = getStrage().retrieve("user", ExTeacher.class);
 
 		ManagerDao maDao = new ManagerDao();
 		maDao.delete(user);

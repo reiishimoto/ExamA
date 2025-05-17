@@ -22,6 +22,7 @@ import dao.TestDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
+import tool.TempStrage;
 
 @ChainAction(locate=ChainLocate.ROOT)
 public class TestRegistAction extends Action {
@@ -72,7 +73,7 @@ public class TestRegistAction extends Action {
                 } else {
                     errors.put("filter", "指定された科目が存在しません。");
                 }
-
+                TempStrage tempStrage = getStrage();
                 tempStrage.store("f1", entYear);
                 tempStrage.store("f2", classNum);
                 tempStrage.store("f3", subjectCd);

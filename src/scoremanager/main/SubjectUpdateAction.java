@@ -37,7 +37,7 @@ public class SubjectUpdateAction extends Action {
 		} else {
 			// 科目が見つかった場合はJSPに渡すためにセット
 			req.setAttribute("subject", subject);
-			tempStrage.store("subjectCd", cd);
+			getStrage().store("subjectCd", cd);
 		}
 
         // 科目情報変更画面にフォワード

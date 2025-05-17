@@ -53,7 +53,7 @@ public class StudentDeleteAction extends Action {
 		// リクエストに在学フラグをセット
 		req.setAttribute("isAttend", isAttend);
 
-		tempStrage.store("no", no);
+		getStrage().store("no", no);
 
 		// JSPへフォワード 7
 		req.getRequestDispatcher("student_delete.jsp").forward(req, res);

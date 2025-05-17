@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  *
  * <p>{@link FrontController#chainProcessing(HttpSession, Action)} によって管理され、
  * ルートアクション時には新しい TempStrage インスタンスが生成され、
- * チェイン終端 (isEnd = true) の場合はセッションから削除されます。</p>
+ * チェイン終端 (locate=END) の場合はセッションから削除されます。</p>
  */
 public class TempStrage {
 	/** ストレージが関連付けられているルートクラス */
@@ -50,7 +50,7 @@ public class TempStrage {
 	 * @return 指定された型のオブジェクト、またはnull
 	 */
 	public <T> T retrieve(String key, Class<T> type) {
-		return type.cast(map.get(key)); // 🚀 安全なキャスト
+		return type.cast(map.get(key));
 	}
 
 	/**

@@ -10,9 +10,10 @@ public abstract class EarlyAction extends Action {
 
 	@Override
 	public void action(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		HttpSession session = req.getSession();
-		session.removeAttribute("user");
-		session.removeAttribute("isManager");
+		HttpSession session = req.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
 		execute(req, res);
 	}
 }

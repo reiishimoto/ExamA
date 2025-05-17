@@ -22,7 +22,7 @@ public class UserUpdateAction extends ManagementAction {
 		ManagerDao maDao = new ManagerDao();
 		user = maDao.fetchInfo(req.getParameter("id"));
 
-		tempStrage.store("user", user);
+		getStrage().store("user", user);
 		req.setAttribute("user", user);
 		req.setAttribute("schools", scDao.list());
 		req.getRequestDispatcher("user_update.jsp").forward(req, res);

@@ -17,7 +17,7 @@ public class UserUpdateExecuteAction extends ManagementAction {
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		ExTeacher before = tempStrage.retrieve("user", ExTeacher.class);
+		ExTeacher before = getStrage().retrieve("user", ExTeacher.class);
 
 		String name = req.getParameter("user_name");
 		String schoolCd = req.getParameter("school_cd");

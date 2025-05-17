@@ -19,7 +19,7 @@ public class SubjectUpdateExecuteAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-    	String subjectCd = tempStrage.retrieve("subjectCd", String.class);
+    	String subjectCd = getStrage().retrieve("subjectCd", String.class);
 
         // セッションからログインユーザー（教員）情報を取得
         HttpSession session = req.getSession();

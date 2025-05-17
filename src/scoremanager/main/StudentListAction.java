@@ -48,7 +48,7 @@ public class StudentListAction extends Action {
 		}
 
 		List<Integer> entYearSet = new ArrayList<>();
-		for (int i = year - 10; i < year + 1; i++) {
+		for (int i = year; i > year - 10; i--) {
 			entYearSet.add(i);
 		}
 
@@ -64,7 +64,7 @@ public class StudentListAction extends Action {
 			//指定なしの場合
 			//全学生情報を取得
 			students = sDao.filter(teacher.getSchool(), isAttend);
-		} else if (tempStrage == null) {
+		} else {
 			errors.put("f1", "クラスを指定する場合は入学年度も指定してください");
 			request.setAttribute("errors", errors);
 			//全学生情報を取得

@@ -23,7 +23,7 @@ public class ClassDeleteExecuteAction extends Action {
 		ClassNumDao classDao = new ClassNumDao();
 
 		ClassNum classNum = new ClassNum();
-		classNum.setClass_num(tempStrage.retrieve("num", String.class));
+		classNum.setClass_num(getStrage().retrieve("num", String.class));
 		classNum.setSchool(teacher.getSchool());
 
 		classDao.delete(classNum);

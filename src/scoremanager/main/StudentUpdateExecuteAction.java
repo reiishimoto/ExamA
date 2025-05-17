@@ -18,7 +18,7 @@ public class StudentUpdateExecuteAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		Student target = tempStrage.retrieve("student", Student.class);
+		Student target = getStrage().retrieve("student", Student.class);
 
 		// ローカル変数の指定 1
 		String name = "";

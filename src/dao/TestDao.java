@@ -136,7 +136,7 @@ public class TestDao extends Dao {
 			con.setAutoCommit(false);
 
 			for (Test test : list) {
-				if (lookUp(test) == null) save(test, con);
+				save(test, con);
 			}
 
 			con.commit();
@@ -156,7 +156,7 @@ public class TestDao extends Dao {
 	 * @throws SQLException
 	 */
 	private boolean save(Test test, Connection con) throws SQLException {
-		Test before = get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo());
+		Test before = lookUp(test) != null ? lookUp(test) : get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo());
 		if (before == null) {
 			String sql = "INSERT INTO test (student_no, subject_cd, school_cd, no, point, class_num) values (?, ?, ?, ?, ?, ?);";
 

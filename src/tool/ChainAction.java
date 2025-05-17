@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
  * <li>{@link ChainLocate#ROOT} の場合、{@link TempStrage} インスタンスを生成し、セッションに保存</li>
  * <li>{@link ChainLocate#MIDDLE} の場合、既存の {@link TempStrage} の整合性チェックを実施</li>
  * <li>{@link ChainLocate#END} の場合、処理完了後に {@link TempStrage} を破棄</li>
+ * <li>{@link ChainLocate#OPTIONAL} の場合、整合性チェックは行うがリダイレクトはしない</li>
  * </ul>
  *
  * <p>ルートでない場合、以下のいずれかの条件が成立すると「不正な状態」と判断され、<br>

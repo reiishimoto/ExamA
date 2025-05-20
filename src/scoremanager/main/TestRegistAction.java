@@ -126,6 +126,8 @@ public class TestRegistAction extends Action {
         req.setAttribute("students", students);
         req.setAttribute("scoresMap", scoresMap);
         req.setAttribute("errors", errors);
+        getStrage().store("scores", scoresMap);
+        getStrage().store("students", students);
 
         req.getRequestDispatcher("test_regist.jsp").forward(req, res);
     }

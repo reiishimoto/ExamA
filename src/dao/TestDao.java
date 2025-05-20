@@ -1,6 +1,5 @@
 package dao;
 
-import java.lang.ref.SoftReference;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +15,10 @@ import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Test;
-import dev_support.util.CacheManager;
+import bean.TestInfo;
 import dev_support.util.ExceptUtils;
 
 public class TestDao extends Dao {
-
-	private static SoftReference<CacheManager<String, Test>> cacheRef = new SoftReference<>(null);
 	private static final String baseSql = "SELECT * FROM test ";
 
 	private List<Test> postFilter(ResultSet rs, School school) throws SQLException {
@@ -50,7 +47,6 @@ public class TestDao extends Dao {
 		test.setPoint(rs.getInt("point"));
 
 		list.add(test);
-		put(test);
 		}
 		return list;
 	}
@@ -128,14 +124,14 @@ public class TestDao extends Dao {
 	 * @param list 更新対象のtestのリスト
 	 * @return トランザクション処理が正常に成功すればtrue, 失敗し、ロールバックした場合はfalse
 	 */
-	public boolean save(List<Test> list) {
+	public boolean save(List<TestInfo> list) {
 		boolean result = false;
 
 		// try-with-resourcesでConnectionを管理
 		try (Connection con = getConnection()) {
 			con.setAutoCommit(false);
 
-			for (Test test : list) {
+			for (TestInfo test : list) {
 				save(test, con);
 			}
 
@@ -155,12 +151,9 @@ public class TestDao extends Dao {
 	 * @return
 	 * @throws SQLException
 	 */
-	private boolean save(Test test, Connection con) throws SQLException {
-		Test before = lookUp(test) != null ? lookUp(test) : get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo());
-		if (before == null) {
+	private boolean save(TestInfo test, Connection con) throws SQLException {
+		if (test.isInsert()) {
 			String sql = "INSERT INTO test (student_no, subject_cd, school_cd, no, point, class_num) values (?, ?, ?, ?, ?, ?);";
-
-			put(test);
 
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				System.out.println(Arrays.toString(new Object[] {test.getNo(), test.getPoint(), test.getClassNum(), test.getStudent().getNo()}));
@@ -174,10 +167,8 @@ public class TestDao extends Dao {
 
 				return ps.execute();
 			}
-		} else if (test.getPoint() != before.getPoint() || test.getClassNum() != before.getClassNum()) {
+		} else {
 			String sql = "UPDATE test SET point = ?, class_num = ? WHERE student_no = ? AND test.no = ?;";
-			remove(before);
-			put(test);
 
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 
@@ -188,37 +179,7 @@ public class TestDao extends Dao {
 
 				return ps.execute();
 			}
-		} else {
-			return false;
 		}
-	}
-
-	private static synchronized CacheManager<String, Test> getCache() {
-		CacheManager<String, Test> cache = cacheRef.get();
-		if (cache == null) {
-			cache = new CacheManager<>(200);
-			cacheRef = new SoftReference<CacheManager<String,Test>>(cache);
-		}
-		return cache;
-	}
-
-	/** キャッシュからデータ取得 */
-	private static Test lookUp(Test test) {
-		return getCache().retrieve(generateKey(test));
-	}
-
-	private static void remove(Test test) {
-		getCache().remove(generateKey(test));
-	}
-
-	/** キャッシュにデータ保存 */
-	private static void put(Test test) {
-		CacheManager<String, Test> cache = getCache();
-		cache.put(generateKey(test), test);
-	}
-
-	private static String generateKey(Test test) {
-		return test.getStudent().getNo() + "_" + test.getSubject().getCd() + "_" + test.getSchool().getCd() + "_" + test.getNo();
 	}
 
 	/**

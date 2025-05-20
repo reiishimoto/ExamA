@@ -16,7 +16,7 @@ public class Completion {
 
 	private String title;
 	private String message;
-	private List<LinkData> links = new ArrayList<>();
+	private LinkData[] links;
 
 	private Completion(){}
 
@@ -26,11 +26,26 @@ public class Completion {
 			Completion instance = new Completion();
 			instance.title = infoMap.remove("title");
 			instance.message = infoMap.remove("message");
+			List<LinkData> list = new ArrayList<>();
 			for (Map.Entry<String, String> link: infoMap.entrySet()) {
-				instance.links.add(new LinkData(link.getKey(), link.getValue()));
+				list.add(new LinkData(link.getKey(), link.getValue()));
 			}
+			instance.links = list.toArray(new LinkData[list.size()]);
 			return instance;
 		});
+	}
+
+	public static Completion getDisposable(String linkName, Supplier<Map<String, String>> infomations) {
+		Map<String, String> infoMap = infomations.get();
+		Completion instance = new Completion();
+		instance.title = infoMap.remove("title");
+		instance.message = infoMap.remove("message");
+		List<LinkData> list = new ArrayList<>();
+		for (Map.Entry<String, String> link: infoMap.entrySet()) {
+			list.add(new LinkData(link.getKey(), link.getValue()));
+		}
+		instance.links = list.toArray(new LinkData[list.size()]);
+		return instance;
 	}
 
 	public void forward(HttpServletRequest req, HttpServletResponse res) throws Exception {

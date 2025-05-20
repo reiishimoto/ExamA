@@ -92,10 +92,6 @@
 <h3>科目: <c:out value="${subject_name}"/>（<c:out value="${f4}"/>回）</h3>
 
         <form action="TestRegistExecute.action" method="get">
-<input type="hidden" name="f1" value="${f1}">
-<input type="hidden" name="f2" value="${f2}">
-<input type="hidden" name="f3" value="${f3}">
-<input type="hidden" name="f4" value="${f4}">
 
             <table class="table table-striped table-bordered">
 <thead>

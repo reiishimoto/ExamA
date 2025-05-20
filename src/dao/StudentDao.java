@@ -15,8 +15,7 @@ public class StudentDao extends Dao {
 
 	private static final String singleSql = "select * from student";
 	private static final String unionSql =
-			"select * from (select no, name, ent_year, class_num, cast(is_attend as varchar) as is_attend, school_cd from student union select * from enrollment)"
-			+ " as all ";
+"select * from (select no, name, ent_year, class_num, cast(is_attend as varchar) as is_attend, school_cd from student union select * from enrollment) as all ";
 
 	public Student get (String no)throws Exception{
 

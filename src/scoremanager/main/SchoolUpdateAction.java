@@ -22,7 +22,7 @@ public class SchoolUpdateAction extends ManagementAction {
 		System.out.println(school);
 
 		req.setAttribute("school", school);
-		getStrage().store("school", school);
+		getStorage().store("school", school);
 
 		req.getRequestDispatcher("school_update.jsp").forward(req, res);;
 	}

@@ -16,7 +16,7 @@ public class SchoolUpdateExecuteAction extends ManagementAction {
 
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		School school = getStrage().retrieve("school", School.class);
+		School school = getStorage().retrieve("school", School.class);
 		String name = req.getParameter("school_name");
 		SchoolDao scDao = Dao.getInstance(SchoolDao.class);
 

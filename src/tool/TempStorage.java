@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * ルートアクション時には新しい TempStrage インスタンスが生成され、
  * チェイン終端 (locate=END) の場合はセッションから削除されます。</p>
  */
-public class TempStrage {
+public class TempStorage {
 	/** ストレージが関連付けられているルートクラス */
 	private final Class<?> rootClass;
 
@@ -29,7 +29,7 @@ public class TempStrage {
 	 * 新しいストレージを作成し、特定のルートクラスと紐付ける
 	 * @param root ストレージのルートクラス
 	 */
-	public TempStrage(Class<?> root) {
+	public TempStorage(Class<?> root) {
 		this.rootClass = root;
 	}
 

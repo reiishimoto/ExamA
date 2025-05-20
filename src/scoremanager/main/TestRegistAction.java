@@ -23,7 +23,7 @@ import dao.TestDao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
-import tool.TempStrage;
+import tool.TempStorage;
 
 @ChainAction(locate=ChainLocate.ROOT)
 public class TestRegistAction extends Action {
@@ -74,7 +74,7 @@ public class TestRegistAction extends Action {
                 } else {
                     errors.put("filter", "指定された科目が存在しません。");
                 }
-                TempStrage tempStrage = getStrage();
+                TempStorage tempStrage = getStorage();
                 tempStrage.store("f1", entYear);
                 tempStrage.store("f2", classNum);
                 tempStrage.store("f3", subjectCd);
@@ -127,8 +127,8 @@ public class TestRegistAction extends Action {
         req.setAttribute("students", students);
         req.setAttribute("scoresMap", scoresMap);
         req.setAttribute("errors", errors);
-        getStrage().store("scores", scoresMap);
-        getStrage().store("students", students);
+        getStorage().store("scores", scoresMap);
+        getStorage().store("students", students);
 
         req.getRequestDispatcher("test_regist.jsp").forward(req, res);
     }

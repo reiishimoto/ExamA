@@ -34,7 +34,7 @@ public class SubjectDeleteAction extends Action {
 
 		// レスポンス値をセット
 		req.setAttribute("subject", subject);
-		getStrage().store("subjectCd", cd);
+		getStorage().store("subjectCd", cd);
 
 		// JSPへフォワード
 		req.getRequestDispatcher("subject_delete.jsp").forward(req, res);

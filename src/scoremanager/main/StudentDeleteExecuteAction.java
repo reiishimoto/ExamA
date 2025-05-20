@@ -21,7 +21,7 @@ public class StudentDeleteExecuteAction extends Action {
 		StudentDao studentDao = Dao.getInstance(StudentDao.class);
 
 		// リクエストパラメーターの取得
-		String no = getStrage().retrieve("no", String.class);
+		String no = getStorage().retrieve("no", String.class);
 
 		// 変更内容を保存save
 		studentDao.delete(no);

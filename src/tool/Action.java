@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public abstract class Action implements AutoCloseable {
-	private static final ThreadLocal<TempStrage> localStrage = new ThreadLocal<>();
+	private static final ThreadLocal<TempStorage> localStorage = new ThreadLocal<>();
 	private ChainAction chainInfo;
 
 	public abstract void execute(
@@ -28,14 +28,14 @@ public abstract class Action implements AutoCloseable {
 		return chainInfo;
 	}
 
-	protected TempStrage getStrage() {
-		return localStrage.get();
+	protected TempStorage getStorage() {
+		return localStorage.get();
 	}
-	public void setLocalStrage(TempStrage strage) {
-		localStrage.set(strage);
+	public void setLocalStorage(TempStorage strage) {
+		localStorage.set(strage);
 	}
 	public void creanup() {
-		localStrage.remove();
+		localStorage.remove();
 	}
 
 	@Override

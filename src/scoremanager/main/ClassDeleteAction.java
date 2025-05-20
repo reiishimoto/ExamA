@@ -20,7 +20,7 @@ public class ClassDeleteAction extends Action {
 		HttpSession session = req.getSession();
 		Teacher teacher = (Teacher) session.getAttribute("user");
 		String num = req.getParameter("num");
-		getStrage().store("num", num);
+		getStorage().store("num", num);
 		ClassNumDao classDao = Dao.getInstance(ClassNumDao.class);
 		ClassNum classData = classDao.get(num, teacher.getSchool());
 

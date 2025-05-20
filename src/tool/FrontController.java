@@ -74,7 +74,7 @@ public class FrontController extends HttpServlet {
 		if (chainInfo == null) return null;
 
 		ChainLocate locate = chainInfo.locate();
-		TempStrage strage = (TempStrage) session.getAttribute(ChainAction.KEY);
+		TempStorage strage = (TempStorage) session.getAttribute(ChainAction.KEY);
 
 		if (locate == ChainLocate.OPTIONAL) {
 			// 既存の `TempStrage` が rootClass と一致していれば使用、なければ新規作成
@@ -84,9 +84,9 @@ public class FrontController extends HttpServlet {
 		}
 
 		if (locate == ChainLocate.ROOT) {
-			TempStrage newStrage = new TempStrage(action.getClass());
+			TempStorage newStrage = new TempStorage(action.getClass());
 			session.setAttribute(ChainAction.KEY, newStrage);
-			action.setLocalStrage(newStrage);
+			action.setLocalStorage(newStrage);
 			return null;
 		}
 
@@ -98,12 +98,12 @@ public class FrontController extends HttpServlet {
 			session.setAttribute(ChainAction.KEY, null);
 		}
 
-		action.setLocalStrage(strage);
+		action.setLocalStorage(strage);
 		return null;
 	}
 
 
-	private boolean isValidTransition(TempStrage strage, Class<? extends Action> expectedRoot) {
+	private boolean isValidTransition(TempStorage strage, Class<? extends Action> expectedRoot) {
 	    return strage != null && strage.isSendFrom(expectedRoot);
 	}
 

@@ -21,7 +21,7 @@ public class UserDeleteAction extends ManagementAction {
 		ExTeacher user = maDao.fetchInfo(id);
 
 		req.setAttribute("user", user);
-		getStrage().store("user", user);
+		getStorage().store("user", user);
 
 		req.getRequestDispatcher("user_delete.jsp").forward(req, res);;
 	}

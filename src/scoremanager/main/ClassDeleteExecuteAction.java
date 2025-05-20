@@ -24,7 +24,7 @@ public class ClassDeleteExecuteAction extends Action {
 		ClassNumDao classDao = Dao.getInstance(ClassNumDao.class);
 
 		ClassNum classNum = new ClassNum();
-		classNum.setClass_num(getStrage().retrieve("num", String.class));
+		classNum.setClass_num(getStorage().retrieve("num", String.class));
 		classNum.setSchool(teacher.getSchool());
 
 		classDao.delete(classNum);

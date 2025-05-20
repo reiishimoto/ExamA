@@ -21,7 +21,7 @@ import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
 import tool.Completion;
-import tool.TempStrage;
+import tool.TempStorage;
 
 @ChainAction(locate=ChainLocate.END, rootClass=TestRegistAction.class, redirectFor="TestRegist.action")
 public class TestRegistExecuteAction extends Action {
@@ -44,7 +44,7 @@ public class TestRegistExecuteAction extends Action {
 		TestDao tesDao = Dao.getInstance(TestDao.class);
 
 		// filter情報の受け取り
-		TempStrage tempStrage = getStrage();
+		TempStorage tempStrage = getStorage();
 		entYear = tempStrage.retrieve("f1", Integer.class);
 		class_num = tempStrage.retrieve("f2", String.class);
 		subject_cd = tempStrage.retrieve("f3", String.class);

@@ -21,7 +21,7 @@ public class ManagerDao extends Dao {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					SchoolDao scDao = new SchoolDao();
+					SchoolDao scDao = getInstance(SchoolDao.class);
 
 					School school = scDao.get(rs.getString("school_cd"));
 
@@ -80,7 +80,7 @@ public class ManagerDao extends Dao {
 
 	private List<ExTeacher> regist(ResultSet rs, boolean isManager) throws Exception {
 		List<ExTeacher> list = new ArrayList<>();
-		SchoolDao scDao = new SchoolDao();
+		SchoolDao scDao = getInstance(SchoolDao.class);
 		CacheManager<String, School> cache = new CacheManager<>(20);
 
 		while (rs.next()) {
@@ -106,7 +106,7 @@ public class ManagerDao extends Dao {
 
 	private List<ExTeacher> branching(ResultSet rs) throws Exception {
 		List<ExTeacher> list = new ArrayList<>();
-		SchoolDao scDao = new SchoolDao();
+		SchoolDao scDao = getInstance(SchoolDao.class);
 		CacheManager<String, School> cache = new CacheManager<>(20);
 
 		while(rs.next()) {

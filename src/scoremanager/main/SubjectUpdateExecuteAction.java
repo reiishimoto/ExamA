@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Subject;
 import bean.Teacher;
+import dao.Dao;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
@@ -28,7 +29,7 @@ public class SubjectUpdateExecuteAction extends Action {
         String subjectName = req.getParameter("subject_name");
         if (subjectName.length() > 20) subjectName = subjectName.substring(0, 20);
         // 科目DAOを生成
-        SubjectDao subjectDao = new SubjectDao();
+        SubjectDao subjectDao = Dao.getInstance(SubjectDao.class);
         // 科目コードと学校コードで該当の科目を検索
         Subject subject = subjectDao.get(subjectCd, teacher.getSchool());
 

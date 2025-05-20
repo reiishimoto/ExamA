@@ -28,7 +28,7 @@ public class StudentDao extends Dao {
 
 			ResultSet rSet = statement.executeQuery();
 
-			SchoolDao schoolDao = new SchoolDao();
+			SchoolDao schoolDao = getInstance(SchoolDao.class);
 
 			if (rSet.next()){
 				String cond = rSet.getString("is_attend");

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
+import dao.Dao;
 import dao.TeacherDao;
 import tool.EarlyAction;
 
@@ -21,7 +22,7 @@ public class LoginExecuteAction extends EarlyAction {
 		String url = "";
 		String id = "";
 		String password = "";
-		TeacherDao teacherDao = new TeacherDao();
+		TeacherDao teacherDao = Dao.getInstance(TeacherDao.class);
 		Teacher teacher = null;
 
 		//リクエストパラメータ―の取得 2

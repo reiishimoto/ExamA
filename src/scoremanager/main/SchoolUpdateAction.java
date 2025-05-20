@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
+import dao.Dao;
 import dao.SchoolDao;
 import tool.ChainAction;
 import tool.ChainLocate;
@@ -15,7 +16,7 @@ public class SchoolUpdateAction extends ManagementAction {
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String cd = req.getParameter("cd");
-		SchoolDao scDao = new SchoolDao();
+		SchoolDao scDao = Dao.getInstance(SchoolDao.class);
 		School school = scDao.get(cd);
 
 		System.out.println(school);

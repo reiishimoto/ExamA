@@ -3,6 +3,7 @@ package scoremanager.main;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.Dao;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
@@ -21,7 +22,7 @@ public class SubjectDeleteExecuteAction extends Action {
     	cd = getStrage().retrieve("subjectCd", String.class);
 
         // 削除処理
-        SubjectDao subjectDao = new SubjectDao();
+        SubjectDao subjectDao = Dao.getInstance(SubjectDao.class);
         subjectDao.delete(cd);
 
         // JSPへフォワード

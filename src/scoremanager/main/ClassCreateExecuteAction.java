@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.Dao;
 import tool.Action;
 import tool.Completion;
 
@@ -15,7 +16,7 @@ public class ClassCreateExecuteAction extends Action {
 		String classNum = req.getParameter("classNum");
 		Teacher teacher= (Teacher) req.getSession().getAttribute("user");
 
-		ClassNumDao classDao = new ClassNumDao();
+		ClassNumDao classDao = Dao.getInstance(ClassNumDao.class);
 		classDao.insert(classNum, teacher.getSchool());
 
 		Completion completion = Completion.getData("class_create_done", Completion.createInfo(

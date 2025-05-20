@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ExStudent;
 import bean.Student;
+import dao.Dao;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
@@ -28,7 +29,7 @@ public class StudentUpdateExecuteAction extends Action {
 		String reason = "";
 		// 不在時のメッセージに対応できるようExStudent使用
 		ExStudent student = new ExStudent();
-		StudentDao studentDao = new StudentDao();
+		StudentDao studentDao = Dao.getInstance(StudentDao.class);
 
 		// リクエストパラメーターの取得 2
 		// name,class_num,isAttendStr

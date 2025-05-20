@@ -17,6 +17,7 @@ import bean.Teacher;
 import bean.TestListStudent;
 import bean.TestListSubject;
 import dao.ClassNumDao;
+import dao.Dao;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestListStudentDao;
@@ -43,8 +44,8 @@ public class TestListAction extends Action {
 
 		if (type.equals("st")) {
 
-			StudentDao stuDao = new StudentDao();
-			TestListStudentDao tlstDao = new TestListStudentDao();
+			StudentDao stuDao = Dao.getInstance(StudentDao.class);
+			TestListStudentDao tlstDao = Dao.getInstance(TestListStudentDao.class);
 
 			Student student = stuDao.get(req.getParameter("st"));
 
@@ -65,8 +66,8 @@ public class TestListAction extends Action {
 			dispatcher = req.getRequestDispatcher("test_list_student.jsp");
 		} else if (type.equals("sj")) {
 
-			SubjectDao subDao = new SubjectDao();
-			TestListSubjectDao tlsjDao = new TestListSubjectDao();
+			SubjectDao subDao = Dao.getInstance(SubjectDao.class);
+			TestListSubjectDao tlsjDao = Dao.getInstance(TestListSubjectDao.class);
 
 			Subject subject = subDao.get(req.getParameter("sj"), teacher.getSchool());
 
@@ -110,7 +111,7 @@ public class TestListAction extends Action {
 		}
 		if (req.getAttribute("class_num_set") == null) {
 
-			ClassNumDao dao = new ClassNumDao();
+			ClassNumDao dao = Dao.getInstance(ClassNumDao.class);
 
 			List<String> classNumList = ExceptUtils.exceptionHandle(() -> dao.filter(teacher.getSchool()));
 
@@ -119,7 +120,7 @@ public class TestListAction extends Action {
 		}
 		if (req.getAttribute("subject_set") == null) {
 
-			SubjectDao dao = new SubjectDao();
+			SubjectDao dao = Dao.getInstance(SubjectDao.class);
 
 			List<Subject> subjectList = ExceptUtils.exceptionHandle(() -> dao.filter(teacher.getSchool()));
 

@@ -24,8 +24,8 @@ public class TestDao extends Dao {
 	private List<Test> postFilter(ResultSet rs, School school) throws SQLException {
 
 		// 関連するクラスを取り出すためのDAO
-		StudentDao stuDao = new StudentDao();
-		SubjectDao subDao = new SubjectDao();
+		StudentDao stuDao = getInstance(StudentDao.class);
+		SubjectDao subDao = getInstance(SubjectDao.class);
 
 		// DAOによるクエリ実行回数を軽減するためのキャッシュ。実行ごとに更新を反映させるためローカル
 		Map<String, Student> stuCache = new HashMap<>();

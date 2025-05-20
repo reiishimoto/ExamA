@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.ExStudent;
 import bean.Teacher;
+import dao.Dao;
 import dao.StudentDao;
 import tool.Action;
 import tool.Completion;
@@ -26,7 +27,7 @@ public class StudentCreateExecuteAction extends Action {
 		String student_name = ""; // 入力された氏名
 		String class_num = ""; // 選択されたクラス番号
 		ExStudent student = new ExStudent();
-		StudentDao studentDao = new StudentDao();
+		StudentDao studentDao = Dao.getInstance(StudentDao.class);
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 
 		// リクエストパラメーターの取得 2

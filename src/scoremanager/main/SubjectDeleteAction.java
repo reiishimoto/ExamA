@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Subject;
 import bean.Teacher;
+import dao.Dao;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
@@ -22,7 +23,7 @@ public class SubjectDeleteAction extends Action {
 		Teacher teacher = (Teacher) session.getAttribute("user");
 		String cd = req.getParameter("cd"); // 科目コード
 
-		SubjectDao subjectDao = new SubjectDao();
+		SubjectDao subjectDao = Dao.getInstance(SubjectDao.class);
 
 		// DBからデータ取得
 		Subject subject = subjectDao.get(cd, teacher.getSchool());

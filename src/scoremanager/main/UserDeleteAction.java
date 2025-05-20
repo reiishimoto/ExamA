@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExTeacher;
+import dao.Dao;
 import dao.ManagerDao;
 import tool.ChainAction;
 import tool.ChainLocate;
@@ -16,7 +17,7 @@ public class UserDeleteAction extends ManagementAction {
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String id = req.getParameter("id");
 
-		ManagerDao maDao = new ManagerDao();
+		ManagerDao maDao = Dao.getInstance(ManagerDao.class);
 		ExTeacher user = maDao.fetchInfo(id);
 
 		req.setAttribute("user", user);

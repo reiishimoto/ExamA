@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Subject;
 import bean.Teacher;
+import dao.Dao;
 import dao.SubjectDao;
 import tool.Action;
 
@@ -21,7 +22,7 @@ public class SubjectListAction extends Action {
         Teacher teacher = (Teacher) session.getAttribute("user");
 
         // 科目DAOのインスタンスを生成
-        SubjectDao subjectDao = new SubjectDao();
+        SubjectDao subjectDao = Dao.getInstance(SubjectDao.class);
 
         // ログイン中の教師の学校コードに紐づく科目一覧を取得
         List<Subject> subjects = subjectDao.filter(teacher.getSchool());

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.Dao;
 import tool.Action;
 
 public class SubjectCreateAction extends Action {
@@ -19,7 +20,7 @@ public class SubjectCreateAction extends Action {
         Teacher teacher = (Teacher) session.getAttribute("user"); // ユーザー情報取得
 
         // ローカル変数の指定
-        ClassNumDao classNumDao = new ClassNumDao(); // クラス番号DAO初期化
+        ClassNumDao classNumDao = Dao.getInstance(ClassNumDao.class); // クラス番号DAO初期化
 
         // DBからデータ取得（学校コードに紐づくクラス番号一覧）
         List<String> list = classNumDao.filter(teacher.getSchool());

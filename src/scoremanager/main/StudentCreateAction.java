@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.Dao;
 import tool.Action;
 
 public class StudentCreateAction extends Action {
@@ -21,7 +22,7 @@ public class StudentCreateAction extends Action {
 		Teacher teacher = (Teacher)session.getAttribute("user");
 
 		// ローカル変数の指定 1
-		ClassNumDao cNumDao = new ClassNumDao(); // クラス番号Daoを初期化
+		ClassNumDao cNumDao = Dao.getInstance(ClassNumDao.class); // クラス番号Daoを初期化
 		LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
 		int year = todaysDate.getYear(); // 現在の年を取得
 

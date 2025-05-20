@@ -16,6 +16,7 @@ import bean.Subject;
 import bean.Teacher;
 import bean.Test;
 import dao.ClassNumDao;
+import dao.Dao;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
@@ -33,10 +34,10 @@ public class TestRegistAction extends Action {
         Teacher teacher = (Teacher) session.getAttribute("user");
         School school = teacher.getSchool();
 
-        ClassNumDao cNumDao = new ClassNumDao();
-        SubjectDao subDao = new SubjectDao();
-        StudentDao stuDao = new StudentDao();
-        TestDao testDao = new TestDao();
+        ClassNumDao cNumDao = Dao.getInstance(ClassNumDao.class);
+        SubjectDao subDao = Dao.getInstance(SubjectDao.class);
+        StudentDao stuDao = Dao.getInstance(StudentDao.class);
+        TestDao testDao = Dao.getInstance(TestDao.class);
 
         String entYearStr = req.getParameter("f1");
         String classNum = req.getParameter("f2");

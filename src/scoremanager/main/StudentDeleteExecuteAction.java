@@ -4,6 +4,7 @@ package scoremanager.main;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.Dao;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
@@ -17,7 +18,7 @@ public class StudentDeleteExecuteAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		// ローカル変数の指定 1
-		StudentDao studentDao = new StudentDao();
+		StudentDao studentDao = Dao.getInstance(StudentDao.class);
 
 		// リクエストパラメーターの取得
 		String no = getStrage().retrieve("no", String.class);

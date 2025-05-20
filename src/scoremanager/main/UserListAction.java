@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExTeacher;
+import dao.Dao;
 import dao.ManagerDao;
 import tool.ManagementAction;
 
@@ -13,7 +14,7 @@ public class UserListAction extends ManagementAction {
 
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		ManagerDao maDao = new ManagerDao();
+		ManagerDao maDao = Dao.getInstance(ManagerDao.class);
 
 		String filter = req.getParameter("f");
 		if (filter == null) filter = "";

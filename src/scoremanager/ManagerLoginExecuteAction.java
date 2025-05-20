@@ -21,7 +21,7 @@ public class ManagerLoginExecuteAction extends EarlyAction {
 		String url = "";
 		String id = "";
 		String password = "";
-		ManagerDao managerDao = new ManagerDao();
+		ManagerDao managerDao = ManagerDao.getInstance(ManagerDao.class);
 		ExTeacher manager = null;
 
 		//リクエストパラメータ―の取得 2

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Student;
+import dao.Dao;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
@@ -21,7 +22,7 @@ public class StudentDeleteAction extends Action {
 		String class_num = ""; // クラス番号
 		boolean isAttend = false; // 在学フラグ
 		Student student = new Student(); //学生の詳細データ
-		StudentDao studentDao = new StudentDao();
+		StudentDao studentDao = Dao.getInstance(StudentDao.class);
 
 		// リクエストパラメーターの取得 2
 		no = req.getParameter("no");

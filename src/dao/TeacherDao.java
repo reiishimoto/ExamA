@@ -33,7 +33,7 @@ public class TeacherDao extends Dao {
 			ResultSet resultSet = statement.executeQuery();
 
 			// 学校Daoを初期化
-			SchoolDao schoolDao = new SchoolDao();
+			SchoolDao schoolDao = getInstance(SchoolDao.class);
 
 			if (resultSet.next()) {
 				// リザルトセットが存在する場合

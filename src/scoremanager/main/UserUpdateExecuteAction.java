@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExTeacher;
+import dao.Dao;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ChainAction;
@@ -21,8 +22,8 @@ public class UserUpdateExecuteAction extends ManagementAction {
 
 		String name = req.getParameter("user_name");
 		String schoolCd = req.getParameter("school_cd");
-		SchoolDao scDao = new SchoolDao();
-		ManagerDao maDao = new ManagerDao();
+		SchoolDao scDao = Dao.getInstance(SchoolDao.class);
+		ManagerDao maDao = Dao.getInstance(ManagerDao.class);
 
 		ExTeacher user = new ExTeacher();
 

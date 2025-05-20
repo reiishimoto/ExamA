@@ -14,6 +14,7 @@ import bean.Student;
 import bean.Subject;
 import bean.Teacher;
 import bean.TestInfo;
+import dao.Dao;
 import dao.SubjectDao;
 import dao.TestDao;
 import tool.Action;
@@ -30,7 +31,7 @@ public class TestRegistExecuteAction extends Action {
 		Teacher teacher = (Teacher) session.getAttribute("user");
         School school = teacher.getSchool();
 
-        SubjectDao subDao = new SubjectDao();
+        SubjectDao subDao = Dao.getInstance(SubjectDao.class);
 
 		//ローカル変数の指定
 		List<Student> students = new ArrayList<>();
@@ -40,7 +41,7 @@ public class TestRegistExecuteAction extends Action {
 		String subject_cd = "";
 		int no;
 		int entYear;
-		TestDao tesDao = new TestDao();
+		TestDao tesDao = Dao.getInstance(TestDao.class);
 
 		// filter情報の受け取り
 		TempStrage tempStrage = getStrage();

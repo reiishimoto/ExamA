@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExTeacher;
+import dao.Dao;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.ChainAction;
@@ -16,10 +17,10 @@ public class UserUpdateAction extends ManagementAction {
 	@Override
 	public void executeManage(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		SchoolDao scDao = new SchoolDao();
+		SchoolDao scDao = Dao.getInstance(SchoolDao.class);
 
 		ExTeacher user;
-		ManagerDao maDao = new ManagerDao();
+		ManagerDao maDao = Dao.getInstance(ManagerDao.class);
 		user = maDao.fetchInfo(req.getParameter("id"));
 
 		getStrage().store("user", user);

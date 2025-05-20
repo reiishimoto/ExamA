@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ExTeacher;
+import dao.Dao;
 import dao.ManagerDao;
 import dao.SchoolDao;
 import tool.Completion;
@@ -22,12 +23,12 @@ public class UserCreateExecuteAction extends ManagementAction {
 		String password = req.getParameter("user_pw");
 		String schoolCd = req.getParameter("school_cd");
 		String roll = req.getParameter("roll");
-		ManagerDao maDao = new ManagerDao();
+		ManagerDao maDao = Dao.getInstance(ManagerDao.class);
 
 		if (maDao.fetchInfo(id) != null) {
 			errors.put("id", String.format("id ｢%s｣ は既に存在しています", id));
 			req.setAttribute("errors", errors);
-			SchoolDao scDao = new SchoolDao();
+			SchoolDao scDao = Dao.getInstance(SchoolDao.class);
 			req.setAttribute("schools", scDao.list());
 
 			req.setAttribute("user_id", id);
@@ -41,7 +42,7 @@ public class UserCreateExecuteAction extends ManagementAction {
 		}
 
 		if (roll == null) roll = "";
-		SchoolDao scDao = new SchoolDao();
+		SchoolDao scDao = Dao.getInstance(SchoolDao.class);
 
 		ExTeacher user = new ExTeacher();
 

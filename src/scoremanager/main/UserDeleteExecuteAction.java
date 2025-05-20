@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.ExTeacher;
+import dao.Dao;
 import dao.ManagerDao;
 import tool.ChainAction;
 import tool.ChainLocate;
@@ -19,7 +20,7 @@ public class UserDeleteExecuteAction extends ManagementAction {
 		HttpSession session = req.getSession();
 		ExTeacher user = getStrage().retrieve("user", ExTeacher.class);
 
-		ManagerDao maDao = new ManagerDao();
+		ManagerDao maDao = Dao.getInstance(ManagerDao.class);
 		maDao.delete(user);
 		if (((ExTeacher)session.getAttribute("user")).getId().equals(user.getId())) {
 			res.sendRedirect("../index.jsp");

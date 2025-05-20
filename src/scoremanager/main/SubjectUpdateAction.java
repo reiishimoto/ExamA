@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Subject;
 import bean.Teacher;
+import dao.Dao;
 import dao.SubjectDao;
 import tool.Action;
 import tool.ChainAction;
@@ -26,7 +27,7 @@ public class SubjectUpdateAction extends Action {
     	String cd = req.getParameter("cd");
 
 		// 科目DAOのインスタンスを生成
-		SubjectDao subjectDao = new SubjectDao();
+		SubjectDao subjectDao = Dao.getInstance(SubjectDao.class);
 
 		// 指定された科目コードと学校コードに一致する科目情報を取得
 		subject = subjectDao.get(cd, teacher.getSchool());

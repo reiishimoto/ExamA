@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Subject;
 import bean.Teacher;
+import dao.Dao;
 import dao.SubjectDao;
 import tool.Action;
 import tool.Completion;
@@ -23,7 +24,7 @@ public class SubjectCreateExecuteAction extends Action {
         String subjectCd   = req.getParameter("subject_cd");
         String subjectName = req.getParameter("subject_name");
 
-        SubjectDao subjectDao = new SubjectDao();
+        SubjectDao subjectDao = Dao.getInstance(SubjectDao.class);
         Map<String, String> errors = new HashMap<>();
 
         // 必須チェックのみ

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.Dao;
 import dao.StudentDao;
 import tool.Action;
 
@@ -32,8 +33,8 @@ public class StudentListAction extends Action {
 		List<Student> students = null;
 		LocalDate todaysDate = LocalDate.now();
 		int year = todaysDate.getYear();
-		StudentDao sDao = new StudentDao();
-		ClassNumDao cNumDao = new ClassNumDao();
+		StudentDao sDao = Dao.getInstance(StudentDao.class);
+		ClassNumDao cNumDao = Dao.getInstance(ClassNumDao.class);
 		Map<String, String> errors = new HashMap<>();
 
 		entYearStr = request.getParameter("f1");

@@ -10,6 +10,7 @@ import bean.ExStudent;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.Dao;
 import dao.StudentDao;
 import tool.Action;
 import tool.ChainAction;
@@ -30,8 +31,8 @@ public class StudentUpdateAction extends Action {
 		String class_num = ""; // クラス番号
 		boolean isAttend = false; // 在学フラグ
 		Student student = new Student(); //学生の詳細データ
-		StudentDao studentDao = new StudentDao();
-		ClassNumDao classNumDao = new ClassNumDao();
+		StudentDao studentDao = Dao.getInstance(StudentDao.class);
+		ClassNumDao classNumDao = Dao.getInstance(ClassNumDao.class);
 
 		// リクエストパラメーターの取得 2
 		no = req.getParameter("no");

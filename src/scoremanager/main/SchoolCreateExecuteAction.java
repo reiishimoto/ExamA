@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
+import dao.Dao;
 import dao.SchoolDao;
 import tool.Completion;
 import tool.ManagementAction;
@@ -19,7 +20,7 @@ public class SchoolCreateExecuteAction extends ManagementAction {
 		school.setCd(cd);
 		school.setName(name);
 
-		new SchoolDao().save(school);
+		Dao.getInstance(SchoolDao.class).save(school);
 
 		Completion completion = Completion.getData("school_create_done", Completion.createInfo(
 				"学校登録", "登録が完了しました",

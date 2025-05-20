@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import bean.ClassNum;
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.Dao;
 import tool.Action;
 import tool.ChainAction;
 import tool.ChainLocate;
@@ -20,7 +21,7 @@ public class ClassDeleteExecuteAction extends Action {
 		HttpSession session = req.getSession();
 		Teacher teacher = (Teacher) session.getAttribute("user");
 
-		ClassNumDao classDao = new ClassNumDao();
+		ClassNumDao classDao = Dao.getInstance(ClassNumDao.class);
 
 		ClassNum classNum = new ClassNum();
 		classNum.setClass_num(getStrage().retrieve("num", String.class));
